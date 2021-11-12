@@ -3,15 +3,17 @@ import "./phone.css";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+import { useNavigate } from "react-router-dom";
 
 // react router
 
 //components
-import SignIn from "./Signin";
+import Signup from "./Signup";
 
 const Phone = () => {
     const [viewOtpForm, setViewOtpForm] = useState(false);
     const [user, setUser] = useState(false);
+    let history = useNavigate();
     const firebaseConfig = {
         apiKey: "AIzaSyBjk9IaChZz4Zuh1-rfTaRpmCsk5BYsUUc",
         authDomain: "darkmatter-in.firebaseapp.com",
@@ -84,13 +86,14 @@ const Phone = () => {
             .then((confirmationResult) => {
                 console.log(confirmationResult);
                 console.log("success");
-                window.open("/", "_self");
+
+
                 alert('successful');
             })
             .catch((error) => {
                 // User couldn't sign in (bad verification code?)
                 alert(error.message);
-            });
+            }); history('/login')
     };
 
     const signOut = () => {
@@ -111,7 +114,7 @@ const Phone = () => {
             <div id="recaptcha-container"></div>
 
 
-            <SignIn
+            <Signup
                 loginSubmit={loginSubmit}
                 otpSubmit={otpSubmit}
                 viewOtpForm={viewOtpForm}

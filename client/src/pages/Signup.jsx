@@ -8,12 +8,14 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function Copyright(props) {
+
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
@@ -29,15 +31,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide({ loginSubmit, otpSubmit, viewOtpForm }) {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+    const [state, setstate] = useState('');
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -74,51 +69,55 @@ export default function SignInSide({ loginSubmit, otpSubmit, viewOtpForm }) {
                             Sign in
                         </Typography>
 
-                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                            {!viewOtpForm ? (<div>
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="mobile"
-                                    label="Mobile Number"
-                                    name="number"
-                                    autoComplete="phone number"
-                                    autoFocus
-                                />
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    onSubmit={otpSubmit}
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                >
-                                    Submit
-                                </Button>
-                            </div>
-
-                            ) : (<div> <TextField
+                        {!viewOtpForm ? (<Box component="form" noValidate onSubmit={loginSubmit} sx={{ mt: 1 }}>
+                            <TextField
                                 margin="normal"
                                 required
                                 fullWidth
                                 id="mobile"
-                                label="OTP"
-                                name="number"
+                                label="Mobile Number"
+                                name="phone"
                                 autoComplete="phone number"
                                 autoFocus
-                            /> <Button
+                            />
+                            <Button
                                 type="submit"
                                 fullWidth
 
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
-                                    Verify Otp
-                                </Button></div>)}
+                                Submit
+                            </Button>
 
-
-                            <Copyright sx={{ mt: 5 }} />
                         </Box>
+                        ) : (
+                            <Box component="form" noValidate onSubmit={otpSubmit} sx={{ mt: 1 }}>
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    required
+                                    value={state}
+                                    id="mobile"
+                                    onChange={(e) => { setstate(e.target.value) }}
+                                    label="OTP"
+                                    name="otp_value"
+                                    autoComplete="phone number"
+                                    autoFocus
+                                /> <Button
+                                    type="submit"
+                                    fullWidth
+
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    Verify Otp
+                                </Button>
+                            </Box>)}
+
+
+
                     </Box>
                 </Grid>
             </Grid>

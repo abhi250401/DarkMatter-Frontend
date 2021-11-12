@@ -9,6 +9,7 @@ import { useState } from 'react';
 import DarkMode from "./pages/darkmode";
 import Phone from "./pages/phone";
 import './App.css'
+import FirstPage from "./pages/FirstPage";
 import Signup from "./pages/Signup";
 function App() {
 
@@ -19,7 +20,9 @@ function App() {
 
         <Routes>
 
-          <Route exact path="/" element={<Home />}>
+          <Route exact path="/dashboard" element={<Home />}>
+          </Route>
+          <Route exact path="/" element={<FirstPage />}>
           </Route>
 
           <Route exact path="/login" element={<Login />}>
@@ -28,7 +31,7 @@ function App() {
           </Route>
           <Route exact path="/phone" element={<Phone />}>
           </Route>
-          <Route exact path="/signin" element={<Signup />}>
+          <Route exact path="/signin" element={<Phone />}>
           </Route>
         </Routes>
 
