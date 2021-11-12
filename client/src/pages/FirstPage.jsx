@@ -106,34 +106,9 @@ function PricingContent() {
             >
                 <Toolbar sx={{ flexWrap: 'wrap' }}>
                     <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                        Company name
+                        Dark Matter
                     </Typography>
-                    <nav>
-                        <Link
-                            variant="button"
-                            color="text.primary"
-                            href="#"
-                            sx={{ my: 1, mx: 1.5 }}
-                        >
-                            Features
-                        </Link>
-                        <Link
-                            variant="button"
-                            color="text.primary"
-                            href="#"
-                            sx={{ my: 1, mx: 1.5 }}
-                        >
-                            Enterprise
-                        </Link>
-                        <Link
-                            variant="button"
-                            color="text.primary"
-                            href="#"
-                            sx={{ my: 1, mx: 1.5 }}
-                        >
-                            Support
-                        </Link>
-                    </nav>
+
                     <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
                         <LINK to="/signin">    Login </LINK>
                     </Button>
@@ -151,9 +126,7 @@ function PricingContent() {
                     Pricing
                 </Typography>
                 <Typography variant="h5" align="center" color="text.secondary" component="p">
-                    Quickly build an effective pricing table for your potential customers with
-                    this layout. It&apos;s built with default MUI components with little
-                    customization.
+                    Quickly build an effective pricing table for your potential customers
                 </Typography>
             </Container>
             {/* End hero unit */}

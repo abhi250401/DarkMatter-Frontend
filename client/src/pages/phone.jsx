@@ -11,9 +11,10 @@ import { useNavigate } from "react-router-dom";
 import Signup from "./Signup";
 
 const Phone = () => {
+    let phone_number;
     const [viewOtpForm, setViewOtpForm] = useState(false);
     const [user, setUser] = useState(false);
-    let history = useNavigate();
+    let goto = useNavigate();
     const firebaseConfig = {
         apiKey: "AIzaSyBjk9IaChZz4Zuh1-rfTaRpmCsk5BYsUUc",
         authDomain: "darkmatter-in.firebaseapp.com",
@@ -56,7 +57,7 @@ const Phone = () => {
     const loginSubmit = (e) => {
         e.preventDefault();
 
-        let phone_number = "+91" + e.target.phone.value;
+        phone_number = "+91" + e.target.phone.value;
         const appVerifier = window.recaptchaVerifier;
 
         auth
@@ -74,6 +75,7 @@ const Phone = () => {
                 // ...
                 alert(error.message);
             });
+
     };
 
     const otpSubmit = (e) => {
@@ -87,13 +89,19 @@ const Phone = () => {
                 console.log(confirmationResult);
                 console.log("success");
 
+                phone_number = confirmationResult.user.phoneNumber;
+                console.log(phone_number);
+                if (phone_number === "+919999987060")
+                    goto('/login')
+                else
+                    goto('/signup');
 
-                alert('successful');
+
             })
             .catch((error) => {
-                // User couldn't sign in (bad verification code?)
+
                 alert(error.message);
-            }); history('/login')
+            });
     };
 
     const signOut = () => {

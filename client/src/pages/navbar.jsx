@@ -203,7 +203,6 @@ export default function PrimarySearchAppBar() {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <Link to="/login" >       <Button variant="outlined" style={{ backgroundColor: "white", marginLeft: "20px", height: "50px" }}>LOGIN</Button></Link>
                         </IconButton>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

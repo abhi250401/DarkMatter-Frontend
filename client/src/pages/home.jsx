@@ -4,7 +4,7 @@ import Navbar from './navbar'
 const home = () => {
     return (
         <div>
-            <div style={{ backgroundColor: "#BB86FC", height: "6vh", fontSize: "0.8em", justifyContent: "center", alignItems: "center", display: "flex" }}>
+            <div style={{ backgroundColor: "#BB86FC", height: "5vh", fontSize: "0.8em", justifyContent: "center", alignItems: "center", display: "flex" }}>
                 TICKER COMES HERE....
             </div>
             <Navbar />

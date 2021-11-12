@@ -69,12 +69,14 @@ export default function SignInSide({ loginSubmit, otpSubmit, viewOtpForm }) {
                             Sign in
                         </Typography>
 
-                        {!viewOtpForm ? (<Box component="form" noValidate onSubmit={loginSubmit} sx={{ mt: 1 }}>
+                        {!viewOtpForm ? (<Box component="form" Validate onSubmit={loginSubmit} sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"
                                 required
                                 fullWidth
                                 id="mobile"
+                                maxLength="10"
+                                minLength="10"
                                 label="Mobile Number"
                                 name="phone"
                                 autoComplete="phone number"
@@ -87,7 +89,7 @@ export default function SignInSide({ loginSubmit, otpSubmit, viewOtpForm }) {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
-                                Submit
+                                Next
                             </Button>
 
                         </Box>
@@ -98,6 +100,8 @@ export default function SignInSide({ loginSubmit, otpSubmit, viewOtpForm }) {
                                     required
                                     fullWidth
                                     required
+                                    maxLength="6"
+                                    minLength="6"
                                     value={state}
                                     id="mobile"
                                     onChange={(e) => { setstate(e.target.value) }}
