@@ -6,12 +6,12 @@ import Register from './pages/Newregister';
 import Navbar from './pages/navbar';
 import Home from './pages/home';
 import { useState } from 'react';
-import DarkMode from "./pages/darkmode";
+import Admin from './pages/Admin';
 import Phone from "./pages/phone";
 import './App.css'
 import FirstPage from "./pages/FirstPage";
-import Signup from "./pages/Signup";
 import Checkout from "./pages/checkout/checkout";
+import EditUser from "./pages/Edituser";
 function App() {
 
 
@@ -35,6 +35,10 @@ function App() {
           <Route exact path="/phone" element={<Phone />}>
           </Route>
           <Route exact path="/signin" element={<Phone />}>
+          </Route>
+          <Route exact path="/edit/:id" element={<EditUser />}>
+          </Route>
+          <Route exact path="/admin2" element={<Admin />}>
           </Route>
         </Routes>
 

@@ -32,6 +32,7 @@ const theme = createTheme();
 
 export default function SignUp() {
     const goto = useNavigate();
+    const phone = localStorage.getItem("phone_number");
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -46,6 +47,7 @@ export default function SignUp() {
             },
             body: JSON.stringify({
                 name,
+                phone: localStorage.getItem("phone_number"),
                 email,
                 password,
             }),

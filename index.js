@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const User = require('./model/user');
 //import routes
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
@@ -18,12 +19,28 @@ app.use(express.json());
 app.use('/api/user', authRoute);
 app.use('/api/posts', postRoute);
 
-
-app.get('/', (req, res) => {
-    res.send('we are at home page');
+app.delete('/user/:id', function (req, res) {
+    User.deleteOne({ _id: req.params.id }).then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        console.warn(err);
+    })
 });
-app.get('/', (req, res) => {
-    res.send('we are at home page');
+app.put('/user/:id', function (req, res) {
+    User.updateOne({ _id: req.params.id }, { $set: { name: req.body.name, email: req.body.email } }).then((result) => {
+        res.status(201).json(result);
+    }).catch((err) => {
+        console.warn(err);
+    })
 })
+
+app.get('/userone/:id', (req, res) => {
+    User.findById(req.params.id).then((data) => {
+        res.json(data);
+    }).catch(err => {
+        console.log(err);
+    })
+});
+
 
 app.listen(3000, () => console.log('server up and running'))

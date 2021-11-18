@@ -2,6 +2,9 @@ const router = require('express').Router();
 const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+
+
 router.post('/register', async (req, res) => {
 
     const emailexist = await User.findOne({
@@ -22,7 +25,7 @@ router.post('/register', async (req, res) => {
         const user = new User({
             name: req.body.name,
             email: req.body.email,
-            mobile: '',
+            phone: req.body.phone,
             role: 3,
             status: 0,
             password: hashPassword
@@ -52,11 +55,43 @@ router.post('/login', async (req, res) => {
     if (!validPass) return res.json({ status: 'error', user: false })
 
     //create a token and assign it
-    const token = jwt.sign({ _id: user._id }, "hisdi");
+    const token = jwt.sign({
+        _id: user._id,
+        name: user.name,
+        email: user.email
+
+    },
+        "hisdi");
     return res.json({ status: 'ok', user: token })
 
 
 })
+router.get('/users', async (req, res) => {
+
+    await User.find().then((data) => {
+        res.json(data);
+    }).catch(err => {
+        console.log(err);
+    })
+}
+)
+
+
+router.get('/quote', async (req, res) => {
+    const token = req.headers['x-access-token']
+
+    try {
+        const decoded = jwt.verify(token, 'hisdi')
+        const email = decoded.email
+        const user = await User.findOne({ email: email })
+
+        return res.json({ status: 'ok', quote: user.quote })
+    } catch (error) {
+        console.log(error)
+        res.json({ status: 'error', error: 'invalid token' })
+    }
+})
+
 
 
 module.exports = router;

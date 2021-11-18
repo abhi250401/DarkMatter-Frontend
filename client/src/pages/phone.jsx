@@ -91,6 +91,7 @@ const Phone = () => {
 
                 phone_number = confirmationResult.user.phoneNumber;
                 console.log(phone_number);
+                localStorage.setItem("phone_number", phone_number);
                 if (phone_number === "+919999987060")
                     goto('/login')
                 else
