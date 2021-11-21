@@ -30,7 +30,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignInSide({ loginSubmit, otpSubmit, viewOtpForm }) {
+export default function SignInSide({ loginSubmit, otpSubmit, viewOtpForm, phoneNumber }) {
     const [state, setstate] = useState('');
 
 
