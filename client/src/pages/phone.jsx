@@ -124,6 +124,7 @@ const Phone = () => {
 
 
             <Signup
+                phoneNumber={phone_number}
                 loginSubmit={loginSubmit}
                 otpSubmit={otpSubmit}
                 viewOtpForm={viewOtpForm}

@@ -148,7 +148,9 @@ EnhancedTableHead.propTypes = {
 
 const EnhancedTableToolbar = (props) => {
     const { numSelected } = props;
+    const handleDelete = () => {
 
+    }
     return (
         <Toolbar
             sx={{
@@ -186,7 +188,7 @@ const EnhancedTableToolbar = (props) => {
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
                     <IconButton>
-                        <DeleteIcon />
+                        <DeleteIcon onClick={() => handleDelete()} />
                     </IconButton>
                 </Tooltip>
             ) : (
@@ -345,8 +347,8 @@ export default function EnhancedTable() {
 
                                             <TableCell>{user.email}</TableCell>
                                             <TableCell>{user.name}</TableCell>
-                                            <Button color="primary" variant="contained" component={Link} to={`/edit/${user._id}`}>Edit</Button>
-
+                                            <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/${user._id}`}>Edit</Button>
+                                            <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/${user._id}`}>Delete</Button>
 
                                         </TableRow>
                                     );

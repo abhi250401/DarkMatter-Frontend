@@ -115,6 +115,18 @@ export default function SignUp() {
                                 <TextField
                                     required
                                     fullWidth
+                                    id="phone"
+                                    value={phone}
+                                    disabled
+                                    label="Phone Number"
+                                    name="Phone"
+                                    autoComplete="Phone"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
                                     value={password}
                                     onChange={(e) => { setPassword(e.target.value) }}
                                     name="password"
