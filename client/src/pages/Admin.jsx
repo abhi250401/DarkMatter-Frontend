@@ -227,6 +227,7 @@ export default function EnhancedTable() {
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("calories");
     const [selected, setSelected] = React.useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(true);
     const [rowsPerPage, setRowsPerPage] = React.useState(15);
@@ -290,6 +291,9 @@ export default function EnhancedTable() {
         );
     return (
         <Box sx={{ width: "100%" }}>
+            <input onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchTerm}
+                placeholder="SEARCH" />
             <Paper sx={{ width: "100%", mb: 2 }}>
                 <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer>
@@ -310,6 +314,13 @@ export default function EnhancedTable() {
                             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
                             {stableSort(users, getComparator(order, orderBy))
+                                .filter((val) => {
+                                    if (searchTerm === " ")
+                                        return val
+                                    else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                        return val
+                                    }
+                                })
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((user, index) => {
                                     const isItemSelected = isSelected(user._id);
