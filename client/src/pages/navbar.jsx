@@ -101,6 +101,7 @@ export default function PrimarySearchAppBar() {
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleMenuClose}> <Link to="/admin/users"> Admin </Link></MenuItem>
         </Menu>
     );
 
@@ -144,6 +145,7 @@ export default function PrimarySearchAppBar() {
                     <AccountCircle />
                 </IconButton>
                 <p>Profile</p>
+
             </MenuItem>
         </Menu>
     );
@@ -152,15 +154,7 @@ export default function PrimarySearchAppBar() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" style={{ backgroundColor: "black", justifyContent: "space-between", display: "flex" }}>
                 <Toolbar style={{ display: "flex", justifyContent: "flex-end", marginLeft: "1%" }}>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        Logo
-                    </IconButton>
+
                     <Typography style={{ marginLeft: "%" }}
                         variant="h5"
                         noWrap

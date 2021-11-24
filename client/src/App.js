@@ -39,7 +39,7 @@ function App() {
           <Route exact path="/edit/:id" element={<EditUser />}>
           </Route><Route exact path="/delete/:id" element={<DeleteUser />}>
           </Route>
-          <Route exact path="/admin2" element={<Admin />}>
+          <Route exact path="/admin/users" element={<Admin />}>
           </Route>
         </Routes>
 

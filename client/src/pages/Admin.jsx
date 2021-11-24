@@ -1,4 +1,5 @@
 import * as React from "react";
+import Navbar from "./navbar";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -290,106 +291,109 @@ export default function EnhancedTable() {
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "white" }}>Loading ...</h1></div>
         );
     return (
-        <Box sx={{ width: "100%" }}>
-            <input onChange={(e) => setSearchTerm(e.target.value)}
-                value={searchTerm}
-                placeholder="SEARCH" />
-            <Paper sx={{ width: "100%", mb: 2 }}>
-                <EnhancedTableToolbar numSelected={selected.length} />
-                <TableContainer>
-                    <Table
-                        sx={{ minWidth: 750 }}
-                        aria-labelledby="tableTitle"
-                        size={dense ? "small" : "medium"}
-                    >
-                        <EnhancedTableHead
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
-                            onRequestSort={handleRequestSort}
-                            rowCount={users.length}
-                        />
-                        <TableBody>
-                            {/* if you don't need to support IE11, you can replace the `stableSort` call with:
+        <div><Navbar />
+            <Box sx={{ width: "100%" }}>
+
+                <Paper sx={{ width: "100%", mb: 2 }}>
+                    <EnhancedTableToolbar numSelected={selected.length} />
+                    <TableContainer>
+                        <input style={{ display: "flex", justifyContent: "center", width: "30%", alignContent: "center", margin: "auto", marginBottom: "20px" }} onChange={(e) => setSearchTerm(e.target.value)}
+                            value={searchTerm}
+                            placeholder="SEARCH" />
+                        <Table
+                            sx={{ minWidth: 750 }}
+                            aria-labelledby="tableTitle"
+                            size={dense ? "small" : "medium"}
+                        >
+                            <EnhancedTableHead
+                                numSelected={selected.length}
+                                order={order}
+                                orderBy={orderBy}
+                                onSelectAllClick={handleSelectAllClick}
+                                onRequestSort={handleRequestSort}
+                                rowCount={users.length}
+                            />
+                            <TableBody>
+                                {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                            {stableSort(users, getComparator(order, orderBy))
-                                .filter((val) => {
-                                    if (searchTerm === " ")
-                                        return val
-                                    else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                        return val
-                                    }
-                                })
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((user, index) => {
-                                    const isItemSelected = isSelected(user._id);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
+                                {stableSort(users, getComparator(order, orderBy))
+                                    .filter((val) => {
+                                        if (searchTerm === " ")
+                                            return val
+                                        else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                            return val
+                                        }
+                                    })
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((user, index) => {
+                                        const isItemSelected = isSelected(user._id);
+                                        const labelId = `enhanced-table-checkbox-${index}`;
 
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick={(event) => handleClick(event, user._id)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={user._id}
-                                            selected={isItemSelected}
-                                        >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    color="primary"
-                                                    checked={isItemSelected}
-                                                    inputProps={{
-                                                        "aria-labelledby": labelId
-                                                    }}
-                                                />
-                                            </TableCell>
-                                            <TableCell
-                                                component="th"
-                                                id={labelId}
-                                                scope="row"
-                                                padding="none"
+                                        return (
+                                            <TableRow
+                                                hover
+                                                onClick={(event) => handleClick(event, user._id)}
+                                                role="checkbox"
+                                                aria-checked={isItemSelected}
+                                                tabIndex={-1}
+                                                key={user._id}
+                                                selected={isItemSelected}
                                             >
-                                                {user._id}
-                                            </TableCell>
+                                                <TableCell padding="checkbox">
+                                                    <Checkbox
+                                                        color="primary"
+                                                        checked={isItemSelected}
+                                                        inputProps={{
+                                                            "aria-labelledby": labelId
+                                                        }}
+                                                    />
+                                                </TableCell>
+                                                <TableCell
+                                                    component="th"
+                                                    id={labelId}
+                                                    scope="row"
+                                                    padding="none"
+                                                >
+                                                    {user._id}
+                                                </TableCell>
 
 
 
-                                            <TableCell>{user.email}</TableCell>
-                                            <TableCell>{user.name}</TableCell>
-                                            <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/${user._id}`}>Edit</Button>
-                                            <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/${user._id}`}>Delete</Button>
+                                                <TableCell>{user.email}</TableCell>
+                                                <TableCell>{user.name}</TableCell>
+                                                <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/${user._id}`}>Edit</Button>
+                                                <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/${user._id}`}>Delete</Button>
 
-                                        </TableRow>
-                                    );
-                                })}
-                            {emptyRows > 0 && (
-                                <TableRow
-                                    style={{
-                                        height: (dense ? 33 : 53) * emptyRows
-                                    }}
-                                >
-                                    <TableCell colSpan={6} />
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={users.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
+                                            </TableRow>
+                                        );
+                                    })}
+                                {emptyRows > 0 && (
+                                    <TableRow
+                                        style={{
+                                            height: (dense ? 33 : 53) * emptyRows
+                                        }}
+                                    >
+                                        <TableCell colSpan={6} />
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={users.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </Paper>
+                <FormControlLabel
+                    control={<Switch checked={dense} onChange={handleChangeDense} />}
+                    label="Dense padding"
                 />
-            </Paper>
-            <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"
-            />
-        </Box>
+            </Box>
+        </div>
     );
 }
