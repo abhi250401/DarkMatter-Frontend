@@ -28,13 +28,12 @@ function App() {
           </Route>
           <Route exact path="/" element={<FirstPage />}>
           </Route>
-          <Route exact path="/tracks" element={<Checkout />}>
+          <Route exact path="/signup" element={<Checkout />}>
           </Route>
 
           <Route exact path="/login" element={<Login />}>
           </Route>
-          <Route exact path="/signup" element={<Register />}>
-          </Route>
+
           <Route exact path="/phone" element={<Phone />}>
           </Route>
           <Route exact path="/signin" element={<Phone />}>
