@@ -89,16 +89,15 @@ export default function Checkout() {
                     </Stepper>
                     <React.Fragment>
                         {activeStep === steps.length ? (
-                            <React.Fragment>
+                            <div style={{ textAlign: "center" }}><React.Fragment >
                                 <Typography variant="h5" gutterBottom>
-                                    Thank you for your order.
+                                    Thank you for creating an account.
                                 </Typography>
                                 <Typography variant="subtitle1">
-                                    Your order number is #2001539. We have emailed your order
-                                    confirmation, and will send you an update when your order has
-                                    shipped.
+                                    Your will be able to login in to your account once we have verified your details.
                                 </Typography>
                             </React.Fragment>
+                            </div>
                         ) : (
                             <React.Fragment>
                                 {getStepContent(activeStep)}

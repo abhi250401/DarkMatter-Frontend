@@ -23,5 +23,34 @@ const UserSchema = new mongoose.Schema({
     }
 
 
+
+    /* userID
+     fileID
+     planID
+     name
+     email
+     mobile
+     password
+     gender
+     dob
+     company
+     address
+     pincode
+     state
+     country
+     aadhaarID
+     aadhaarNo
+     panID
+     panNo
+     picture
+     role
+     status
+     verified
+     created
+     Updated
+     planCategories
+     */
+
+
 });
 module.exports = mongoose.model('User', UserSchema);

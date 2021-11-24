@@ -7,15 +7,18 @@ import { Link } from 'react-router-dom';
 export default function Home() {
     const history = useNavigate();
     const [tok, setTok] = useState(null);
+    const [data, setdata] = useState(null);
+    const [loading, setLoading] = useState(false)
     async function populateHome() {
         const req = await fetch('http://localhost:3000/api/user/quote', {
             headers: {
                 'x-access-token': localStorage.getItem('token'),
             },
+        }).then((req) => {
+            const d = req.json();
+            setdata(d);
+            console.log(data);
         })
-
-        const data = req.json();
-        console.log(data);
     }
 
     useEffect(() => {
@@ -24,17 +27,17 @@ export default function Home() {
         if (token) {
             const user = jwt.decode(token);
             setTok(user);
+            setLoading(true);
+            console.log(tok);
             if (!user) {
                 localStorage.removeItem('token')
                 history('/');
             }
-            else {
-                populateHome();
-            }
+
         }
 
     }, [])
-    if (!tok)
+    if (!loading)
         return (
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "black" }}>No access ...
                 <Link to="/login" > Login</Link>  </h1></div >
@@ -44,7 +47,7 @@ export default function Home() {
             <div style={{ backgroundColor: "#36454f", height: "5vh", fontSize: "0.8em", justifyContent: "center", alignItems: "center", display: "flex" }}>
                 TICKER COMES HERE....
             </div>
-            <Navbar />
+            <Navbar Token={tok} />
             <div style={{ fontSize: "3rem", color: "black", display: "grid", justifyContent: "center", alignContent: "center", height: "83.5vh" }}> Dashboard </div>
 
         </div >

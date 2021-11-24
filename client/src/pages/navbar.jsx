@@ -12,7 +12,9 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-
+import { useState, useEffect } from 'react';
+import jwt from 'jsonwebtoken';
+import { useNavigate } from 'react-router';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
@@ -58,9 +60,31 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(data) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const [loading, setloading] = useState('')
+    const [tok, setTok] = useState(null);
+    const history = useNavigate();
+    useEffect(() => {
+
+        const token = localStorage.getItem('token')
+        if (token) {
+            const user = jwt.decode(token);
+            setTok(user._id);
+            setloading(true);
+            console.log(tok);
+            if (!user) {
+                localStorage.removeItem('token')
+                history('/');
+            }
+
+
+        }
+
+    }, [])
+
+
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -100,11 +124,12 @@ export default function PrimarySearchAppBar() {
             onClose={handleMenuClose}
         >
 
-            <MenuItem onClick={handleMenuClose}> <Link to="/user/profile"> Profile</Link></MenuItem>
+            <Link to={`/user/profile/${tok}`}>    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
             <MenuItem onClick={handleMenuClose}>Change Password</MenuItem>
-            <MenuItem onClick={handleMenuClose}> <Link to="/admin/users"> Users</Link></MenuItem>
-            <MenuItem onClick={handleMenuClose}> <Link to="/admin/stocks"> Stocks</Link></MenuItem>
-            <MenuItem onClick={handleMenuClose}> <Link to="/admin/settings"> Settings</Link></MenuItem>
+            <Link to="/admin/users">  <MenuItem onClick={handleMenuClose}>  Users</MenuItem></Link>
+            <Link to="/admin/stocks"> <MenuItem onClick={handleMenuClose}> Stocks</MenuItem></Link>
+            <Link to="/admin/settings"><MenuItem onClick={handleMenuClose}> Settings </MenuItem></Link>
+            <Link to="/admin/settings"><MenuItem onClick={handleMenuClose}> Signout </MenuItem></Link>
         </Menu>
     );
 
@@ -164,7 +189,7 @@ export default function PrimarySearchAppBar() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        DarkMatter
+                        <Link to="/home" > DarkMatter</Link>
                     </Typography>
                     <div style={{ marginLeft: "5%" }}><Search style={{}}>
                         <SearchIconWrapper>
@@ -191,16 +216,7 @@ export default function PrimarySearchAppBar() {
                         >
                             <AccountCircle />
                         </IconButton>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                        </IconButton>
+
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <IconButton

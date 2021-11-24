@@ -5,9 +5,6 @@ import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import axios from 'axios';
-
-
-import { useNavigate } from "react-router";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
@@ -30,7 +27,6 @@ import { useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import jwt from 'jsonwebtoken';
 
 
 
@@ -186,7 +182,7 @@ const EnhancedTableToolbar = (props) => {
                     id="tableTitle"
                     component="div"
                 >
-                    Users
+                    Stocks
                 </Typography>
             )}
 
@@ -212,9 +208,6 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function EnhancedTable() {
-    const history = useNavigate();
-    const [tok, setTok] = useState(null);
-
     const [loading, setLoading] = useState(false);
 
 
@@ -228,20 +221,6 @@ export default function EnhancedTable() {
             console.log(err);
         })
 
-        const token = localStorage.getItem('token')
-        if (token) {
-            const user = jwt.decode(token);
-            setTok(user);
-
-            console.log(tok);
-            if (!user) {
-                localStorage.removeItem('token')
-                history('/');
-            }
-            else {
-
-            }
-        }
 
     }, [])
 
@@ -311,13 +290,8 @@ export default function EnhancedTable() {
         return (
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "white" }}>Loading ...</h1></div>
         );
-    if (!tok)
-        return (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "black" }}>No access ...
-                <Link to="/login" > Login</Link>  </h1></div >
-        );
     return (
-        <div><Navbar Token={tok} />
+        <div><Navbar />
             <Box sx={{ width: "100%" }}>
 
                 <Paper sx={{ width: "100%", mb: 2 }}>

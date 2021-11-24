@@ -104,13 +104,13 @@ function PricingContent() {
                 sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
             >
                 <Toolbar sx={{ flexWrap: 'wrap' }}>
-                    <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+                    <Link to="/" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
                         Dark Matter
-                    </Typography>
+                    </Link>
 
-                    <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-                        <LINK to="/signin">    Login </LINK>
-                    </Button>
+                    <LINK to="/signin" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+                        Login
+                    </LINK>
                 </Toolbar>
             </AppBar>
             {/* Hero unit */}

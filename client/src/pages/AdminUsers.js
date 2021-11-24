@@ -62,7 +62,9 @@ export default function AdminUsers() {
                     <TableBody>
                         {users.map((user) => (
                             <TableRow className={classes.row} key={user._id}>
-                                <TableCell>{user._id}</TableCell>
+                                <Link to={`/user/profile/${user._id}`} >
+                                    <TableCell>{user._id}</TableCell>
+                                </Link>
                                 <TableCell>{user.name}</TableCell>
                                 <TableCell>{user.username}</TableCell>
                                 <TableCell>{user.email}</TableCell>

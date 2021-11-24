@@ -11,8 +11,10 @@ import './App.css'
 import FirstPage from "./pages/FirstPage";
 import Checkout from "./pages/checkout/checkout";
 import EditUser from "./pages/Edituser";
+import Error from "./Error";
 import DeleteUser from "./pages/Deleteuser";
 import UserProfile from "./pages/UserProfile";
+import Stocks from "./pages/Stocks";
 function App() {
 
 
@@ -38,12 +40,17 @@ function App() {
           <Route exact path="/signin" element={<Phone />}>
           </Route>
           <Route exact path="/edit/:id" element={<EditUser />}>
-          </Route><Route exact path="/delete/:id" element={<DeleteUser />}>
+          </Route>
+          <Route exact path="/delete/:id" element={<DeleteUser />}>
+          </Route>
+          <Route exact path="/admin/settings" element={<Error />}>
           </Route>
 
-          <Route exact path="/user/profile" element={<UserProfile />}>
+          <Route exact path="/user/profile/:id" element={<UserProfile />}>
           </Route>
           <Route exact path="/admin/users" element={<Admin />}>
+          </Route>
+          <Route exact path="/admin/stocks" element={<Stocks />}>
           </Route>
         </Routes>
 
