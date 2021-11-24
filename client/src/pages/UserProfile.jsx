@@ -2,7 +2,7 @@ import React from 'react'
 
 const UserProfile = () => {
     return (
-        <div>
+        <div style={{ color: "black" }}>
             user profile
         </div>
     )
