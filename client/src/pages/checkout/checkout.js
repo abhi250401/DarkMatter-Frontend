@@ -20,8 +20,8 @@ function Copyright() {
     return (
         <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Darkmatter
+            <Link color="inherit" href="/">
+                DarkMatter
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -29,7 +29,7 @@ function Copyright() {
     );
 }
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Profile', 'KYC', 'Select Plan'];
 
 function getStepContent(step) {
     switch (step) {
@@ -78,7 +78,7 @@ export default function Checkout() {
             <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
                 <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     <Typography component="h1" variant="h4" align="center">
-                        Checkout
+                        Sign Up
                     </Typography>
                     <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
                         {steps.map((label) => (
