@@ -56,7 +56,7 @@ export default function SignIn() {
         if (data.user) {
             localStorage.setItem('token', data.user)
             alert('Login successful')
-            window.location.href = '/dashboard'
+            window.location.href = '/home'
         } else {
             alert('Please check your username and password')
         }

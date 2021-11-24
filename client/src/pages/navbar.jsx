@@ -100,8 +100,10 @@ export default function PrimarySearchAppBar() {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-            <MenuItem onClick={handleMenuClose}> <Link to="/admin/users"> Admin </Link></MenuItem>
+            <MenuItem onClick={handleMenuClose}>Change Password</MenuItem>
+            <MenuItem onClick={handleMenuClose}> <Link to="/user/profile"> Users</Link></MenuItem>
+            <MenuItem onClick={handleMenuClose}> <Link to="/admin/stocks"> Stocks</Link></MenuItem>
+            <MenuItem onClick={handleMenuClose}> <Link to="/admin/settings"> Settings</Link></MenuItem>
         </Menu>
     );
 
@@ -152,7 +154,7 @@ export default function PrimarySearchAppBar() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" style={{ backgroundColor: "black", justifyContent: "space-between", display: "flex" }}>
+            <AppBar position="static" style={{ backgroundColor: "#f5f5f5", justifyContent: "space-between", display: "flex", color: "black" }}>
                 <Toolbar style={{ display: "flex", justifyContent: "flex-end", marginLeft: "1%" }}>
 
                     <Typography style={{ marginLeft: "%" }}
@@ -161,7 +163,7 @@ export default function PrimarySearchAppBar() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        Dark matter
+                        DarkMatter
                     </Typography>
                     <div style={{ marginLeft: "5%" }}><Search style={{}}>
                         <SearchIconWrapper>

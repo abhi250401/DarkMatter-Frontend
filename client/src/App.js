@@ -12,6 +12,7 @@ import FirstPage from "./pages/FirstPage";
 import Checkout from "./pages/checkout/checkout";
 import EditUser from "./pages/Edituser";
 import DeleteUser from "./pages/Deleteuser";
+import UserProfile from "./pages/UserProfile";
 function App() {
 
 
@@ -21,7 +22,7 @@ function App() {
 
         <Routes>
 
-          <Route exact path="/dashboard" element={<Home />}>
+          <Route exact path="/home" element={<Home />}>
           </Route>
           <Route exact path="/" element={<FirstPage />}>
           </Route>
@@ -38,6 +39,9 @@ function App() {
           </Route>
           <Route exact path="/edit/:id" element={<EditUser />}>
           </Route><Route exact path="/delete/:id" element={<DeleteUser />}>
+          </Route>
+
+          <Route exact path="/user/profile" element={<UserProfile />}>
           </Route>
           <Route exact path="/admin/users" element={<Admin />}>
           </Route>

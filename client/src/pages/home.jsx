@@ -45,7 +45,7 @@ export default function Home() {
                 TICKER COMES HERE....
             </div>
             <Navbar />
-            <div style={{ backgroundColor: "#C9F7F2", fontSize: "3rem", color: "black", display: "grid", justifyContent: "center", alignContent: "center", height: "83.5vh" }}> Dashboard </div>
+            <div style={{ fontSize: "3rem", color: "black", display: "grid", justifyContent: "center", alignContent: "center", height: "83.5vh" }}> Dashboard </div>
 
         </div >
     )
