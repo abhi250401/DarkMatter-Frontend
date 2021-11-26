@@ -30,8 +30,6 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     console.log(email);
@@ -40,7 +38,7 @@ export default function SignIn() {
     async function loginUser(event) {
         event.preventDefault()
 
-        const response = await fetch('http://localhost:3000/api/user/login', {
+        const response = await fetch( 'http://localhost:3000/api/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -53,18 +51,16 @@ export default function SignIn() {
         })
 
         const data = await response.json()
-        console.log(data);
+        // console.log(data);
 
         if (data.user) {
-            localStorage.setItem('token', data.user)
+            sessionStorage.setItem('token', data.user)
 
             window.location.href = '/home'
         } else {
             alert('Please check your username and password')
         }
     }
-
-
 
     return (
         <ThemeProvider theme={theme}>
@@ -112,19 +108,17 @@ export default function SignIn() {
                                 value={password}
                                 onChange={(e) => { setPassword(e.target.value) }}
                                 id="password"
-
+                                maxLength="255"
                             />
 
                             <Button
                                 type="submit"
                                 fullWidth
-
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 Log In
                             </Button>
-
                         </Box>
                     </Box>
                     <Copyright sx={{ mt: 8, mb: 4 }} />

@@ -1,20 +1,24 @@
 // import loadable from 'react-loadable';
 
-import Login from './pages/Newlogin';
-import Register from './pages/Newregister';
+//	Public pages
+import Error from "./pages/error";
+import FirstPage from "./pages/index";
+import Register from './pages/login';
+import Login from './pages/loginWithPassword';
+import Phone from "./pages/loginValidate";
+import Checkout from "./pages/Signup/userBasic";
+import A from "./pages/signup"
+
+//	User pages
 import Navbar from './pages/navbar';
 import Home from './pages/home';
-import Admin from './pages/Admin';
-import Phone from "./pages/phone";
-import A from "./pages/a"
-import FirstPage from "./pages/FirstPage";
-import Checkout from "./pages/Signup/checkout";
-import EditUser from "./pages/Edituser";
-import Error from "./Error";
-import DeleteUser from "./pages/Deleteuser";
-import UserProfile from "./pages/UserProfile";
-import Stocks from "./pages/Stocks";
-import Multistep from "./pages/Multistep";
+import EditUser from "./pages/userEdit";
+import DeleteUser from "./pages/userDelete";
+import UserProfile from "./pages/userProfile";
+
+//	Admin pages
+import Admin from './pages/adminUsers';
+import Stocks from "./pages/adminStocks";
 
 export default [
 	{

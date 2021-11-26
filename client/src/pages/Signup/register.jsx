@@ -56,14 +56,12 @@ export default function SignUp() {
         const data = await response.json()
 
         if (data.status === 'ok') {
-            alert('registration success')
+            console.log('registration success')
             goto('/tracks')
-        }
-        else {
+        }else {
             alert('error email already exists')
         }
     }
-
 
     return (
         <ThemeProvider theme={theme}>

@@ -4,9 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 
-
-
-
 const useStyles = makeStyles({
     container: {
         width: '50%',
@@ -17,7 +14,7 @@ const useStyles = makeStyles({
     }
 })
 
-const EditUser = () => {
+const DeleteUser = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
@@ -42,26 +39,19 @@ const EditUser = () => {
     const [email, setEmail] = useState('');
 
 
-    const editUserDetails = async () => {
+    const deleteUserDetails = async () => {
         const response = await fetch(`http://localhost:3000/user/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name,
-                email,
-            }),
+            method: 'DELETE',
+
         })
 
         const data = await response.json()
-        if (data.acknowledged == true) {
-            alert('successfull')
-            history('/admin2'); console.log(data);
-        }
-        else
+        if (data) {
+            // console.log('successfull')
+            history('/admin/users'); console.log(data);
+        }else {
             alert('error');
-
+        }
     }
 
     if (!loading)
@@ -70,7 +60,7 @@ const EditUser = () => {
 
     return (
         <FormGroup className={classes.container}>
-            <Typography variant="h4">Edit Information</Typography>
+            <Typography variant="h4">DELETE User</Typography>
             <FormControl>
                 <InputLabel htmlFor="my-input">Name</InputLabel>
                 <Input onChange={(e) => setName(e.target.value)} name="name" type="name" id="name" value={name} id="my-input" aria-describedby="my-helper-text" />
@@ -82,10 +72,10 @@ const EditUser = () => {
             </FormControl>
 
             <FormControl>
-                <Button variant="contained" color="primary" onClick={() => editUserDetails()}>Edit User</Button>
+                <Button variant="contained" color="primary" onClick={() => deleteUserDetails()}>Delete User</Button>
             </FormControl>
         </FormGroup>
     )
 }
 
-export default EditUser;
+export default DeleteUser;

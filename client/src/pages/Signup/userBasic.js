@@ -8,21 +8,17 @@ import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
-
-
 import Button from '@mui/material/Button';
-
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 const theme = createTheme();
 export const Names = ({ formData, setForm, navigation, step }) => {
     const { firstName, phone, email, password } = formData;
     return (
-
-
         <Container maxWidth="xs">
             <TextField
-                label="Phone number"
+                label="Mobile Number"
                 name="phone"
                 value={phone}
                 margin="normal"
@@ -64,12 +60,6 @@ export const Names = ({ formData, setForm, navigation, step }) => {
                 autoComplete="off"
                 fullWidth
             />
-
-
-
         </Container>
-
-
-
     );
 };

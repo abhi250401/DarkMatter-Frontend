@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, useRoutes, Link, Routes, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 
 import './App.css'
 import config from "./config.json";

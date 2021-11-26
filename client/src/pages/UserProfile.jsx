@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 import Navbar from './navbar'
 
-
-
 const useStyles = makeStyles({
     container: {
         width: '50%',
@@ -63,8 +61,8 @@ const EditUser = () => {
 
         const data = await response.json()
         if (data.acknowledged == true) {
-            alert('successfull')
-            history('/admin2'); console.log(data);
+            // alert('successfull')
+            history('/admin/users'); console.log(data);
         }
         else
             alert('error');

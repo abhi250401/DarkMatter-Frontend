@@ -15,12 +15,14 @@ import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import { Link as LINK } from 'react-router-dom';
+
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Dark Matter            </Link>{' '}
+            <Link color="inherit" href="/">
+                DarkMatter
+            </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>

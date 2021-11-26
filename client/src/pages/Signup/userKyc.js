@@ -1,7 +1,5 @@
 import React from "react";
-
 import TextField from "@material-ui/core/TextField";
-
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Stepper from '@mui/material/Stepper';
@@ -10,31 +8,23 @@ import StepLabel from '@mui/material/StepLabel';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
-
 import Stack from '@mui/material/Stack';
-
 import Button from '@mui/material/Button';
-
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 const theme = createTheme();
 export const Address = ({ formData, setForm, navigation, steps }) => {
     const { aadhar, pan, dob } = formData;
     const [activeStep, setActiveStep] = React.useState(0);
-    const stepss = ['Shipping address', 'Payment details', 'Review your order'];
+    // const stepss = ['Shipping address', 'Payment details', 'Review your order'];
 
     console.log(steps);
     return (
-
-
-
-
-
-
         <Container maxWidth="xs">
 
             <TextField
-                label="Aadhar card"
+                label="Aadhaar Card"
                 name="aadhar"
                 value={aadhar}
                 onChange={setForm}
@@ -54,7 +44,6 @@ export const Address = ({ formData, setForm, navigation, steps }) => {
                 fullWidth
             />
             <Stack component="form" noValidate spacing={3}>
-
                 <TextField
                     label="Date of Birth"
                     name="dob"
@@ -65,8 +54,6 @@ export const Address = ({ formData, setForm, navigation, steps }) => {
                     variant="outlined"
                     autoComplete="off"
                     fullWidth
-
-
                     defaultValue=""
                     sx={{ width: 220 }}
                     InputLabelProps={{
@@ -74,11 +61,6 @@ export const Address = ({ formData, setForm, navigation, steps }) => {
                     }}
                 />
             </Stack>
-
-
         </Container>
-
-
-
     );
 };

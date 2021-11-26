@@ -1,21 +1,27 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
+import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Container from '@mui/material/Container';
+import Toolbar from '@mui/material/Toolbar';
+import Paper from '@mui/material/Paper';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Button from '@mui/material/Button';
+import { Grid } from '@mui/material';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function Copyright(props) {
+import React from "react";
+import { useForm, useStep } from "react-hooks-helper";
+import { Names } from "./Signup/userBasic";
+import { Address } from "./Signup/userKyc";
+// import { Contact } from "./Signup/PaymentForm";
+import { Review } from "./Signup/userPlan";
+import { Submit } from "./Signup/userResponse.jsx";
 
+function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
@@ -29,15 +35,62 @@ function Copyright(props) {
 }
 
 const theme = createTheme();
+const phone = localStorage.getItem("phone_number");
+const defaultData = {
+    firstName: "",
 
-export default function SignInSide({ loginSubmit, otpSubmit, viewOtpForm, phoneNumber }) {
-    const [state, setstate] = useState('');
+    plan1: "plan1",
+    plan2: "plan2",
+    plan3: "plan3",
 
+
+    pan: "",
+    aadhar: "",
+    dob: "",
+    password: "",
+    city: "",
+    state: "",
+    zip: "",
+    phone,
+    email: "",
+};
+export default function Checkout() {
+    const [formData, setForm] = useForm(defaultData);
+    const [activeStep, setActiveStep] = React.useState(0);
+
+    const steps = ['Profile', 'Kyc', 'Select Plan'];
+    const { steep, navigation } = useStep({
+        steps,
+        initialStep: 0,
+    });
+    function getStepContent(steps) {
+
+        const props = { formData, setForm, navigation, steep };
+        switch (steps) {
+            case 0:
+                return <Names {...props} />;
+            case 1:
+                return <Address {...props} />;
+
+            case 2:
+                return <Review {...props} />;
+            case 3:
+                return <Submit {...props} />;
+        }
+    }
+    const handleNext = () => {
+        setActiveStep(activeStep + 1);
+    };
+
+    const handleBack = () => {
+        setActiveStep(activeStep - 1);
+    };
 
     return (
         <ThemeProvider theme={theme}>
+            <CssBaseline />
             <Grid container component="main" sx={{ height: '100vh' }}>
-                <CssBaseline />
+
                 <Grid
                     item
                     xs={false}
@@ -52,79 +105,57 @@ export default function SignInSide({ loginSubmit, otpSubmit, viewOtpForm, phoneN
                         backgroundPosition: 'center',
                     }}
                 />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                    <Box
-                        sx={{
-                            my: 8,
-                            mx: 4,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Sign in
+                <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+                    <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+                        <Typography component="h1" variant="h4" align="center">
+                            Sign-up
                         </Typography>
-
-                        {!viewOtpForm ? (<Box component="form" Validate onSubmit={loginSubmit} sx={{ mt: 1 }}>
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="mobile"
-                                maxLength="10"
-                                minLength="10"
-                                label="Mobile Number"
-                                name="phone"
-                                autoComplete="phone number"
-                                autoFocus
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                Next
-                            </Button>
-
-                        </Box>
-                        ) : (
-                            <Box component="form" noValidate onSubmit={otpSubmit} sx={{ mt: 1 }}>
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    required
-                                    maxLength="6"
-                                    minLength="6"
-                                    value={state}
-                                    id="mobile"
-                                    onChange={(e) => { setstate(e.target.value) }}
-                                    label="OTP"
-                                    name="otp_value"
-                                    autoComplete="phone number"
-                                    autoFocus
-                                /> <Button
-                                    type="submit"
-                                    fullWidth
-
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                >
-                                    Verify Otp
-                                </Button>
-                            </Box>)}
+                        <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                        <React.Fragment>
+                            {activeStep === steps.length ? (
+                                <React.Fragment>
+                                    <Typography variant="h5" gutterBottom>
+                                        Thank you for your order.
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        Your order number is #2001539. We have emailed your order
+                                        confirmation, and will send you an update when your order has
+                                        shipped.
+                                    </Typography>
+                                </React.Fragment>
+                            ) : (
+                                <React.Fragment>
+                                    {getStepContent(activeStep)}
+                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                        {activeStep !== 0 && activeStep !== steps.length && (
+                                            <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                                                Back
+                                            </Button>
+                                        )}
+                                        {activeStep !== steps.length - 1 && (
 
 
-
-                    </Box>
-                </Grid>
+                                            < Button
+                                                variant="contained"
+                                                onClick={handleNext}
+                                                sx={{ mt: 3, ml: 1 }}
+                                            >
+                                                Next
+                                            </Button>)}
+                                    </Box>
+                                </React.Fragment>
+                            )}
+                        </React.Fragment>
+                    </Paper>
+                    <Copyright />
+                </Container>
             </Grid>
-        </ThemeProvider>
+        </ThemeProvider >
     );
 }

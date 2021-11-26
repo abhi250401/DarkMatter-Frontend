@@ -1,10 +1,10 @@
 import React from "react";
 import { useForm, useStep } from "react-hooks-helper";
-import { Names } from "./Signup/checkout";
-import { Address } from "./Signup/AddressForm";
-import { Contact } from "./Signup/PaymentForm";
-import { Review } from "./Signup/Review";
-import { Submit } from "./Signup/Submit.jsx";
+import { Names } from "./Signup/userBasic";
+import { Address } from "./Signup/userKyc";
+// import { Contact } from "./Signup/PaymentForm";
+import { Review } from "./Signup/userPlan";
+import { Submit } from "./Signup/userResponse.jsx";
 
 const defaultData = {
     firstName: "",
@@ -22,7 +22,7 @@ const defaultData = {
 const steps = [
     { id: "names" },
     { id: "address" },
-    { id: "contact" },
+    // { id: "contact" },
     { id: "review" },
     { id: "submit" },
 ];
@@ -41,8 +41,8 @@ export default function Multistep() {
             return <Names {...props} />;
         case "address":
             return <Address {...props} />;
-        case "contact":
-            return <Contact {...props} />;
+        // case "contact":
+        //     return <Contact {...props} />;
         case "review":
             return <Review {...props} />;
         case "submit":
