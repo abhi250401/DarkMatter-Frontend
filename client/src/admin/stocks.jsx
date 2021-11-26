@@ -1,5 +1,5 @@
 import * as React from "react";
-import Navbar from "./navbar";
+import Navbar from "../pages/navbar";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -209,7 +209,7 @@ export default function EnhancedTable() {
 
     const [users, setData] = useState(null);
     useEffect(() => {
-        axios.get('http://localhost:3000/api/user/users').then(response => {
+        axios.get( process.env.API_URL + '/admin/stocks' ).then(response => {
             console.log(response.data);
             setData(response.data);
             setLoading(true);

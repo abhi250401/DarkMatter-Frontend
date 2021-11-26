@@ -1,12 +1,10 @@
 import * as React from "react";
-import Navbar from "./navbar";
+import Navbar from "../pages/navbar";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import axios from 'axios';
-
-
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -87,8 +85,6 @@ const headCells = [
         disablePadding: false,
         label: 'Mobile',
     }
-
-
 ];
 
 function EnhancedTableHead(props) {
@@ -223,7 +219,7 @@ export default function EnhancedTable() {
 
     const [users, setData] = useState(null);
     useEffect(() => {
-        axios.get('http://localhost:3000/api/user/users').then(response => {
+        axios.get( process.env.API_URL + '/user/users').then(response => {
             console.log(response.data);
             setData(response.data);
             setLoading(true);
@@ -240,12 +236,8 @@ export default function EnhancedTable() {
                 localStorage.removeItem('token')
                 history('/');
             }
-
         }
-
     }, [])
-
-
 
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("calories");
@@ -345,8 +337,7 @@ export default function EnhancedTable() {
                                 rowCount={users.length}
                             />
                             <TableBody>
-                                {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
+                                {/* if you don't need to support IE11, you can replace the `stableSort` call with: rows.slice().sort(getComparator(order, orderBy)) */}
                                 {stableSort(users, getComparator(order, orderBy))
                                     .filter((val) => {
                                         if (searchTerm === " ")
