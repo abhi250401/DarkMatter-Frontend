@@ -70,7 +70,7 @@ const headCells = [
     {
         id: '_id',
         numeric: false,
-        disablePadding: true,
+        disablePadding: false,
         label: 'User id',
     },
     {
@@ -85,6 +85,19 @@ const headCells = [
         numeric: false,
         disablePadding: false,
         label: 'Name',
+    },
+    {
+        id: 'phone',
+        numeric: true,
+        disablePadding: false,
+        label: 'phone',
+    },
+    {
+        id: 'buttons',
+        numeric: true,
+
+        disablePadding: false,
+        label: 'Modify',
     },
 
 ];
@@ -112,7 +125,7 @@ function EnhancedTableHead(props) {
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
                         inputProps={{
-                            "aria-label": "select all desserts"
+                            "aria-label": "select all "
                         }}
                     />
                 </TableCell>
@@ -227,7 +240,6 @@ export default function EnhancedTable() {
         }).catch(err => {
             console.log(err);
         })
-
         const token = localStorage.getItem('token')
         if (token) {
             const user = jwt.decode(token);
@@ -238,12 +250,11 @@ export default function EnhancedTable() {
                 localStorage.removeItem('token')
                 history('/');
             }
-            else {
 
-            }
         }
 
     }, [])
+
 
 
     const [order, setOrder] = React.useState("asc");
@@ -327,7 +338,7 @@ export default function EnhancedTable() {
                             value={searchTerm}
                             placeholder="SEARCH" />
                         <Table
-                            sx={{ minWidth: 750 }}
+
                             aria-labelledby="tableTitle"
                             size={dense ? "small" : "medium"}
                         >
@@ -374,23 +385,25 @@ export default function EnhancedTable() {
                                                         }}
                                                     />
                                                 </TableCell>
-                                                <Link to={`/user/profile/${user._id}`} > <TableCell
+                                                <TableCell
                                                     component="th"
                                                     id={labelId}
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {user._id}
+                                                    <Link to={`/user/profile/${user._id}`} >   {user._id} </Link>
                                                 </TableCell>
-                                                </Link>
+
 
 
 
                                                 <TableCell>{user.email}</TableCell>
                                                 <TableCell>{user.name}</TableCell>
-                                                <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/${user._id}`}>Edit</Button>
-                                                <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/${user._id}`}>Delete</Button>
-
+                                                <TableCell >{user.phone}</TableCell>
+                                                <TableCell>
+                                                    <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/${user._id}`}>Edit</Button>
+                                                    <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/${user._id}`}>Delete</Button>
+                                                </TableCell>
                                             </TableRow>
                                         );
                                     })}

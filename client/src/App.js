@@ -8,6 +8,7 @@ import Home from './pages/home';
 import Admin from './pages/Admin';
 import Phone from "./pages/phone";
 import './App.css'
+import A from "./pages/a"
 import FirstPage from "./pages/FirstPage";
 import Checkout from "./pages/checkout/checkout";
 import EditUser from "./pages/Edituser";
@@ -15,6 +16,7 @@ import Error from "./Error";
 import DeleteUser from "./pages/Deleteuser";
 import UserProfile from "./pages/UserProfile";
 import Stocks from "./pages/Stocks";
+import Multistep from "./pages/Multistep";
 function App() {
 
 
@@ -28,7 +30,7 @@ function App() {
           </Route>
           <Route exact path="/" element={<FirstPage />}>
           </Route>
-          <Route exact path="/signup" element={<Checkout />}>
+          <Route exact path="/signup" element={<A />}>
           </Route>
 
           <Route exact path="/login" element={<Login />}>

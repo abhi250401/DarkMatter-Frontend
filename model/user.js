@@ -20,7 +20,24 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    role: {
+        type: Number,
+        required: false,
+    },
+    aadhar: {
+        type: Number,
+        required: false,
+    },
+    pan: {
+        type: String,
+        required: false,
+    },
+    dob: {
+        type: Date,
+        required: false,
+    },
+
 
 
 

@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 router.post('/register', async (req, res) => {
 
     const emailexist = await User.findOne({
-        email: req.body.email
+        email: req.body.formData.email
     }).catch(error => { console.log(error) });
     if (emailexist) res.json({ status: 'error', error: 'Duplicate email' })
 
@@ -19,14 +19,19 @@ router.post('/register', async (req, res) => {
 
     //hashing the password
     const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(req.body.password, salt);
+    const hashPassword = await bcrypt.hash(req.body.formData.password, salt);
 
     try {
         const user = new User({
-            name: req.body.name,
-            email: req.body.email,
-            phone: req.body.phone,
+            name: req.body.formData.firstName,
+            email: req.body.formData.email,
+            phone: req.body.formData.phone,
+            aadhar: req.body.formData.aadhar,
+            pan: req.body.formData.pan,
+            dob: req.body.formData.dob,
+
             role: 3,
+
             status: 0,
             password: hashPassword
         });
@@ -66,6 +71,23 @@ router.post('/login', async (req, res) => {
 
 
 })
+
+router.post('/phoneauth', async (req, res) => {
+    const user = await User.findOne({
+        phone: req.body.phone_number
+    }).catch(error => {
+        console.log(error)
+    });
+    if (user)
+        return res.json({ status: "ok" })
+
+    if (!user) {
+        return res.json({ status: "invalid" })
+    }
+
+})
+
+
 router.get('/users', async (req, res) => {
 
     await User.find().then((data) => {

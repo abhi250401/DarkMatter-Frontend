@@ -34,6 +34,7 @@ app.put('/user/:id', function (req, res) {
     })
 })
 
+
 app.get('/userone/:id', (req, res) => {
     User.findById(req.params.id).then((data) => {
         res.json(data);

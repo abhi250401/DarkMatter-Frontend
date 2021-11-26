@@ -1,65 +1,52 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import React from "react";
 
-export default function PaymentForm() {
+import TextField from "@material-ui/core/TextField";
+
+import CssBaseline from '@mui/material/CssBaseline';
+import AppBar from '@mui/material/AppBar';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Container from '@mui/material/Container';
+import Toolbar from '@mui/material/Toolbar';
+import Paper from '@mui/material/Paper';
+
+
+import Button from '@mui/material/Button';
+
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+const theme = createTheme();
+export const Contact = ({ formData, setForm, navigation, steps }) => {
+    const { phone, email } = formData;
+    const [activeStep, setActiveStep] = React.useState(0);
     return (
-        <React.Fragment>
-            <Typography variant="h6" gutterBottom>
-                Payment method
-            </Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        required
-                        id="cardName"
-                        label="Name on card"
-                        fullWidth
-                        autoComplete="cc-name"
-                        variant="standard"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        required
-                        id="cardNumber"
-                        label="Card number"
-                        fullWidth
-                        autoComplete="cc-number"
-                        variant="standard"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        required
-                        id="expDate"
-                        label="Expiry date"
-                        fullWidth
-                        autoComplete="cc-exp"
-                        variant="standard"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        required
-                        id="cvv"
-                        label="CVV"
-                        helperText="Last three digits on signature strip"
-                        fullWidth
-                        autoComplete="cc-csc"
-                        variant="standard"
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <FormControlLabel
-                        control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-                        label="Remember credit card details for next time"
-                    />
-                </Grid>
-            </Grid>
-        </React.Fragment>
+
+
+        <Container maxWidth="xs">
+
+            <TextField
+                label="Phone"
+                name="phone"
+                value={phone}
+                onChange={setForm}
+                margin="normal"
+                variant="outlined"
+                autoComplete="off"
+                fullWidth
+            />
+            <TextField
+                label="E-Mail"
+                name="email"
+                value={email}
+                onChange={setForm}
+                margin="normal"
+                variant="outlined"
+                autoComplete="off"
+                fullWidth
+            />
+
+        </Container>
+
     );
-}
+};

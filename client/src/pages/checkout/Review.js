@@ -1,65 +1,99 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import React from "react";
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetail from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-export default function PaymentForm() {
+import ListItemText from '@material-ui/core/ListItemText'
+
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+
+export const Review = ({ formData, navigation }) => {
+    const { go } = navigation;
+    const {
+        firstName,
+        aadhar,
+        dob,
+        pan,
+        phone,
+        email,
+    } = formData;
+    async function registerUser(event) {
+        event.preventDefault()
+
+        const response = await fetch('http://localhost:3000/api/user/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                formData
+            }),
+        })
+
+        const data = await response.json()
+
+        if (data.status === 'ok') {
+            alert('registration success')
+
+        }
+        else {
+            alert('error email already exists')
+        }
+    }
+
+
     return (
-        <React.Fragment>
-            <Typography variant="h6" gutterBottom>
-                Select Plan
-            </Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        required
-                        id="cardName"
-                        label="Name on card"
-                        fullWidth
-                        autoComplete="cc-name"
-                        variant="standard"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        required
-                        id="cardNumber"
-                        label="Card number"
-                        fullWidth
-                        autoComplete="cc-number"
-                        variant="standard"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        required
-                        id="expDate"
-                        label="Expiry date"
-                        fullWidth
-                        autoComplete="cc-exp"
-                        variant="standard"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        required
-                        id="cvv"
-                        label="CVV"
-                        helperText="Last three digits on signature strip"
-                        fullWidth
-                        autoComplete="cc-csc"
-                        variant="standard"
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <FormControlLabel
-                        control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-                        label="Remember credit card details for next time"
-                    />
-                </Grid>
-            </Grid>
-        </React.Fragment>
+        <Container maxWidth='sm'>
+            <h3>Review</h3>
+            <RenderAccordion summary="Profile" go={go} details={[
+                { 'Name': firstName },
+                { 'Email': email },
+                { 'Phone': phone },
+            ]} />
+            <RenderAccordion summary="Kyc" go={go} details={[
+                { 'Adhaar': aadhar },
+                { 'dob': dob },
+                { 'PAN Card': pan },
+
+            ]} />
+            {/* <RenderAccordion summary="" go={go} details={[
+                { 'Phone': phone },
+                { 'Email': email },
+                { 'Password': password }
+            ]} /> */}
+            <Button
+                color="primary"
+                variant="contained"
+                style={{ marginTop: '1.5rem' }}
+                onClick={registerUser}
+            >
+                Submit
+            </Button>
+
+        </Container >
     );
-}
+};
+
+export const RenderAccordion = ({ summary, details, go }) => (
+    <Accordion>
+        <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+        >{summary}</AccordionSummary>
+        <AccordionDetail>
+            <div>
+                {details.map((data, index) => {
+                    const objKey = Object.keys(data)[0];
+                    const objValue = data[Object.keys(data)[0]];
+
+                    return <ListItemText key={index}>{`${objKey}: ${objValue}`}</ListItemText>
+
+                })}
+
+            </div>
+        </AccordionDetail>
+    </Accordion>
+)

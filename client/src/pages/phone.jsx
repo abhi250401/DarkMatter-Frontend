@@ -4,7 +4,7 @@ import "./phone.css";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 // react router
 
 //components
@@ -92,11 +92,16 @@ const Phone = () => {
                 phone_number = confirmationResult.user.phoneNumber;
                 console.log(phone_number);
                 localStorage.setItem("phone_number", phone_number);
-                if (phone_number === "+919999987060")
-                    goto('/login')
-                else
-                    goto('/signup');
-
+                axios.post('http://localhost:3000/api/user/phoneauth',
+                    phone_number).then(response => {
+                        console.log(response)
+                        if (response.data.status === "ok")
+                            goto('/login');
+                        else
+                            goto('/signup')
+                    }).catch(err => {
+                        console.log(err);
+                    })
 
             })
             .catch((error) => {
