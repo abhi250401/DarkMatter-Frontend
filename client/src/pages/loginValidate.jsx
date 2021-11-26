@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
-// import "./phone.css";
-
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// react router
-
-//components
-import Signup from "./";
+import Signup from "./login";
 
 const Phone = () => {
     let phone_number;
@@ -82,16 +77,16 @@ const Phone = () => {
                 phone_number = confirmationResult.user.phoneNumber;
 
                 localStorage.setItem("phone_number", phone_number);
-                axios.post(process.env.API_URL + '/user/phoneauth', phone_number)
-                    .then(response => {
-                        // console.log(response)
-                        if (response.data.status === "ok")
-                            goto('/login');
-                        else
-                            goto('/signup')
-                    }).catch(err => {
-                        console.log(err);
-                    })
+                axios.post( process.env.API_URL + '/user/phoneauth', phone_number)
+                .then(response => {
+                    // console.log(response)
+                    if (response.data.status === "ok")
+                        goto('/login');
+                    else
+                        goto('/signup')
+                }).catch(err => {
+                    console.log(err);
+                })
             })
             .catch((error) => {
 
@@ -101,15 +96,15 @@ const Phone = () => {
 
     const signOut = () => {
         firebase
-            .auth()
-            .signOut()
-            .then(() => {
-                window.open("/signin", "_self");
-            })
-            .catch((error) => {
-                // An error happened.
-                console.log(error);
-            });
+        .auth()
+        .signOut()
+        .then(() => {
+            window.open("/signin", "_self");
+        })
+        .catch((error) => {
+            // An error happened.
+            console.log(error);
+        });
     };
 
     return (

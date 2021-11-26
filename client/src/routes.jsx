@@ -17,8 +17,8 @@ import DeleteUser from "./pages/userDelete";
 import UserProfile from "./pages/userProfile";
 
 //	Admin pages
-import Admin from './pages/adminUsers';
-import Stocks from "./pages/adminStocks";
+import Admin from './admin/users';
+import Stocks from "./admin/stocks";
 
 export default [
 	{

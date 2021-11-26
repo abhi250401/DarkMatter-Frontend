@@ -38,7 +38,7 @@ export default function SignIn() {
     async function loginUser(event) {
         event.preventDefault()
 
-        const response = await fetch( 'http://localhost:3000/api/user/login', {
+        const response = await fetch( process.env.API_URL + '/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
