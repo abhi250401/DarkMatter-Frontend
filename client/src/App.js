@@ -1,64 +1,25 @@
 import React from "react";
-import { BrowserRouter, Link, Switch } from "react-router-dom";
-import { Routes, Route } from 'react-router-dom';
-import Login from './pages/Newlogin';
-import Register from './pages/Newregister';
-import Navbar from './pages/navbar';
-import Home from './pages/home';
-import Admin from './pages/Admin';
-import Phone from "./pages/phone";
+import { BrowserRouter, useRoutes, Link, Routes, Route, Switch } from "react-router-dom";
+
 import './App.css'
-import A from "./pages/a"
-import FirstPage from "./pages/FirstPage";
-import Checkout from "./pages/checkout/checkout";
-import EditUser from "./pages/Edituser";
-import Error from "./Error";
-import DeleteUser from "./pages/Deleteuser";
-import UserProfile from "./pages/UserProfile";
-import Stocks from "./pages/Stocks";
-import Multistep from "./pages/Multistep";
+import config from "./config.json";
+import routes from "./routes";
+
 function App() {
-
-
-  return (
-    <BrowserRouter>
-      <div>
-
-        <Routes>
-
-          <Route exact path="/home" element={<Home />}>
-          </Route>
-          <Route exact path="/" element={<FirstPage />}>
-          </Route>
-          <Route exact path="/signup" element={<A />}>
-          </Route>
-
-          <Route exact path="/login" element={<Login />}>
-          </Route>
-
-          <Route exact path="/phone" element={<Phone />}>
-          </Route>
-          <Route exact path="/signin" element={<Phone />}>
-          </Route>
-          <Route exact path="/edit/:id" element={<EditUser />}>
-          </Route>
-          <Route exact path="/delete/:id" element={<DeleteUser />}>
-          </Route>
-          <Route exact path="/admin/settings" element={<Error />}>
-          </Route>
-
-          <Route exact path="/user/profile/:id" element={<UserProfile />}>
-          </Route>
-          <Route exact path="/admin/users" element={<Admin />}>
-          </Route>
-          <Route exact path="/admin/stocks" element={<Stocks />}>
-          </Route>
-        </Routes>
-
-
-
-      </div ></BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                {routes.map((route, i) =>
+                <Route
+                  key={i}
+                  path={route.path}
+                  exact={route.exact}
+                  element={route.element}
+                />
+                )}
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
