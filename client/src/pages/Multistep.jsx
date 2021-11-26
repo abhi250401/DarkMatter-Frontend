@@ -1,10 +1,10 @@
 import React from "react";
 import { useForm, useStep } from "react-hooks-helper";
-import { Names } from "./checkout/checkout";
-import { Address } from "./checkout/AddressForm";
-import { Contact } from "./checkout/PaymentForm";
-import { Review } from "./checkout/Review";
-import { Submit } from "./checkout/Submit.jsx";
+import { Names } from "./Signup/checkout";
+import { Address } from "./Signup/AddressForm";
+import { Contact } from "./Signup/PaymentForm";
+import { Review } from "./Signup/Review";
+import { Submit } from "./Signup/Submit.jsx";
 
 const defaultData = {
     firstName: "",

@@ -21,13 +21,33 @@ export const Names = ({ formData, setForm, navigation, step }) => {
 
 
         <Container maxWidth="xs">
-
+            <TextField
+                label="Phone number"
+                name="phone"
+                value={phone}
+                margin="normal"
+                disabled
+                variant="outlined"
+                autoComplete="off"
+                fullWidth
+            />
             <TextField
                 label="Name"
                 name="firstName"
                 value={firstName}
                 onChange={setForm}
                 type="name"
+                margin="normal"
+                variant="outlined"
+                autoComplete="off"
+                fullWidth
+            />
+            <TextField
+                label="Email"
+                name="email"
+                value={email}
+                type="email"
+                onChange={setForm}
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
@@ -44,27 +64,8 @@ export const Names = ({ formData, setForm, navigation, step }) => {
                 autoComplete="off"
                 fullWidth
             />
-            <TextField
-                label="Phone number"
-                name="phone"
-                value={phone}
-                margin="normal"
-                disabled
-                variant="outlined"
-                autoComplete="off"
-                fullWidth
-            />
-            <TextField
-                label="Email"
-                name="email"
-                value={email}
-                type="email"
-                onChange={setForm}
-                margin="normal"
-                variant="outlined"
-                autoComplete="off"
-                fullWidth
-            />
+
+
 
         </Container>
 

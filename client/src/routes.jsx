@@ -8,7 +8,7 @@ import Admin from './pages/Admin';
 import Phone from "./pages/phone";
 import A from "./pages/a"
 import FirstPage from "./pages/FirstPage";
-import Checkout from "./pages/checkout/checkout";
+import Checkout from "./pages/Signup/checkout";
 import EditUser from "./pages/Edituser";
 import Error from "./Error";
 import DeleteUser from "./pages/Deleteuser";
