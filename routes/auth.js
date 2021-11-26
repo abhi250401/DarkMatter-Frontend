@@ -88,7 +88,7 @@ router.post('/phoneauth', async (req, res) => {
         return res.json({ status: "not ok" })
     }
     else
-        return res.json({ status: "oo" });
+        return res.json({ status: "ok" });
 
 })
 
