@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 
 import './App.css'
-import config from "./config.json";
+
 import routes from "./routes";
 
 function App() {
@@ -10,12 +10,12 @@ function App() {
         <BrowserRouter>
             <Routes>
                 {routes.map((route, i) =>
-                <Route
-                  key={i}
-                  path={route.path}
-                  exact={route.exact}
-                  element={route.element}
-                />
+                    <Route
+                        key={i}
+                        path={route.path}
+                        exact={route.exact}
+                        element={route.element}
+                    />
                 )}
             </Routes>
         </BrowserRouter>

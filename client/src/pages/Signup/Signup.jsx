@@ -15,11 +15,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import React from "react";
 import { useForm, useStep } from "react-hooks-helper";
-import { Names } from "./Signup/userBasic";
-import { Address } from "./Signup/userKyc";
+import { Names } from "./userBasic";
+import { Address } from "./userKyc";
 // import { Contact } from "./Signup/PaymentForm";
-import { Review } from "./Signup/userPlan";
-import { Submit } from "./Signup/userResponse.jsx";
+import { Review } from "./userPlan";
+import { Submit } from "./userResponse.jsx";
 
 function Copyright(props) {
     return (

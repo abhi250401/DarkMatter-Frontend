@@ -58,7 +58,7 @@ export default function SignUp() {
         if (data.status === 'ok') {
             console.log('registration success')
             goto('/tracks')
-        }else {
+        } else {
             alert('error email already exists')
         }
     }

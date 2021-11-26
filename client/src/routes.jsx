@@ -7,7 +7,7 @@ import Register from './pages/login';
 import Login from './pages/loginWithPassword';
 import Phone from "./pages/loginValidate";
 import Checkout from "./pages/Signup/userBasic";
-import A from "./pages/signup"
+import A from "./pages/Signup/Signup"
 
 //	User pages
 import Navbar from './pages/navbar';
