@@ -1,0 +1,10 @@
+{
+  "domain": "darkmatter.co.in",
+  "apiUrl": "https://darkmatter.co.in/api",
+  "baseUrl": "https://darkmatter.co.in",
+  "cdnUrl": "https://darkmatter.co.in",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "text/plain"
+  }
+}

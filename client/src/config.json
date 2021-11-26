@@ -1,0 +1,10 @@
+{
+  "domain": "localhost",
+  "apiUrl": "http://localhost:3001/api",
+  "baseUrl": "http://localhost:3000",
+  "cdnUrl": "http://localhost:3000",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "text/plain"
+  }
+}
