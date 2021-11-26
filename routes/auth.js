@@ -47,7 +47,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     const user = await User.findOne({
-        email: req.body.email
+        phone: req.body.phone
     }).catch(error => {
         console.log(error)
     });
@@ -63,7 +63,8 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        phone: user.phone,
 
     },
         "hisdi");
