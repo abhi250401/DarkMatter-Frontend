@@ -49,6 +49,7 @@ router.post('/login', async (req, res) => {
     const user = await User.findOne({
         phone: req.body.phone
     }).catch(error => {
+        return res.json({ status: 'error', error: 'Invalid login' })
         console.log(error)
     });
 
@@ -63,7 +64,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({
         _id: user._id,
         name: user.name,
-        email: user.email,
+
         phone: user.phone,
 
     },
@@ -76,15 +77,18 @@ router.post('/login', async (req, res) => {
 router.post('/phoneauth', async (req, res) => {
     const user = await User.findOne({
         phone: req.body.phone_number
-    }).catch(error => {
-        console.log(error)
-    });
-    if (user)
-        return res.json({ status: "ok" })
+    })
+        .catch(error => {
+            console.log(error)
+            return res.json({ status: "invalid" })
+        });
+
 
     if (!user) {
-        return res.json({ status: "invalid" })
+        return res.json({ status: "not ok" })
     }
+    else
+        return res.json({ status: "oo" });
 
 })
 

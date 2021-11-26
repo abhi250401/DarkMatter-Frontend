@@ -27,6 +27,7 @@ export const Names = ({ formData, setForm, navigation, step }) => {
                 name="firstName"
                 value={firstName}
                 onChange={setForm}
+                type="name"
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
