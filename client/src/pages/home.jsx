@@ -10,7 +10,7 @@ export default function Home() {
     const [data, setdata] = useState(null);
     const [loading, setLoading] = useState(false)
     async function populateHome() {
-        const req = await fetch('http://localhost:3000/api/user/quote', {
+        const req = await fetch( process.env.REACT_APP_API_URL + '/user/quote', {
             headers: {
                 'x-access-token': localStorage.getItem('token'),
             },
@@ -33,10 +33,9 @@ export default function Home() {
                 localStorage.removeItem('token')
                 history('/');
             }
-
         }
-
     }, [])
+
     if (!loading)
         return (
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "black" }}>No access ...
@@ -53,5 +52,3 @@ export default function Home() {
         </div >
     )
 }
-
-

@@ -40,7 +40,7 @@ export default function SignUp() {
     async function registerUser(event) {
         event.preventDefault()
 
-        const response = await fetch( process.env.API_URL + '/user/register', {
+        const response = await fetch( process.env.REACT_APP_API_URL + '/user/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export default function SignUp() {
         const data = await response.json()
 
         if (data.status === 'ok') {
-            console.log('registration success')
+            // console.log('registration success')
             goto('/tracks')
         } else {
             alert('error email already exists')

@@ -23,8 +23,9 @@ const EditUser = () => {
     let history = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/userone/${id}`).then(response => {
-            console.log(response.data);
+        axios.get( process.env.REACT_APP_API_URL + `/user/${id}` )
+        .then(response => {
+            // console.log(response.data);
             setLoading(true);
             setUser(response.data);
             setName(response.data.name);
@@ -33,22 +34,18 @@ const EditUser = () => {
         }).catch(err => {
             console.log(err);
         })
-
     }, []);
     const Token = {
-
         _id: `${id}`
-
-
     };
+
     console.log(Token)
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
 
-
     const editUserDetails = async () => {
-        const response = await fetch(`http://localhost:3000/user/${id}`, {
+        const response = await fetch( process.env.REACT_APP_API_URL + `/user/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -63,15 +60,13 @@ const EditUser = () => {
         if (data.acknowledged == true) {
             // alert('successfull')
             history('/admin/users'); console.log(data);
-        }
-        else
+        }else {
             alert('error');
-
+        }
     }
 
     if (!loading)
         return <h1>loading....</h1>;
-
 
     return (
         <div>

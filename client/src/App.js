@@ -1,11 +1,10 @@
 import React from "react";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
-
-import './App.css'
-
 import routes from "./routes";
+import './App.css';
 
 function App() {
+    console.log(process.env);
     return (
         <BrowserRouter>
             <Routes>

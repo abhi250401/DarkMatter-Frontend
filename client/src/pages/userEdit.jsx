@@ -22,8 +22,9 @@ const EditUser = () => {
     let history = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/userone/${id}`).then(response => {
-            console.log(response.data);
+        axios.get( process.env.REACT_APP_API_URL + `/user/${id}` )
+        .then(response => {
+            // console.log(response.data);
             setLoading(true);
             setUser(response.data);
             setName(response.data.name);
@@ -40,7 +41,7 @@ const EditUser = () => {
 
 
     const editUserDetails = async () => {
-        const response = await fetch(`http://localhost:3000/user/${id}`, {
+        const response = await fetch( process.env.REACT_APP_API_URL + `/user/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -53,17 +54,15 @@ const EditUser = () => {
 
         const data = await response.json()
         if (data.acknowledged == true) {
-            alert('successfull')
-            history('/admin2'); console.log(data);
-        }
-        else
+            // alert('successfull')
+            history('/admin/users'); console.log(data);
+        }else {
             alert('error');
-
+        }
     }
 
     if (!loading)
         return <h1>loading....</h1>;
-
 
     return (
         <FormGroup className={classes.container}>

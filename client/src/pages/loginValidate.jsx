@@ -77,7 +77,7 @@ const Phone = () => {
                 phone_number = confirmationResult.user.phoneNumber;
 
                 localStorage.setItem("phone_number", phone_number);
-                axios.post( process.env.API_URL + '/user/phoneauth', phone_number)
+                axios.post( process.env.REACT_APP_API_URL + '/user/phoneauth', phone_number)
                 .then(response => {
                     // console.log(response)
                     if (response.data.status === "ok")

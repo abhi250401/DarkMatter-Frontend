@@ -219,7 +219,7 @@ export default function EnhancedTable() {
 
     const [users, setData] = useState(null);
     useEffect(() => {
-        axios.get( process.env.API_URL + '/user/users').then(response => {
+        axios.get( process.env.REACT_APP_API_URL + '/user/users').then(response => {
             console.log(response.data);
             setData(response.data);
             setLoading(true);

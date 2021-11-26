@@ -209,17 +209,14 @@ export default function EnhancedTable() {
 
     const [users, setData] = useState(null);
     useEffect(() => {
-        axios.get( process.env.API_URL + '/admin/stocks' ).then(response => {
+        axios.get( process.env.REACT_APP_API_URL + '/admin/stocks' ).then(response => {
             console.log(response.data);
             setData(response.data);
             setLoading(true);
         }).catch(err => {
             console.log(err);
         })
-
-
     }, [])
-
 
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("calories");
