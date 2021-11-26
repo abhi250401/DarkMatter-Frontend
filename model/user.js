@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: false,
     },
+    aadhaar: {
+        type: Number,
+        required: false,
+    },
     pan: {
         type: String,
         required: false,
@@ -37,19 +41,26 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         required: false,
     },
+    verified: {
+        type: Number,
+        required: false,
+    },
+    status: {
+        type: Number,
+        required: true,
+    }
 
 
 
 
-    /* userID
+    /* 
      fileID
      planID
-     name
-     email
+    
      mobile
-     password
+     
      gender
-     dob
+     
      company
      address
      pincode
@@ -60,9 +71,7 @@ const UserSchema = new mongoose.Schema({
      panID
      panNo
      picture
-     role
-     status
-     verified
+     
      created
      Updated
      planCategories

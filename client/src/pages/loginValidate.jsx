@@ -4,8 +4,22 @@ import "firebase/compat/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Signup from "./login";
-
+import jwt_decode from 'jwt-decode';
 const Phone = () => {
+    let globalUser = null;
+    const now = new Date();
+    const token = sessionStorage.getItem('token') || null;
+    if (token) {
+        const decoded = jwt_decode(token);
+        console.log(decoded);
+
+        if (decoded.expiry && decoded.expiry < now && decoded.status && decoded.status === 1) {
+            globalUser = decoded
+            goto('/home');
+        }
+
+    }
+
     let phone_number;
     const [viewOtpForm, setViewOtpForm] = useState(false);
     const [user, setUser] = useState(false);
@@ -77,16 +91,16 @@ const Phone = () => {
                 phone_number = confirmationResult.user.phoneNumber;
 
                 localStorage.setItem("phone_number", phone_number);
-                axios.post( process.env.REACT_APP_API_URL + '/user/phoneauth', phone_number)
-                .then(response => {
-                    // console.log(response)
-                    if (response.data.status === "ok")
-                        goto('/login');
-                    else
-                        goto('/signup')
-                }).catch(err => {
-                    console.log(err);
-                })
+                axios.post(process.env.REACT_APP_API_URL + '/user/phoneauth', phone_number)
+                    .then(response => {
+                        // console.log(response)
+                        if (response.data.status === "ok")
+                            goto('/login');
+                        else
+                            goto('/signup')
+                    }).catch(err => {
+                        console.log(err);
+                    })
             })
             .catch((error) => {
 
@@ -96,15 +110,15 @@ const Phone = () => {
 
     const signOut = () => {
         firebase
-        .auth()
-        .signOut()
-        .then(() => {
-            window.open("/signin", "_self");
-        })
-        .catch((error) => {
-            // An error happened.
-            console.log(error);
-        });
+            .auth()
+            .signOut()
+            .then(() => {
+                window.open("/signin", "_self");
+            })
+            .catch((error) => {
+                // An error happened.
+                console.log(error);
+            });
     };
 
     return (

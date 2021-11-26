@@ -3,13 +3,15 @@ import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 import routes from "./routes";
 import './App.css';
 
+
 function App() {
-    console.log(process.env);
+
     return (
         <BrowserRouter>
             <Routes>
                 {routes.map((route, i) =>
                     <Route
+
                         key={i}
                         path={route.path}
                         exact={route.exact}

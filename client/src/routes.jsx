@@ -44,6 +44,7 @@ export default [
 	},
 	{
 		path: '/phone',
+
 		slug: 'phone',
 		endpoint: 'phone',
 		params: [],

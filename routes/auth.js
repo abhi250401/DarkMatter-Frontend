@@ -60,13 +60,18 @@ router.post('/login', async (req, res) => {
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.json({ status: 'error', user: false })
 
+    var expiryDate = new Date();
+    expiryDate.setMonth(expiryDate.getMonth() + 1);
+    // var expiryDate = new Date(date.setMonth(date.getMonth() + 1));
     //create a token and assign it
     const token = jwt.sign({
         _id: user._id,
+        userID: user._id,
+        avatar: null,
+        role: user.role,
+        status: user.status,
         name: user.name,
-
-        phone: user.phone,
-
+        expiry: expiryDate
     },
         "hisdi");
     return res.json({ status: 'ok', user: token })
