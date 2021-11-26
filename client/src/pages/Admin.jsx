@@ -74,18 +74,30 @@ const headCells = [
         label: 'User id',
     },
     {
-        id: 'email',
-        numeric: false,
-        disablePadding: false,
-        label: 'Email',
-    },
-
-    {
         id: 'name',
         numeric: false,
         disablePadding: false,
         label: 'Name',
     },
+    {
+        id: 'email',
+        numeric: false,
+        disablePadding: false,
+        label: 'Email',
+    },
+    {
+        id: 'mobile',
+        numeric: false,
+        disablePadding: false,
+        label: 'Mobile',
+    },
+    {
+        id: '_id',
+        numeric: false,
+        disablePadding: false,
+        label: 'Actions',
+    },
+<<<<<<< HEAD
     {
         id: 'phone',
         numeric: true,
@@ -100,6 +112,8 @@ const headCells = [
         label: 'Modify',
     },
 
+=======
+>>>>>>> 7e7e6a8083338775b2e562e15bae3da3e0df57dc
 ];
 
 function EnhancedTableHead(props) {
@@ -210,6 +224,7 @@ const EnhancedTableToolbar = (props) => {
                     </IconButton>
                 </Tooltip>
             ) : (
+
                 <Tooltip title="Filter list">
                     <IconButton>
                         <FilterListIcon />
@@ -330,13 +345,17 @@ export default function EnhancedTable() {
     return (
         <div><Navbar Token={tok} />
             <Box sx={{ width: "100%" }}>
-
                 <Paper sx={{ width: "100%", mb: 2 }}>
                     <EnhancedTableToolbar numSelected={selected.length} />
                     <TableContainer>
+                        <FormControlLabel
+                        control={<Switch checked={dense} onChange={handleChangeDense} />}
+                        label="Dense padding"
+                    />
                         <input style={{ display: "flex", justifyContent: "center", width: "30%", alignContent: "center", margin: "auto", marginBottom: "20px" }} onChange={(e) => setSearchTerm(e.target.value)}
                             value={searchTerm}
                             placeholder="SEARCH" />
+
                         <Table
 
                             aria-labelledby="tableTitle"
@@ -391,6 +410,7 @@ export default function EnhancedTable() {
                                                     scope="row"
                                                     padding="none"
                                                 >
+<<<<<<< HEAD
                                                     <Link to={`/user/profile/${user._id}`} >   {user._id} </Link>
                                                 </TableCell>
 
@@ -400,6 +420,13 @@ export default function EnhancedTable() {
                                                 <TableCell>{user.email}</TableCell>
                                                 <TableCell>{user.name}</TableCell>
                                                 <TableCell >{user.phone}</TableCell>
+=======
+                                                <Link to={`/user/profile/${user._id}`} >{user._id}</Link>
+                                                </TableCell>
+                                                <TableCell>{user.name}</TableCell>
+                                                <TableCell>{user.email}</TableCell>
+                                                <TableCell>{user.mobile}</TableCell>
+>>>>>>> 7e7e6a8083338775b2e562e15bae3da3e0df57dc
                                                 <TableCell>
                                                     <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/${user._id}`}>Edit</Button>
                                                     <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/${user._id}`}>Delete</Button>
@@ -429,10 +456,6 @@ export default function EnhancedTable() {
                         onRowsPerPageChange={handleChangeRowsPerPage}
                     />
                 </Paper>
-                <FormControlLabel
-                    control={<Switch checked={dense} onChange={handleChangeDense} />}
-                    label="Dense padding"
-                />
             </Box>
         </div>
     );

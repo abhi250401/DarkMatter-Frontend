@@ -124,12 +124,12 @@ export default function PrimarySearchAppBar(data) {
             onClose={handleMenuClose}
         >
 
-            <Link to={`/user/profile/${tok}`}>    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
+            <Link to="/user/profile">    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
             <MenuItem onClick={handleMenuClose}>Change Password</MenuItem>
             <Link to="/admin/users">  <MenuItem onClick={handleMenuClose}>  Users</MenuItem></Link>
             <Link to="/admin/stocks"> <MenuItem onClick={handleMenuClose}> Stocks</MenuItem></Link>
             <Link to="/admin/settings"><MenuItem onClick={handleMenuClose}> Settings </MenuItem></Link>
-            <Link to="/admin/settings"><MenuItem onClick={handleMenuClose}> Signout </MenuItem></Link>
+            <Link to="/"><MenuItem onClick={handleMenuClose}> Signout </MenuItem></Link>
         </Menu>
     );
 
