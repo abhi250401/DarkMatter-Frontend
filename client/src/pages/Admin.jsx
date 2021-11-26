@@ -90,26 +90,8 @@ const headCells = [
         numeric: false,
         disablePadding: false,
         label: 'Mobile',
-    },
-    {
-        id: '_id',
-        numeric: false,
-        disablePadding: false,
-        label: 'Actions',
-    },
-    {
-        id: 'phone',
-        numeric: true,
-        disablePadding: false,
-        label: 'phone',
-    },
-    {
-        id: 'buttons',
-        numeric: true,
+    }
 
-        disablePadding: false,
-        label: 'Modify',
-    },
 
 ];
 
@@ -417,7 +399,7 @@ export default function EnhancedTable() {
                                                 <TableCell>{user.email}</TableCell>
                                                 <TableCell>{user.name}</TableCell>
                                                 <TableCell >{user.phone}</TableCell>
-                                                <Link to={`/user/profile/${user._id}`} >{user._id}</Link>
+
 
                                                 <TableCell>
                                                     <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/${user._id}`}>Edit</Button>
