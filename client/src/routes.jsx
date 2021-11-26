@@ -16,96 +16,96 @@ import UserProfile from "./pages/UserProfile";
 import Stocks from "./pages/Stocks";
 import Multistep from "./pages/Multistep";
 
-export default [	
+export default [
 	{
 		path: '/home',
 		slug: 'home',
 		endpoint: 'home',
 		params: [],
-		element : <FirstPage />
+		element: <Home />
 	},
 	{
 		path: '/signup',
 		slug: 'signup',
 		endpoint: 'signup',
 		params: [],
-		element : <A />
+		element: <A />
 	},
 	{
 		path: '/login',
 		slug: 'login',
 		endpoint: 'login',
 		params: [],
-		element : <Login />
+		element: <Login />
 	},
 	{
 		path: '/phone',
 		slug: 'phone',
 		endpoint: 'phone',
 		params: [],
-		element : <Phone />
+		element: <Phone />
 	},
 	{
 		path: '/signin',
 		slug: 'signin',
 		endpoint: 'signin',
 		params: [],
-		element : <Phone />
+		element: <Phone />
 	},
 	{
 		path: '/user/profile/:id',
 		slug: 'user/profile/:id',
 		endpoint: 'user/profile/:id',
 		params: [],
-		element : <UserProfile />
+		element: <UserProfile />
 	},
 	{
 		path: '/edit/:id',
 		slug: '/edit/:id',
 		endpoint: 'user',
 		params: [],
-		element : <EditUser />
+		element: <EditUser />
 	},
 	{
 		path: '/delete/:id',
 		slug: '/delete/:id',
 		endpoint: 'user',
 		params: [],
-		element : <DeleteUser />
+		element: <DeleteUser />
 	},
 	{
 		path: '/admin/settings',
 		slug: 'admin/settings',
 		endpoint: 'admin/settings',
 		params: [],
-		element : <Error />
+		element: <Error />
 	},
 	{
 		path: '/admin/users',
 		slug: 'admin/users',
 		endpoint: 'admin/users',
 		params: [],
-		element : <Admin />
+		element: <Admin />
 	},
 	{
 		path: '/admin/stocks',
 		slug: 'admin/stocks',
 		endpoint: 'admin/stocks',
 		params: [],
-		element : <Stocks />
+		element: <Stocks />
 	},
 	{
-		path	 : '/',
-		exact	 : true,
-		endpoint : 'home',
-		params	 : [],
-		element  : <Home />
+		path: '/',
+		exact: true,
+		endpoint: 'home',
+		params: [],
+		element: <FirstPage />
 	},
 	{
-		path	 : '*',
-		exact	 : false,
-		endpoint : '',
-		params	 : [],
-		element : <Error />
+		path: '*',
+		exact: false,
+		endpoint: '',
+		params: [],
+		element: <Error />
 	}
 ];
