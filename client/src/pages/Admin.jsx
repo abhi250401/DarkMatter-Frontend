@@ -97,7 +97,6 @@ const headCells = [
         disablePadding: false,
         label: 'Actions',
     },
-<<<<<<< HEAD
     {
         id: 'phone',
         numeric: true,
@@ -112,8 +111,6 @@ const headCells = [
         label: 'Modify',
     },
 
-=======
->>>>>>> 7e7e6a8083338775b2e562e15bae3da3e0df57dc
 ];
 
 function EnhancedTableHead(props) {
@@ -349,9 +346,9 @@ export default function EnhancedTable() {
                     <EnhancedTableToolbar numSelected={selected.length} />
                     <TableContainer>
                         <FormControlLabel
-                        control={<Switch checked={dense} onChange={handleChangeDense} />}
-                        label="Dense padding"
-                    />
+                            control={<Switch checked={dense} onChange={handleChangeDense} />}
+                            label="Dense padding"
+                        />
                         <input style={{ display: "flex", justifyContent: "center", width: "30%", alignContent: "center", margin: "auto", marginBottom: "20px" }} onChange={(e) => setSearchTerm(e.target.value)}
                             value={searchTerm}
                             placeholder="SEARCH" />
@@ -410,7 +407,7 @@ export default function EnhancedTable() {
                                                     scope="row"
                                                     padding="none"
                                                 >
-<<<<<<< HEAD
+
                                                     <Link to={`/user/profile/${user._id}`} >   {user._id} </Link>
                                                 </TableCell>
 
@@ -420,19 +417,15 @@ export default function EnhancedTable() {
                                                 <TableCell>{user.email}</TableCell>
                                                 <TableCell>{user.name}</TableCell>
                                                 <TableCell >{user.phone}</TableCell>
-=======
                                                 <Link to={`/user/profile/${user._id}`} >{user._id}</Link>
-                                                </TableCell>
-                                                <TableCell>{user.name}</TableCell>
-                                                <TableCell>{user.email}</TableCell>
-                                                <TableCell>{user.mobile}</TableCell>
->>>>>>> 7e7e6a8083338775b2e562e15bae3da3e0df57dc
+
                                                 <TableCell>
                                                     <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/${user._id}`}>Edit</Button>
                                                     <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/${user._id}`}>Delete</Button>
                                                 </TableCell>
                                             </TableRow>
-                                        );
+
+                                        )
                                     })}
                                 {emptyRows > 0 && (
                                     <TableRow
@@ -457,6 +450,6 @@ export default function EnhancedTable() {
                     />
                 </Paper>
             </Box>
-        </div>
+        </div >
     );
 }
