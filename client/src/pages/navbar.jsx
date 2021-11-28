@@ -13,7 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useState, useEffect } from 'react';
-import jwt from 'jsonwebtoken';
+import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -69,19 +69,13 @@ export default function PrimarySearchAppBar(data) {
     const history = useNavigate();
     useEffect(() => {
 
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token') || null;
         if (token) {
-            const user = jwt.decode(token);
-            setTok(user._id);
-            setloading(true);
-            console.log(tok);
-            if (!user) {
-                localStorage.removeItem('token')
-                history('/');
-            }
-
-
+            const decoded = jwt_decode(token);
+            console.log(decoded);
+            setTok(decoded._id);
         }
+
 
     }, [])
 
@@ -125,7 +119,7 @@ export default function PrimarySearchAppBar(data) {
             onClose={handleMenuClose}
         >
 
-            <Link to="/user/profile">    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
+            <Link to={`/user/profile/${tok}`}>    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
             <MenuItem onClick={handleMenuClose}>Change Password</MenuItem>
             <Link to="/admin/users">  <MenuItem onClick={handleMenuClose}>  Users</MenuItem></Link>
             <Link to="/admin/stocks"> <MenuItem onClick={handleMenuClose}> Stocks</MenuItem></Link>

@@ -8,7 +8,7 @@ import jwt_decode from 'jwt-decode';
 const Phone = () => {
     let globalUser = null;
     const now = new Date();
-    const token = sessionStorage.getItem('token') || null;
+    const token = localStorage.getItem('token') || null;
     if (token) {
         const decoded = jwt_decode(token);
         console.log(decoded);

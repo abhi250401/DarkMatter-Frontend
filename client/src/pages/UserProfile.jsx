@@ -23,10 +23,11 @@ const EditUser = () => {
     let history = useNavigate();
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API_URL + `/user/${id}`)
+        axios.get(process.env.REACT_APP_API_URL + `/userone/${id}`)
             .then(response => {
-                // console.log(response.data);
+                console.log(response.data);
                 setLoading(true);
+
                 setUser(response.data);
                 setName(response.data.name);
                 setEmail(response.data.email);
@@ -45,7 +46,7 @@ const EditUser = () => {
     const [email, setEmail] = useState('');
 
     const editUserDetails = async () => {
-        const response = await fetch(process.env.REACT_APP_API_URL + `/user/${id}`, {
+        const response = await fetch(process.env.REACT_APP_API_URL + `/userone/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

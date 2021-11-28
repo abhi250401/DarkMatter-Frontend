@@ -22,7 +22,7 @@ const DeleteUser = () => {
     let history = useNavigate();
 
     useEffect(() => {
-        axios.get( process.env.REACT_APP_API_URL + `/user/${id}` ).then(response => {
+        axios.get(process.env.REACT_APP_API_URL + `/userone/${id}`).then(response => {
             console.log(response.data);
             setLoading(true);
             setUser(response.data);
@@ -38,7 +38,7 @@ const DeleteUser = () => {
     const [email, setEmail] = useState('');
 
     const deleteUserDetails = async () => {
-        const response = await fetch( process.env.REACT_APP_API_URL + `/user/${id}`, {
+        const response = await fetch(process.env.REACT_APP_API_URL + `/user/${id}`, {
             method: 'DELETE',
         })
 
@@ -46,7 +46,7 @@ const DeleteUser = () => {
         if (data) {
             // console.log('successfull')
             history('/admin/users'); console.log(data);
-        }else {
+        } else {
             alert('error');
         }
     }

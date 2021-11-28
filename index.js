@@ -19,14 +19,14 @@ app.use(express.json());
 app.use('/api/user', authRoute);
 app.use('/api/posts', postRoute);
 
-app.delete('/user/:id', function (req, res) {
+app.delete('/api/user/:id', function (req, res) {
     User.deleteOne({ _id: req.params.id }).then((result) => {
         res.status(200).json(result);
     }).catch((err) => {
         console.warn(err);
     })
 });
-app.put('/user/:id', function (req, res) {
+app.put('/api/user/:id', function (req, res) {
     User.updateOne({ _id: req.params.id }, { $set: { name: req.body.name, email: req.body.email } }).then((result) => {
         res.status(201).json(result);
     }).catch((err) => {
@@ -35,7 +35,7 @@ app.put('/user/:id', function (req, res) {
 })
 
 
-app.get('/userone/:id', (req, res) => {
+app.get('/api/userone/:id', (req, res) => {
     User.findById(req.params.id).then((data) => {
         res.json(data);
     }).catch(err => {

@@ -22,17 +22,17 @@ const EditUser = () => {
     let history = useNavigate();
 
     useEffect(() => {
-        axios.get( process.env.REACT_APP_API_URL + `/user/${id}` )
-        .then(response => {
-            // console.log(response.data);
-            setLoading(true);
-            setUser(response.data);
-            setName(response.data.name);
-            setEmail(response.data.email);
+        axios.get(process.env.REACT_APP_API_URL + `/userone/${id}`)
+            .then(response => {
+                // console.log(response.data);
+                setLoading(true);
+                setUser(response.data);
+                setName(response.data.name);
+                setEmail(response.data.email);
 
-        }).catch(err => {
-            console.log(err);
-        })
+            }).catch(err => {
+                console.log(err);
+            })
 
     }, []);
 
@@ -41,7 +41,7 @@ const EditUser = () => {
 
 
     const editUserDetails = async () => {
-        const response = await fetch( process.env.REACT_APP_API_URL + `/user/${id}`, {
+        const response = await fetch(process.env.REACT_APP_API_URL + `/user/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const EditUser = () => {
         if (data.acknowledged == true) {
             // alert('successfull')
             history('/admin/users'); console.log(data);
-        }else {
+        } else {
             alert('error');
         }
     }

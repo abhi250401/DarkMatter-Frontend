@@ -27,11 +27,13 @@ router.post('/register', async (req, res) => {
             email: req.body.formData.email,
             phone: req.body.formData.phone,
             aadhar: req.body.formData.aadhar,
+            aadhaar: req.body.formData.aadhar,
+
             pan: req.body.formData.pan,
             dob: req.body.formData.dob,
 
             role: 3,
-
+            verified: 0,
             status: 0,
             password: hashPassword
         });
@@ -62,6 +64,7 @@ router.post('/login', async (req, res) => {
 
     var expiryDate = new Date();
     expiryDate.setMonth(expiryDate.getMonth() + 1);
+    console.log(user);
     // var expiryDate = new Date(date.setMonth(date.getMonth() + 1));
     //create a token and assign it
     const token = jwt.sign({
@@ -71,6 +74,7 @@ router.post('/login', async (req, res) => {
         role: user.role,
         status: user.status,
         name: user.name,
+
         expiry: expiryDate
     },
         "hisdi");
