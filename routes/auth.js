@@ -1,21 +1,17 @@
 const router = require('express').Router();
-const User = require('../model/user');
+const User = require('../model/users');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-
 
 router.post('/register', async (req, res) => {
 
     const emailexist = await User.findOne({
         email: req.body.formData.email
-    }).catch(error => { console.log(error) });
-    if (emailexist) res.json({ status: 'error', error: 'Duplicate email' })
+    }).catch(error => { 
+        console.log(error) 
+    });
 
-
-
-
-
+    if (emailexist) res.json({ status: 'error', error: 'This email id already exists' })
 
     //hashing the password
     const salt = await bcrypt.genSalt(10);
@@ -38,7 +34,6 @@ router.post('/register', async (req, res) => {
             password: hashPassword
         });
 
-
         const savedUser = await user.save();
         res.json({ status: 'ok' })
     }
@@ -50,8 +45,6 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     const user = await User.findOne({
         phone: req.body.phone,
-
-
     }).catch(error => {
         return res.json({ status: 'error', error: 'Invalid login' })
         console.log(error)
@@ -81,28 +74,23 @@ router.post('/login', async (req, res) => {
     },
         "hisdi");
     return res.json({ status: 'ok', user: token })
-
-
 })
 
 router.post('/phoneauth', async (req, res) => {
     const user = await User.findOne({
         phone: req.body.phone_number
     })
-        .catch(error => {
-            console.log(error)
-            return res.json({ status: "invalid" })
-        });
-
+    .catch(error => {
+        console.log(error)
+        return res.json({ status: "invalid" })
+    });
 
     if (!user) {
         return res.json({ status: "not ok" })
-    }
-    else
+    }else {
         return res.json({ status: "ok" });
-
+    }
 })
-
 
 router.get('/users', async (req, res) => {
 
@@ -111,9 +99,7 @@ router.get('/users', async (req, res) => {
     }).catch(err => {
         console.log(err);
     })
-}
-)
-
+})
 
 router.get('/quote', async (req, res) => {
     const token = req.headers['x-access-token']
@@ -129,7 +115,5 @@ router.get('/quote', async (req, res) => {
         res.json({ status: 'error', error: 'invalid token' })
     }
 })
-
-
 
 module.exports = router;

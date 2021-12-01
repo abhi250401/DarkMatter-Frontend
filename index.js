@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const User = require('./model/user');
+const User = require('./model/users');
 //import routes
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');

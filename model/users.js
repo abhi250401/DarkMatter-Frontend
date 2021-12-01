@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
+    userId: {
+        type: String,
+    },
     name: {
         type: String,
         required: true,
         max: 255,
-
     },
     email: {
         type: String,
@@ -13,10 +15,7 @@ const UserSchema = new mongoose.Schema({
     phone: {
         type: Number,
         required: true,
-
     },
-
-
     password: {
         type: String,
         required: true
@@ -49,34 +48,24 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: true,
     }
-
-
-
-
     /* 
-     fileID
-     planID
-    
-     mobile
-     
-     gender
-     
-     company
-     address
-     pincode
-     state
-     country
-     aadhaarID
-     aadhaarNo
-     panID
-     panNo
-     picture
-     
-     created
-     Updated
-     planCategories
-     */
-
-
+    fileID
+    planID
+    mobile
+    gender
+    company
+    address
+    pincode
+    state
+    country
+    aadhaarID
+    aadhaarNo
+    panID
+    panNo
+    picture
+    created
+    Updated
+    planCategories
+    */
 });
 module.exports = mongoose.model('User', UserSchema);

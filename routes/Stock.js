@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const Stocks = require('../model/Stocks');
-
+const Stocks = require('../model/stocks');
 
 router.post('/stock', async (req, res) => {
 
@@ -23,9 +22,8 @@ router.post('/stock', async (req, res) => {
     catch (err) {
         res.json({ status: 'error', error: 'failed' })
     }
-
-
 });
+
 router.get('/admin/stocks', async (req, res) => {
 
     await Stocks.find().then((data) => {
