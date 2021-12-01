@@ -1,52 +1,45 @@
 const router = require('express').Router();
-const Wishlist = require('../model/Wishlist');
-
-
+const Wishlist = require('../model/wishlist');
+// https://mongoosejs.com/docs/populate.html
 router.post('/wishlist', async (req, res) => {
+    const checkList = {
+        stockId: req.body.stockId,
+        userId: req.body.userId,
+        listId: req.body.listId,
+    };
 
-    const stockExist = await Wishlist.findOne({
-        stockId: req.body.stockId
-    }).catch(error => { console.log(error) });
+    await Wishlist.findOne(checkList)
+        .then(() => {
+            res.json({ status: 'error', error: 'Stock already added to wishlist' })
+        })
+        .catch(error => { console.log(error) });
 
-    if (stockExist) res.json({ status: 'error', error: 'Duplicate Stock' })
     try {
-        const wishList = new Wishlist({
-            stockId: req.body.stockId,
-            userId: req.body.userId,
-            listId: req.body.listId,
-        });
+        const wishList = new Wishlist(checkList);
         const savedWishlist = await wishList.save();
-        res.json({ status: 'ok' })
+        res.json({ status: 'success', data: savedWishlist })
+    } catch (err) {
+        res.json({ status: 'error', error: err })
     }
-    catch (err) {
-        res.json({ status: 'error', error: 'failed' })
-    }
-
-
 });
-router.get('/wishlist', async (req, res) => {
-    Wishlist.find().then((data) => {
-        res.json(data);
-    }).catch(err => {
-        console.log(err);
-    })
-});
-
 
 router.get('/wishlist/:id', async (req, res) => {
-    Wishlist.findById(req.params.id).then((data) => {
-        res.json(data);
-    }).catch(err => {
-        console.log(err);
+    Wishlist.find({
+        userId: req.body.user_id,
+        listId: req.params.id,
     })
+        .then((data) => {
+            res.json({ status: 'success', data: data });
+        }).catch(err => {
+            res.json({ status: 'error', error: err });
+        })
 });
 
-
 router.delete('/wishlist/:id', async (req, res) => {
-    Wishlist.deleteOne({ _id: req.params.id }).then((result) => {
-        res.status(200).json(result);
+    Wishlist.deleteOne({ _id: req.params.id, userId: req.body.user_id }).then((result) => {
+        res.json({ status: 'success', data: result });
     }).catch((err) => {
-        console.warn(err);
+        res.json({ status: 'error', error: err });
     })
 })
 module.exports = router;

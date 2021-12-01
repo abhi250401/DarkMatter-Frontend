@@ -5,9 +5,9 @@ const User = require('./model/users');
 //import routes
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
-const Stocks = require('./model/Stocks');
-const wishlist = require('./routes/Wishlist');
-const stock = require('./routes/Stock');
+const Stocks = require('./model/stocks');
+const wishlist = require('./routes/wishlist');
+const stock = require('./routes/stock');
 //connect to db
 app.use(cors());
 const mongoose = require('mongoose');
