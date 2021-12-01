@@ -19,6 +19,12 @@ import UserProfile from "./pages/userProfile";
 //	Admin pages
 import Admin from './admin/users';
 import Stocks from "./admin/stocks";
+import AddStock from "./admin/addStock";
+import EditStock from "./admin/editStock";
+import DeleteStock from "./admin/deleteStock";
+
+
+const token = localStorage.getItem('token') || null;
 
 export default [
 	{
@@ -33,14 +39,14 @@ export default [
 		slug: 'signup',
 		endpoint: 'signup',
 		params: [],
-		element: <A />
+		element: <A UserToken={token} />
 	},
 	{
 		path: '/login',
 		slug: 'login',
 		endpoint: 'login',
 		params: [],
-		element: <Login />
+		element: <Login UserToken={token} />
 	},
 	{
 		path: '/phone',
@@ -55,7 +61,7 @@ export default [
 		slug: 'signin',
 		endpoint: 'signin',
 		params: [],
-		element: <Phone />
+		element: <Phone UserToken={token} />
 	},
 	{
 		path: '/user/profile/:id',
@@ -71,12 +77,27 @@ export default [
 		params: [],
 		element: <EditUser />
 	},
+
+	{
+		path: '/edit/stock/:id',
+		slug: '/edit/stock/:id',
+		endpoint: 'stock',
+		params: [],
+		element: <EditStock />
+	},
 	{
 		path: '/delete/:id',
 		slug: '/delete/:id',
 		endpoint: 'user',
 		params: [],
 		element: <DeleteUser />
+	},
+	{
+		path: '/delete/stock/:id',
+		slug: '/delete/stock/:id',
+		endpoint: 'stock',
+		params: [],
+		element: <DeleteStock />
 	},
 	{
 		path: '/admin/settings',
@@ -104,7 +125,7 @@ export default [
 		exact: true,
 		endpoint: 'home',
 		params: [],
-		element: <FirstPage />
+		element: <FirstPage UserToken={token} />
 	},
 	{
 		path: '*',
@@ -112,5 +133,12 @@ export default [
 		endpoint: '',
 		params: [],
 		element: <Error />
+	},
+	{
+		path: '/add/stock',
+		exact: true,
+		endpoint: '',
+		params: [],
+		element: <AddStock />
 	}
 ];

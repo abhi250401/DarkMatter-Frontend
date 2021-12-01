@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Signup from "./login";
 import jwt_decode from 'jwt-decode';
-const Phone = () => {
+const Phone = ({ UserToken }) => {
     let globalUser = null;
     const now = new Date();
     const token = localStorage.getItem('token') || null;
@@ -120,7 +120,8 @@ const Phone = () => {
                 console.log(error);
             });
     };
-
+    if (UserToken)
+        goto('/home');
     return (
         <div>
             <div id="recaptcha-container"></div>

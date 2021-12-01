@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router';
 import { accordionClasses } from '@mui/material';
 import { Link } from 'react-router-dom';
 export default function Home() {
+
     const history = useNavigate();
     const [tok, setTok] = useState(null);
     const [data, setdata] = useState(null);
     const [loading, setLoading] = useState(false)
     async function populateHome() {
-        const req = await fetch( process.env.REACT_APP_API_URL + '/user/quote', {
+        const req = await fetch(process.env.REACT_APP_API_URL + '/user/quote', {
             headers: {
                 'x-access-token': localStorage.getItem('token'),
             },

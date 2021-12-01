@@ -103,7 +103,7 @@ export default function Checkout() {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
-                />                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                />  <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
 
                     <Container component="div" maxWidth="sm" sx={{ mb: 4 }}>
                         <Paper variant="" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>

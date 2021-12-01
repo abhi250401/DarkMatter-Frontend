@@ -5,6 +5,9 @@ const User = require('./model/user');
 //import routes
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
+const Stocks = require('./model/Stocks');
+const wishlist = require('./routes/Wishlist');
+const stock = require('./routes/Stock');
 //connect to db
 app.use(cors());
 const mongoose = require('mongoose');
@@ -17,6 +20,9 @@ app.use(express.json());
 
 //routemiddlewares 
 app.use('/api/user', authRoute);
+app.use('/api/user', wishlist);
+
+app.use('/api', stock);
 app.use('/api/posts', postRoute);
 
 app.delete('/api/user/:id', function (req, res) {
@@ -35,6 +41,22 @@ app.put('/api/user/:id', function (req, res) {
 })
 
 
+app.delete('/api/stock/:id', function (req, res) {
+    Stocks.deleteOne({ _id: req.params.id }).then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        console.warn(err);
+    })
+});
+app.put('/api/stock/:id', function (req, res) {
+    Stocks.updateOne({ _id: req.params.id }, { $set: { name: req.body.name, price: req.body.price } }).then((result) => {
+        res.status(201).json(result);
+    }).catch((err) => {
+        console.warn(err);
+    })
+})
+
+
 app.get('/api/userone/:id', (req, res) => {
     User.findById(req.params.id).then((data) => {
         res.json(data);
@@ -42,6 +64,15 @@ app.get('/api/userone/:id', (req, res) => {
         console.log(err);
     })
 });
+
+app.get('/api/stockone/:id', (req, res) => {
+    Stocks.findById(req.params.id).then((data) => {
+        res.json(data);
+    }).catch(err => {
+        console.log(err);
+    })
+});
+
 
 
 app.listen(process.env.PORT || 3000, () => console.log('server up and running'))

@@ -66,10 +66,10 @@ const headCells = [
         label: 'User id',
     },
     {
-        id: 'email',
+        id: 'Price',
         numeric: false,
         disablePadding: false,
-        label: 'Email',
+        label: 'Price',
     },
 
     {
@@ -207,9 +207,9 @@ export default function EnhancedTable() {
     const [loading, setLoading] = useState(false);
 
 
-    const [users, setData] = useState(null);
+    const [stocks, setData] = useState(null);
     useEffect(() => {
-        axios.get( process.env.REACT_APP_API_URL + '/admin/stocks' ).then(response => {
+        axios.get(process.env.REACT_APP_API_URL + '/admin/stocks').then(response => {
             console.log(response.data);
             setData(response.data);
             setLoading(true);
@@ -234,7 +234,7 @@ export default function EnhancedTable() {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = users.map((n) => n._id);
+            const newSelecteds = stocks.map((n) => n._id);
             setSelected(newSelecteds);
             return;
         }
@@ -278,7 +278,7 @@ export default function EnhancedTable() {
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - stocks.length) : 0;
     if (!loading)
         return (
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "white" }}>Loading ...</h1></div>
@@ -288,6 +288,9 @@ export default function EnhancedTable() {
             <Box sx={{ width: "100%" }}>
 
                 <Paper sx={{ width: "100%", mb: 2 }}>
+                    <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to="/add/stock">Add Stock</Button>
+
+
                     <EnhancedTableToolbar numSelected={selected.length} />
                     <TableContainer>
                         <input style={{ display: "flex", justifyContent: "center", width: "30%", alignContent: "center", margin: "auto", marginBottom: "20px" }} onChange={(e) => setSearchTerm(e.target.value)}
@@ -304,12 +307,12 @@ export default function EnhancedTable() {
                                 orderBy={orderBy}
                                 onSelectAllClick={handleSelectAllClick}
                                 onRequestSort={handleRequestSort}
-                                rowCount={users.length}
+                                rowCount={stocks.length}
                             />
                             <TableBody>
                                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                                {stableSort(users, getComparator(order, orderBy))
+                                {stableSort(stocks, getComparator(order, orderBy))
                                     .filter((val) => {
                                         if (searchTerm === " ")
                                             return val
@@ -318,18 +321,18 @@ export default function EnhancedTable() {
                                         }
                                     })
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((user, index) => {
-                                        const isItemSelected = isSelected(user._id);
+                                    .map((stock, index) => {
+                                        const isItemSelected = isSelected(stock._id);
                                         const labelId = `enhanced-table-checkbox-${index}`;
 
                                         return (
                                             <TableRow
                                                 hover
-                                                onClick={(event) => handleClick(event, user._id)}
+                                                onClick={(event) => handleClick(event, stock._id)}
                                                 role="checkbox"
                                                 aria-checked={isItemSelected}
                                                 tabIndex={-1}
-                                                key={user._id}
+                                                key={stock._id}
                                                 selected={isItemSelected}
                                             >
                                                 <TableCell padding="checkbox">
@@ -341,23 +344,24 @@ export default function EnhancedTable() {
                                                         }}
                                                     />
                                                 </TableCell>
-                                                <Link to={`/user/profile/${user._id}`} > <TableCell
+                                                <TableCell
                                                     component="th"
                                                     id={labelId}
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {user._id}
+                                                    <Link to={`/stock/${stock._id}`} >   {stock._id}  </Link>
                                                 </TableCell>
-                                                </Link>
 
 
 
-                                                <TableCell>{user.email}</TableCell>
-                                                <TableCell>{user.name}</TableCell>
-                                                <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/${user._id}`}>Edit</Button>
-                                                <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/${user._id}`}>Delete</Button>
 
+                                                <TableCell>{stock.price}</TableCell>
+                                                <TableCell>{stock.name}</TableCell>
+                                                <TableCell>
+                                                    <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/stock/${stock._id}`}>Edit</Button>
+                                                    <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/stock/${stock._id}`}>Delete</Button>
+                                                </TableCell>
                                             </TableRow>
                                         );
                                     })}
@@ -376,7 +380,7 @@ export default function EnhancedTable() {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={users.length}
+                        count={stocks.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

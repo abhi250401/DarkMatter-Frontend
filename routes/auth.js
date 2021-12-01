@@ -49,7 +49,9 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     const user = await User.findOne({
-        phone: req.body.phone
+        phone: req.body.phone,
+
+
     }).catch(error => {
         return res.json({ status: 'error', error: 'Invalid login' })
         console.log(error)
