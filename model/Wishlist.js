@@ -5,12 +5,12 @@ const mongoose = require('mongoose');
 
 const wishListSchema = new mongoose.Schema({
 
-    stock_id: {
+    stockId: {
         type: String
     },
 
 
-    user_id: {
+    userId: {
         type: String,
 
     },

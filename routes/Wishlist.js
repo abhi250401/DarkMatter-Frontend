@@ -5,14 +5,14 @@ const Wishlist = require('../model/Wishlist');
 router.post('/wishlist', async (req, res) => {
 
     const stockExist = await Wishlist.findOne({
-        stock_id: req.body.stock_id
+        stockId: req.body.stockId
     }).catch(error => { console.log(error) });
 
     if (stockExist) res.json({ status: 'error', error: 'Duplicate Stock' })
     try {
         const wishList = new Wishlist({
-            stock_id: req.body.stock_id,
-            user_id: req.body.user_id,
+            stockId: req.body.stockId,
+            userId: req.body.userId,
             listId: req.body.listId,
         });
         const savedWishlist = await wishList.save();
