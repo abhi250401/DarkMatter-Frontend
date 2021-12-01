@@ -35,7 +35,7 @@ router.post('/register', async (req, res) => {
         });
 
         const savedUser = await user.save();
-        res.json({ status: 'ok' })
+        res.json({ status: 'success' })
     }
     catch (err) {
         res.json({ status: 'error', error: 'failed login' })
@@ -71,9 +71,8 @@ router.post('/login', async (req, res) => {
         name: user.name,
 
         expiry: expiryDate
-    },
-        "hisdi");
-    return res.json({ status: 'ok', user: token })
+    }, "hisdi");
+    return res.json({ status: 'success', user: token })
 })
 
 router.post('/phoneauth', async (req, res) => {
@@ -82,18 +81,17 @@ router.post('/phoneauth', async (req, res) => {
     })
     .catch(error => {
         console.log(error)
-        return res.json({ status: "invalid" })
+        return res.json({ status: 'error' })
     });
 
     if (!user) {
-        return res.json({ status: "not ok" })
+        return res.json({ status: 'error' })
     }else {
-        return res.json({ status: "ok" });
+        return res.json({ status: 'success' });
     }
 })
 
 router.get('/users', async (req, res) => {
-
     await User.find().then((data) => {
         res.json(data);
     }).catch(err => {
@@ -109,7 +107,7 @@ router.get('/quote', async (req, res) => {
         const email = decoded.email
         const user = await User.findOne({ email: email })
 
-        return res.json({ status: 'ok', quote: user.quote })
+        return res.json({ status: 'success', quote: user.quote })
     } catch (error) {
         console.log(error)
         res.json({ status: 'error', error: 'invalid token' })
