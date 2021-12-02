@@ -6,12 +6,11 @@ router.post('/wishlist', async (req, res) => {
         stockId: req.body.stockId,
         userId: req.body.userId,
         listId: req.body.listId,
+        stockName: req.body.stockName
     };
 
     await Wishlist.findOne(checkList)
-        .then(() => {
-            res.json({ status: 'error', error: 'Stock already added to wishlist' })
-        })
+
         .catch(error => { console.log(error) });
 
     try {
@@ -23,10 +22,10 @@ router.post('/wishlist', async (req, res) => {
     }
 });
 
-router.get('/wishlist/:id', async (req, res) => {
-    Wishlist.find({
-        userId: req.body.user_id,
-        listId: req.params.id,
+router.get('/wishlist/:id1/:id2', async (req, res) => {
+    await Wishlist.find({
+        listId: req.params.id2,
+        userId: req.params.id1,
     })
         .then((data) => {
             res.json({ status: 'success', data: data });

@@ -27,13 +27,7 @@ import DeleteStock from "./admin/deleteStock";
 const token = localStorage.getItem('token') || null;
 
 export default [
-	{
-		path: '/home',
-		slug: 'home',
-		endpoint: 'home',
-		params: [],
-		element: <Home />
-	},
+
 	{
 		path: '/signup',
 		slug: 'signup',

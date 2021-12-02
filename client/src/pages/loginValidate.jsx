@@ -20,6 +20,7 @@ const Phone = ({ UserToken }) => {
 
     }
 
+
     let phone_number;
     const [viewOtpForm, setViewOtpForm] = useState(false);
     const [user, setUser] = useState(false);
@@ -94,7 +95,7 @@ const Phone = ({ UserToken }) => {
                 axios.post(process.env.REACT_APP_API_URL + '/user/phoneauth', phone_number)
                     .then(response => {
                         // console.log(response)
-                        if (response.data.status === "ok")
+                        if (response.data.status === "success")
                             goto('/login');
                         else
                             goto('/signup')

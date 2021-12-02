@@ -13,5 +13,9 @@ const wishListSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    stockName: {
+        type: String,
+
+    }
 });
 module.exports = mongoose.model('wishlist', wishListSchema);
