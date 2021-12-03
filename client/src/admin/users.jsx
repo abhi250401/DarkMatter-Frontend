@@ -210,7 +210,7 @@ EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired
 };
 
-export default function EnhancedTable() {
+export default function EnhancedTable(props) {
     const history = useNavigate();
     const [tok, setTok] = useState(null);
 
@@ -219,7 +219,7 @@ export default function EnhancedTable() {
 
     const [users, setData] = useState(null);
     useEffect(() => {
-        axios.get( process.env.REACT_APP_API_URL + '/user/users').then(response => {
+        axios.get(process.env.REACT_APP_API_URL + '/user/users').then(response => {
             console.log(response.data);
             setData(response.data);
             setLoading(true);
@@ -310,7 +310,7 @@ export default function EnhancedTable() {
                 <Link to="/login" > Login</Link>  </h1></div >
         );
     return (
-        <div><Navbar Token={tok} />
+        <div><Navbar {...props} />
             <Box sx={{ width: "100%" }}>
                 <Paper sx={{ width: "100%", mb: 2 }}>
                     <EnhancedTableToolbar numSelected={selected.length} />

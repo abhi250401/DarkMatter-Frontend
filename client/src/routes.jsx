@@ -125,7 +125,7 @@ export default [
 		slug: 'admin/users',
 		endpoint: 'admin/users',
 		params: [],
-		element: <Admin />
+		element: <Admin user={user} />
 	},
 	{
 		path: '/admin/stocks',
