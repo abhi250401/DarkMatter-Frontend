@@ -61,12 +61,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function PrimarySearchAppBar( props ) {
+export default function PrimarySearchAppBar(props) {
+    console.log(props);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [loading, setloading] = useState('')
     const history = useNavigate();
-    
+
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -105,7 +106,7 @@ export default function PrimarySearchAppBar( props ) {
             onClose={handleMenuClose}
         >
 
-            <Link to={`/user/profile/${ props.user.userID ?? 0 }`}>    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
+            <Link to={`/user/profile/${props.user.userID || 0}`}>    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
             <MenuItem onClick={handleMenuClose}>Change Password</MenuItem>
             <Link to="/admin/users">  <MenuItem onClick={handleMenuClose}>  Users</MenuItem></Link>
             <Link to="/admin/stocks"> <MenuItem onClick={handleMenuClose}> Stocks</MenuItem></Link>
@@ -172,16 +173,7 @@ export default function PrimarySearchAppBar( props ) {
                     >
                         <Link to="/home" > DarkMatter</Link>
                     </Typography>
-                    <div style={{ marginLeft: "5%" }}><Search style={{}}>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                    </div>
+
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 

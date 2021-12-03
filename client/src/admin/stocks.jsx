@@ -203,7 +203,7 @@ EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired
 };
 
-export default function EnhancedTable() {
+export default function EnhancedTable(props) {
     const [loading, setLoading] = useState(false);
 
 
@@ -284,7 +284,7 @@ export default function EnhancedTable() {
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "white" }}>Loading ...</h1></div>
         );
     return (
-        <div><Navbar />
+        <div><Navbar {...props} />
             <Box sx={{ width: "100%" }}>
 
                 <Paper sx={{ width: "100%", mb: 2 }}>

@@ -11,7 +11,7 @@ router.post('/wishlist', async (req, res) => {
 
     const stockAdded = await Wishlist.findOne(checkList).catch(error => { console.log(error) });
     if (stockAdded)
-        res.json({ status: 'error', error: 'This email id already exists' })
+        res.json({ status: 'error', error: 'This stock id already exists' })
     if (!stockAdded) {
         try {
             const wishList = new Wishlist(checkList);
