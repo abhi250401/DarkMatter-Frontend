@@ -18,7 +18,7 @@ router.post('/stock', async (req, res) => {
                 cateogary: req.body.cateogary,
             });
             const savedStock = await stock.save();
-            res.json({ status: 'ok' })
+            res.json({ status: 'success' })
         }
         catch (err) {
             res.json({ status: 'error', error: 'failed' })

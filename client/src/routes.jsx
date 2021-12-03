@@ -4,18 +4,20 @@ import jwt_decode from 'jwt-decode';
 //	Public pages
 const FirstPage = React.lazy(() => import( /*webpackChunkName: 'index'*/ './pages/index'));
 const Error = React.lazy(() => import( /*webpackChunkName: 'error'*/ './pages/error'));
-const Register = React.lazy(() => import( /*webpackChunkName: 'login'*/ './pages/login'));
 const Login = React.lazy(() => import( /*webpackChunkName: 'loginWithPassword'*/ './pages/loginWithPassword'));
 const Phone = React.lazy(() => import( /*webpackChunkName: 'loginValidate'*/ './pages/loginValidate'));
-const Checkout = React.lazy(() => import( /*webpackChunkName: 'index'*/ './pages/Signup/userBasic'));
 const A = React.lazy(() => import( /*webpackChunkName: 'index'*/ './pages/Signup/Signup'));
+// const Register = React.lazy(() => import( /*webpackChunkName: 'login'*/ './pages/login'));
+// const Checkout = React.lazy(() => import( /*webpackChunkName: 'index'*/ './pages/Signup/userBasic'));
 
 //	User pages
-const Navbar = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './pages/navbar'));
+// const Navbar = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './pages/navbar'));
 const Home = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './pages/home'));
 const EditUser = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './pages/userEdit'));
 const DeleteUser = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './pages/userDelete'));
 const UserProfile = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './pages/userProfile'));
+// const Stock = React.lazy(() => import( /*webpackChunkName: 'stock'*/ './pages/stock'));
+const Stock = null;
 
 //	Admin pages
 const Admin = React.lazy(() => import( /*webpackChunkName: 'users'*/ './admin/users'));
@@ -40,119 +42,106 @@ if (token) {
 }
 // console.log( 'User', user);
 
-export default [
+const Routes = [
 	{
 		path: '/signup',
-		slug: 'signup',
-		endpoint: 'signup',
 		params: [],
 		element: <A user={user} />
 	},
 	{
 		path: '/login',
-		slug: 'login',
-		endpoint: 'login',
 		params: [],
 		element: <Login user={user} />
 	},
 	{
 		path: '/phone',
-
-		slug: 'phone',
-		endpoint: 'phone',
 		params: [],
 		element: <Phone />
 	},
 	{
 		path: '/signin',
-		slug: 'signin',
-		endpoint: 'signin',
 		params: [],
 		element: <Phone user={user} />
 	},
-	{
-		path: '/user/profile/:id',
-		slug: 'user/profile/:id',
-		endpoint: 'user/profile/:id',
-		params: [],
-		element: <UserProfile />
-	},
-	{
-		path: '/edit/:id',
-		slug: '/edit/:id',
-		endpoint: 'user',
-		params: [],
-		element: <EditUser />
-	},
-
-	{
-		path: '/edit/stock/:id',
-		slug: '/edit/stock/:id',
-		endpoint: 'stock',
-		params: [],
-		element: <EditStock />
-	},
-	{
-		path: '/home',
-		slug: '/home',
-		endpoint: 'home',
-		params: [],
-		element: <Home user={user} />
-	},
-	{
-		path: '/delete/:id',
-		slug: '/delete/:id',
-		endpoint: 'user',
-		params: [],
-		element: <DeleteUser />
-	},
-	{
-		path: '/delete/stock/:id',
-		slug: '/delete/stock/:id',
-		endpoint: 'stock',
-		params: [],
-		element: <DeleteStock />
-	},
+	//	Admin Paths
 	{
 		path: '/admin/settings',
-		slug: 'admin/settings',
-		endpoint: 'admin/settings',
 		params: [],
 		element: <Error />
 	},
 	{
+		path: '/admin/user/:id/edit',
+		params: [],
+		element: <EditUser />
+	},
+	/*{
+		path: '/admin/user/:id/delete',
+		params: [],
+		element: <DeleteUser />
+	},*/
+	{
+		path: '/admin/user/:id',
+		params: [],
+		element: <UserProfile />
+	},
+	{
 		path: '/admin/users',
-		slug: 'admin/users',
-		endpoint: 'admin/users',
 		params: [],
 		element: <Admin user={user} />
 	},
-	{
-		path: '/admin/stocks',
-		slug: 'admin/stocks',
-		endpoint: 'admin/stocks',
+	/*{
+		path: '/admin/stock/:id/delete',
 		params: [],
-		element: <Stocks user={user} />
+		element: <DeleteStock />
+	},*/
+	{
+		path: '/admin/stock/:id',
+		params: [],
+		element: <EditStock />
 	},
 	{
-		path: '/add/stock',
-		exact: true,
-		endpoint: '',
+		path: '/admin/stocks/add',
 		params: [],
 		element: <AddStock />
 	},
 	{
+		path: '/admin/stocks',
+		params: [],
+		element: <Stocks user={user} />
+	},
+	//	User paths
+	{
+		path: '/user/stock/:id',
+		params: [ 'id' ],
+		element: <Stock user={user} />
+	},
+	{
+		path: '/user/profile',
+		params: [],
+		element: <UserProfile />
+	},
+	{
+		path: '/user',
+		params: [],
+		element: <Home user={user} />
+	},
+	{
+		path: '/home',
+		params: [],
+		element: <Home user={user} />
+	},
+	{
 		path: '/',
 		exact: true,
-		endpoint: 'home',
 		params: [],
 		element: <FirstPage />
 	},
 	{
 		path: '*',
 		exact: false,
-		endpoint: '',
 		params: [],
 		element: <Error />
 	}
 ];
+
+export default Routes;

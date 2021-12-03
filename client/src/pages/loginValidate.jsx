@@ -1,30 +1,21 @@
 import React, { useEffect, useState } from "react";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
 import { useNavigate } from "react-router-dom";
+import firebase from "firebase/compat/app";
+import auth from "firebase/compat/auth";
 import axios from "axios";
 import Signup from "./login";
-import jwt_decode from 'jwt-decode';
-const Phone = ({ UserToken }) => {
-    let globalUser = null;
-    const now = new Date();
-    const token = localStorage.getItem('token') || null;
-    if (token) {
-        const decoded = jwt_decode(token);
-        console.log(decoded);
 
-        if (decoded.expiry && decoded.expiry < now && decoded.status && decoded.status === 1) {
-            globalUser = decoded
-            goto('/home');
-        }
-
-    }
-
+const Phone = ( props ) => {
 
     let phone_number;
     const [viewOtpForm, setViewOtpForm] = useState(false);
     const [user, setUser] = useState(false);
     let goto = useNavigate();
+
+    if( props.user && props.user.userID ) {
+        goto('/home');
+    }
+
     const firebaseConfig = {
         apiKey: "AIzaSyBjk9IaChZz4Zuh1-rfTaRpmCsk5BYsUUc",
         authDomain: "darkmatter-in.firebaseapp.com",
@@ -121,8 +112,7 @@ const Phone = ({ UserToken }) => {
                 console.log(error);
             });
     };
-    if (UserToken)
-        goto('/home');
+
     return (
         <div>
             <div id="recaptcha-container"></div>

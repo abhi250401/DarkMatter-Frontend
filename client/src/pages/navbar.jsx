@@ -1,27 +1,12 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+// import { styled, alpha } from '@mui/material/styles';
+import { AppBar, Box, Button, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
+import { AccountCircle, MoreVert } from '@mui/icons-material';
 
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import { Button } from '@mui/material';
-
-const Search = styled('div')(({ theme }) => ({
+/*const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -59,14 +44,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
             width: '20ch',
         },
     },
-}));
+}));*/
 
 export default function PrimarySearchAppBar(props) {
-    console.log(props);
+    // console.log(props);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const [loading, setloading] = useState('')
-    const history = useNavigate();
+    // const [loading, setloading] = useState('')
+    // const history = useNavigate();
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -162,6 +147,9 @@ export default function PrimarySearchAppBar(props) {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
+            <div style={{ backgroundColor: "#36454f", height: "5vh", fontSize: "0.8em", justifyContent: "center", alignItems: "center", display: "flex" }}>
+                TICKER COMES HERE....
+            </div>
             <AppBar position="static" style={{ backgroundColor: "#f5f5f5", justifyContent: "space-between", display: "flex", color: "black" }}>
                 <Toolbar style={{ display: "flex", justifyContent: "flex-end", marginLeft: "1%" }}>
 
@@ -176,8 +164,6 @@ export default function PrimarySearchAppBar(props) {
 
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-
-
                         <IconButton
                             size="large"
                             edge="end"
@@ -200,7 +186,7 @@ export default function PrimarySearchAppBar(props) {
                             onClick={handleMobileMenuOpen}
                             color="inherit"
                         >
-                            <MoreIcon />
+                            <MoreVert />
                         </IconButton>
                     </Box>
                 </Toolbar>
@@ -210,4 +196,3 @@ export default function PrimarySearchAppBar(props) {
         </Box >
     );
 }
-
