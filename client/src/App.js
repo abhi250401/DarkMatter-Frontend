@@ -11,7 +11,6 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route exact path="/home" element={<Home />} />
                 {routes.map((route, i) =>
                     <Route
 

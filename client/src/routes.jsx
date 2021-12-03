@@ -1,5 +1,6 @@
 // import loadable from 'react-loadable';
-
+import React from "react";
+import { Suspense } from "react";
 //	Public pages
 import Error from "./pages/error";
 import FirstPage from "./pages/index";
@@ -15,13 +16,13 @@ import Home from './pages/home';
 import EditUser from "./pages/userEdit";
 import DeleteUser from "./pages/userDelete";
 import UserProfile from "./pages/userProfile";
-
-//	Admin pages
-import Admin from './admin/users';
 import Stocks from "./admin/stocks";
 import AddStock from "./admin/addStock";
 import EditStock from "./admin/editStock";
 import DeleteStock from "./admin/deleteStock";
+//	Admin pages
+const Admin = React.lazy(() => import("./admin/users"));
+
 
 
 const token = localStorage.getItem('token') || null;
@@ -80,6 +81,13 @@ export default [
 		element: <EditStock />
 	},
 	{
+		path: '/home',
+		slug: '/home',
+		endpoint: 'home',
+		params: [],
+		element: <Home />
+	},
+	{
 		path: '/delete/:id',
 		slug: '/delete/:id',
 		endpoint: 'user',
@@ -105,7 +113,9 @@ export default [
 		slug: 'admin/users',
 		endpoint: 'admin/users',
 		params: [],
-		element: <Admin />
+		element: <Suspense fallback={<div style={{ color: "black" }}>Loading</div>}>
+			<Admin />
+		</Suspense>
 	},
 	{
 		path: '/admin/stocks',

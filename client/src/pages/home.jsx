@@ -17,12 +17,16 @@ export default function Home({ user }) {
     const [suggestion, setSuggestion] = useState([])
 
     const token = localStorage.getItem('token');
+
     const tok = jwt_decode(token);
     console.log(tok);
 
     useEffect(() => {
 
+
         const loadApiData = async () => {
+            const token = localStorage.getItem('token');
+
 
             const response = await axios.get(process.env.REACT_APP_API_URL + '/admin/stocks');
             console.log(response.data);
@@ -31,13 +35,18 @@ export default function Home({ user }) {
         }
 
         const fetchWishlistData = async () => {
+            const token = localStorage.getItem('token');
+
             const tok = jwt_decode(token);
             console.log(tok);
             if (tok) {
                 const userId = tok._id
-                await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${userId}/2`).then(response => {
-                    setwishlistData(response.data);
+                await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${userId}/0`).then(response => {
+                    console.log(response);
+                    setwishlistData(response.data.data);
+
                     console.log(wishlistData);
+                    setLoading(true);
                 }).catch(err => {
                     console.log(err);
                 })
@@ -87,6 +96,28 @@ export default function Home({ user }) {
                     stockId: suggestionId,
                 }),
             })
+            if (response.status !== "error") {
+
+                const token = localStorage.getItem('token');
+
+                const tok = jwt_decode(token);
+                console.log(tok);
+                if (tok) {
+                    const userId = tok._id
+                    await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${userId}/0`).then(response => {
+                        console.log(response);
+                        setwishlistData(response.data.data);
+
+                        console.log(wishlistData);
+                        setLoading(true);
+                    }).catch(err => {
+                        console.log(err);
+                    })
+
+
+
+                }
+            }
         }
     }
 
@@ -105,14 +136,18 @@ export default function Home({ user }) {
             </div>
             <Navbar Token={tok} />
             <div>
-                <div style={{}}>
+                <div style={{ marginTop: "2vh", marginLeft: "2vh" }}>
                     <input value={text} placeholder="search" onChange={(e) => onChangeHandler(e.target.value)} />
                     {suggestion && suggestion.map((suggestion, i) =>
-                        <div><div style={{ color: "black", display: "flex", alignItems: "center", height: "auto" }} key={i}>{suggestion.name} <a onClick={() => addtoWishlist(suggestion.name, suggestion._id)}>add </a></div></div>
+                        <div><div style={{ color: "black", display: "flex", alignItems: "center", height: "auto", paddingRight: "0.4em" }} key={i}>{suggestion.name} <a style={{ paddingLeft: "1.2em", color: "blue", cursor: "pointer" }} onClick={() => addtoWishlist(suggestion.name, suggestion._id)}>add </a></div></div>
                     )
                     }
                 </div>
-                <div>
+                <div style={{ marginTop: "5vh", marginLeft: "2vh", padding: "0.9em" }}>{
+                    loading && wishlistData && wishlistData.map((suggestion) =>
+                        <div><div style={{ padding: "0.5em", color: "black", display: "flex", alignItems: "center", height: "auto" }} key={suggestion.stockId}>{suggestion.stockName} </div></div>
+                    )
+                }
 
                 </div>
             </div>

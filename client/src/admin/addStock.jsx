@@ -38,7 +38,7 @@ const EditUser = () => {
         })
 
         const data = await response.json()
-        if (data.status == "ok") {
+        if (data.status === "ok") {
             alert('successfull')
             history('/admin/stocks'); console.log(data);
         } else {

@@ -9,16 +9,17 @@ router.post('/wishlist', async (req, res) => {
         stockName: req.body.stockName
     };
 
-    await Wishlist.findOne(checkList)
-
-        .catch(error => { console.log(error) });
-
-    try {
-        const wishList = new Wishlist(checkList);
-        const savedWishlist = await wishList.save();
-        res.json({ status: 'success', data: savedWishlist })
-    } catch (err) {
-        res.json({ status: 'error', error: err })
+    const stockAdded = await Wishlist.findOne(checkList).catch(error => { console.log(error) });
+    if (stockAdded)
+        res.json({ status: 'error', error: 'This email id already exists' })
+    if (!stockAdded) {
+        try {
+            const wishList = new Wishlist(checkList);
+            const savedWishlist = await wishList.save();
+            res.json({ status: 'success', data: savedWishlist })
+        } catch (err) {
+            res.json({ status: 'error', error: err })
+        }
     }
 });
 

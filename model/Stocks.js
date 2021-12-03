@@ -5,7 +5,7 @@ const StockSchema = new mongoose.Schema({
     },
     slug: {
         type: String,
-        required: true,
+
         max: 255,
     },
     name: {
