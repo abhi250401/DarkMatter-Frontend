@@ -1,47 +1,59 @@
-// import loadable from 'react-loadable';
-import React from "react";
-import { Suspense } from "react";
+import React from 'react';
+import jwt_decode from 'jwt-decode';
+
 //	Public pages
-import Error from "./pages/error";
-import FirstPage from "./pages/index";
-import Register from './pages/login';
-import Login from './pages/loginWithPassword';
-import Phone from "./pages/loginValidate";
-import Checkout from "./pages/Signup/userBasic";
-import A from "./pages/Signup/Signup"
+const FirstPage = React.lazy( () => import( /*webpackChunkName: 'index'*/ './pages/index' ) );
+const Error = React.lazy( () => import( /*webpackChunkName: 'error'*/ './pages/error' ) );
+const Register = React.lazy( () => import( /*webpackChunkName: 'login'*/ './pages/login' ) );
+const Login = React.lazy( () => import( /*webpackChunkName: 'loginWithPassword'*/ './pages/loginWithPassword' ) );
+const Phone = React.lazy( () => import( /*webpackChunkName: 'loginValidate'*/ './pages/loginValidate' ) );
+const Checkout = React.lazy( () => import( /*webpackChunkName: 'index'*/ './pages/Signup/userBasic' ) );
+const A = React.lazy( () => import( /*webpackChunkName: 'index'*/ './pages/Signup/Signup' ) );
 
 //	User pages
-import Navbar from './pages/navbar';
-import Home from './pages/home';
-import EditUser from "./pages/userEdit";
-import DeleteUser from "./pages/userDelete";
-import UserProfile from "./pages/userProfile";
-import Stocks from "./admin/stocks";
-import AddStock from "./admin/addStock";
-import EditStock from "./admin/editStock";
-import DeleteStock from "./admin/deleteStock";
+const Navbar = React.lazy( () => import( /*webpackChunkName: 'adminUsers'*/ './pages/navbar' ) );
+const Home = React.lazy( () => import( /*webpackChunkName: 'adminUsers'*/ './pages/home' ) );
+const EditUser = React.lazy( () => import( /*webpackChunkName: 'adminUsers'*/ './pages/userEdit' ) );
+const DeleteUser = React.lazy( () => import( /*webpackChunkName: 'adminUsers'*/ './pages/userDelete' ) );
+const UserProfile = React.lazy( () => import( /*webpackChunkName: 'adminUsers'*/ './pages/userProfile' ) );
+
 //	Admin pages
-const Admin = React.lazy(() => import("./admin/users"));
+const Admin = React.lazy( () => import( /*webpackChunkName: 'users'*/ './admin/users' ) );
+const Stocks = React.lazy( () => import( /*webpackChunkName: 'stocks'*/ './admin/stocks' ) );
+const AddStock = React.lazy( () => import( /*webpackChunkName: 'addStock'*/ './admin/addStock' ) );
+const EditStock = React.lazy( () => import( /*webpackChunkName: 'editStock'*/ './admin/editStock' ) );
+const DeleteStock = React.lazy( () => import( /*webpackChunkName: 'deleteStock'*/ './admin/deleteStock' ) );
 
+//  Check if user is logged in
+let user = {};
+const token = localStorage.getItem('token') || {};
+if ( token ) {
+    const decoded = jwt_decode( token );
+    if( decoded.expiry && Date.now() <= decoded.exp * 1000 && decoded.status && parseInt( decoded.status ) === 1 ) {
+        user = decoded;
+    }
 
-
-const token = localStorage.getItem('token') || null;
+    //	To be removed
+    if ( Date.now() <= decoded.exp * 1000 ) {
+    	user = decoded;
+    } 
+}
+// console.log( 'User', user);
 
 export default [
-
 	{
 		path: '/signup',
 		slug: 'signup',
 		endpoint: 'signup',
 		params: [],
-		element: <A UserToken={token} />
+		element: <A user={user} />
 	},
 	{
 		path: '/login',
 		slug: 'login',
 		endpoint: 'login',
 		params: [],
-		element: <Login UserToken={token} />
+		element: <Login user={user} />
 	},
 	{
 		path: '/phone',
@@ -56,7 +68,7 @@ export default [
 		slug: 'signin',
 		endpoint: 'signin',
 		params: [],
-		element: <Phone UserToken={token} />
+		element: <Phone user={user} />
 	},
 	{
 		path: '/user/profile/:id',
@@ -85,7 +97,7 @@ export default [
 		slug: '/home',
 		endpoint: 'home',
 		params: [],
-		element: <Home />
+		element: <Home user={user} />
 	},
 	{
 		path: '/delete/:id',
@@ -113,9 +125,7 @@ export default [
 		slug: 'admin/users',
 		endpoint: 'admin/users',
 		params: [],
-		element: <Suspense fallback={<div style={{ color: "black" }}>Loading</div>}>
-			<Admin />
-		</Suspense>
+		element: <Admin />
 	},
 	{
 		path: '/admin/stocks',
@@ -125,11 +135,18 @@ export default [
 		element: <Stocks />
 	},
 	{
+		path: '/add/stock',
+		exact: true,
+		endpoint: '',
+		params: [],
+		element: <AddStock />
+	},
+	{
 		path: '/',
 		exact: true,
 		endpoint: 'home',
 		params: [],
-		element: <FirstPage UserToken={token} />
+		element: <FirstPage />
 	},
 	{
 		path: '*',
@@ -137,12 +154,5 @@ export default [
 		endpoint: '',
 		params: [],
 		element: <Error />
-	},
-	{
-		path: '/add/stock',
-		exact: true,
-		endpoint: '',
-		params: [],
-		element: <AddStock />
 	}
 ];

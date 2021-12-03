@@ -24,10 +24,8 @@ router.post('/register', async (req, res) => {
             phone: req.body.formData.phone,
             aadhar: req.body.formData.aadhar,
             aadhaar: req.body.formData.aadhar,
-
             pan: req.body.formData.pan,
             dob: req.body.formData.dob,
-
             role: 3,
             verified: 0,
             status: 0,
@@ -35,7 +33,7 @@ router.post('/register', async (req, res) => {
         });
 
         const savedUser = await user.save();
-        res.json({ status: 'success' })
+        res.json({ status: 'success', data : savedUser })
     }
     catch (err) {
         res.json({ status: 'error', error: 'failed login' })
@@ -57,21 +55,19 @@ router.post('/login', async (req, res) => {
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.json({ status: 'error', user: false })
 
-    var expiryDate = new Date();
-    expiryDate.setMonth(expiryDate.getMonth() + 1);
     console.log(user);
-    // var expiryDate = new Date(date.setMonth(date.getMonth() + 1));
-    //create a token and assign it
+
+    //  Create a token and assign it
     const token = jwt.sign({
         _id: user._id,
         userID: user._id,
         avatar: null,
-        role: user.role,
-        status: user.status,
-        name: user.name,
-
-        expiry: expiryDate
-    }, "hisdi");
+        role: user.role || 0,
+        status: user.status || 0,
+        name: user.name || '',
+    }, 'hisdi', {
+        expiresIn: '30d'
+    });
     return res.json({ status: 'success', user: token })
 })
 

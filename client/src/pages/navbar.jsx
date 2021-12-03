@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
+
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,13 +16,9 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { useState, useEffect } from 'react';
-import jwt_decode from "jwt-decode";
-import { useNavigate } from 'react-router';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
@@ -61,26 +61,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function PrimarySearchAppBar(data) {
+export default function PrimarySearchAppBar( props ) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [loading, setloading] = useState('')
-    const [tok, setTok] = useState(null);
     const history = useNavigate();
-    useEffect(() => {
-
-        const token = localStorage.getItem('token') || null;
-        if (token) {
-            const decoded = jwt_decode(token);
-            console.log(decoded);
-            setTok(decoded._id);
-        }
-
-
-    }, [])
-
-
-
+    
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -119,7 +105,7 @@ export default function PrimarySearchAppBar(data) {
             onClose={handleMenuClose}
         >
 
-            <Link to={`/user/profile/${tok}`}>    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
+            <Link to={`/user/profile/${ props.user.userID ?? 0 }`}>    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
             <MenuItem onClick={handleMenuClose}>Change Password</MenuItem>
             <Link to="/admin/users">  <MenuItem onClick={handleMenuClose}>  Users</MenuItem></Link>
             <Link to="/admin/stocks"> <MenuItem onClick={handleMenuClose}> Stocks</MenuItem></Link>
