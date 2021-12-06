@@ -5,14 +5,14 @@ import auth from "firebase/compat/auth";
 import axios from "axios";
 import Signup from "./login";
 
-const Phone = ( props ) => {
+const Phone = (props) => {
 
     let phone_number;
     const [viewOtpForm, setViewOtpForm] = useState(false);
     const [user, setUser] = useState(false);
     let goto = useNavigate();
 
-    if( props.user && props.user.userID ) {
+    if (props.user && props.user.userID) {
         goto('/home');
     }
 

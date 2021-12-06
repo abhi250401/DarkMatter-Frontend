@@ -47,7 +47,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));*/
 
 export default function PrimarySearchAppBar(props) {
-    // console.log(props);
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     // const [loading, setloading] = useState('')
@@ -92,7 +92,7 @@ export default function PrimarySearchAppBar(props) {
         >
 
             <Link to={`/user/profile/${props.user.userID || 0}`}>    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
-            <MenuItem onClick={handleMenuClose}>Change Password</MenuItem>
+            <MenuItem >Change Password</MenuItem>
             <Link to="/admin/users">  <MenuItem onClick={handleMenuClose}>  Users</MenuItem></Link>
             <Link to="/admin/stocks"> <MenuItem onClick={handleMenuClose}> Stocks</MenuItem></Link>
             <Link to="/admin/settings"><MenuItem onClick={handleMenuClose}> Settings </MenuItem></Link>

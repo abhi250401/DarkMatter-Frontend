@@ -70,17 +70,17 @@ const Routes = [
 		element: <Error />
 	},
 	{
-		path: '/admin/user/:id/edit',
+		path: '/edit/:id',
 		params: [],
 		element: <EditUser />
 	},
-	/*{
-		path: '/admin/user/:id/delete',
+	{
+		path: '/delete/:id/',
 		params: [],
 		element: <DeleteUser />
-	},*/
+	},
 	{
-		path: '/admin/user/:id',
+		path: '/user/profile/:id',
 		params: [],
 		element: <UserProfile />
 	},
@@ -89,18 +89,19 @@ const Routes = [
 		params: [],
 		element: <Admin user={user} />
 	},
-	/*{
-		path: '/admin/stock/:id/delete',
+	{
+		path: '/delete/stock/:id',
 		params: [],
 		element: <DeleteStock />
-	},*/
+	},
+
 	{
-		path: '/admin/stock/:id',
+		path: '/edit/stock/:id',
 		params: [],
 		element: <EditStock />
 	},
 	{
-		path: '/admin/stocks/add',
+		path: '/admin/stock/add',
 		params: [],
 		element: <AddStock />
 	},
@@ -112,7 +113,7 @@ const Routes = [
 	//	User paths
 	{
 		path: '/user/stock/:id',
-		params: [ 'id' ],
+		params: ['id'],
 		element: <Stock user={user} />
 	},
 	{

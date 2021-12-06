@@ -1,0 +1,7 @@
+.autoContainer { 
+  display:flex ; 
+  justify-content: center;
+}
+body{
+  color:black;
+}

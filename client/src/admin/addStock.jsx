@@ -7,6 +7,7 @@ import axios from 'axios';
 const useStyles = makeStyles({
     container: {
         width: '50%',
+        color: 'black',
         margin: '5% 0 0 25%',
         '& > *': {
             marginTop: 20
@@ -38,7 +39,7 @@ const EditUser = () => {
         })
 
         const data = await response.json()
-        if (data.status === "ok") {
+        if (data.status === "success") {
             alert('successfull')
             history('/admin/stocks'); console.log(data);
         } else {
@@ -58,7 +59,7 @@ const EditUser = () => {
 
             <FormControl>
                 <InputLabel htmlFor="my-input">Price</InputLabel>
-                <Input onChange={(e) => setPrice(e.target.value)} name="price" id="price" type="price" value={price} id="my-input" aria-describedby="my-helper-text" />
+                <Input onChange={(e) => setPrice(e.target.value)} name="price" id="price" type="number" value={price} id="my-input" aria-describedby="my-helper-text" />
             </FormControl>
 
             <FormControl>

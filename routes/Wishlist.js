@@ -36,7 +36,7 @@ router.get('/wishlist/:id1/:id2', async (req, res) => {
 });
 
 router.delete('/wishlist/:id', async (req, res) => {
-    Wishlist.deleteOne({ _id: req.params.id, userId: req.body.user_id }).then((result) => {
+    Wishlist.deleteOne({ _id: req.params.id, userId: req.body.userId }).then((result) => {
         res.json({ status: 'success', data: result });
     }).catch((err) => {
         res.json({ status: 'error', error: err });

@@ -73,12 +73,12 @@ const EditUser = () => {
             </FormControl>
 
             <FormControl>
-                <InputLabel htmlFor="my-input">Email</InputLabel>
+                <InputLabel htmlFor="my-input">Price</InputLabel>
                 <Input onChange={(e) => setPrice(e.target.value)} name="price" id="price" type="price" value={price} id="my-input" aria-describedby="my-helper-text" />
             </FormControl>
 
             <FormControl>
-                <Button variant="contained" color="primary" onClick={() => editStockDetails()}>Edit User</Button>
+                <Button variant="contained" color="primary" onClick={() => editStockDetails()}>Edit Stock</Button>
             </FormControl>
         </FormGroup>
     )

@@ -288,7 +288,7 @@ export default function EnhancedTable(props) {
             <Box sx={{ width: "100%" }}>
 
                 <Paper sx={{ width: "100%", mb: 2 }}>
-                    <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to="/add/stock">Add Stock</Button>
+                    <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to="/admin/stock/add">Add Stock</Button>
 
 
                     <EnhancedTableToolbar numSelected={selected.length} />
