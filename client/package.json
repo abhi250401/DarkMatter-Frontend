@@ -27,8 +27,8 @@
     "@testing-library/user-event": "^13.5.0"
   },
   "scripts": {
-    "start": "set PORT=3001 && react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts --openssl-legacy-provider build",
+    "start": "set PORT=3001 && react-scripts start",
+    "build": "react-scripts ",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

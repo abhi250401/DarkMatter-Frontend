@@ -6,9 +6,12 @@ import MuiAlert from '@mui/material/Alert';
 import CommentIcon from '@mui/icons-material/Comment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PlaylistAdd from '@mui/icons-material/PlaylistAdd';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import axios from "axios";
 import Navbar from './navbar'
 import './home.css'
+import { AnalyticsRounded } from '@mui/icons-material';
 
 export default function Home(props) {
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -121,7 +124,7 @@ export default function Home(props) {
             loadApiData();
         }
 
-        if (text.length > 0) {
+        if (text.length >= 3) {
             matches = apiData.filter(stock => {
                 const regex = new RegExp(`${text}`, 'gi');
                 return stock.name.match(regex);
@@ -150,7 +153,7 @@ export default function Home(props) {
             }),
         }).then((response) => {
             console.log(response);
-            if( response.status === 'success' ) {
+            if (response.status === 'success') {
                 getUserWishlist(page);
             }
         }).catch(() => {
@@ -182,7 +185,7 @@ export default function Home(props) {
             <div>
                 <Grid container component="main" sx={{ height: 'calc( 100vh - 102px )' }}>
                     <Grid item xs={3} style={{
-                        position: 'relative', zIndex : 0
+                        position: 'relative', zIndex: 0
                     }}>
                         {/*<Stack>
                             <Autocomplete
@@ -212,8 +215,8 @@ export default function Home(props) {
                                 )}
 
                                     />*/}
-                        <div class="search-wrapper" style={{ display : 'flex', alignItems : 'center', flexDirection : 'column' }}>
-                            <input style={{ padding: '.5rem', width: '100%', margin: 0, 'border' : '1px solid #ccc', 'border-radius' : 0 }} value={text} placeholder="Search..." onChange={(e) => searchStock(e.target.value)} />
+                        <div class="search-wrapper" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                            <input style={{ padding: '.5rem', width: '100%', margin: 0, 'border': '1px solid #ccc', 'border-radius': 0 }} value={text} placeholder="Search..." onChange={(e) => searchStock(e.target.value)} />
 
                             {/*suggestion && suggestion.map((suggestion, i) =>
                                 <div class="auto-container"><div class="autoContainer"
@@ -256,34 +259,35 @@ export default function Home(props) {
                                     </FixedSizeList>
                             )*/}
 
-                            <List className={ ( suggestion && suggestion.length ) ? 'show' : 'hide' } sx={{
-                                    width: '100%',
-                                    // maxWidth: 330,
-                                    bgcolor: '#fff',
-                                    position: 'absolute',
-                                    overflow: 'auto',
-                                    // maxHeight: 300,
-                                    '& ul': { padding: 0 },
-                                    top: '2.25rem',
-                                    backgroundColor: '#fff',
-                                    height: '75%',
-                                    left: 0,
-                                    right: 0,
-                                    bottom: 0,
-                                    zIndex: 1,
-                                }}> 
+                            <List className={(suggestion && suggestion.length) ? 'show' : 'hide'} sx={{
+                                width: '100%',
+                                // maxWidth: 330,
+                                bgcolor: '#fff',
+                                position: 'absolute',
+                                overflow: 'auto',
+                                // maxHeight: 300,
+                                '& ul': { padding: 0 },
+                                top: '2.25rem',
+                                backgroundColor: '#fff',
+                                height: '75%',
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                zIndex: 1,
+                            }}>
                                 {suggestion && suggestion.map((suggestion, i) => (
-                                <ListItem
-                                    key={suggestion._id}
-                                    // disablePadding
-                                    secondaryAction={
-                                        <IconButton disablePadding>
-                                            <PlaylistAdd onClick={() => addtoWishlist(suggestion)} color="primary" />
-                                        </IconButton>
-                                    }
-                                >
-                                    <ListItemText style={{ color: "black" }} disablePadding primary={`${suggestion.name}`} />
-                                </ListItem>
+                                    <ListItem
+                                        key={suggestion._id}
+                                        // disablePadding
+                                        secondaryAction={
+                                            <div> <IconButton disablePadding>
+                                                <PlaylistAdd onClick={() => addtoWishlist(suggestion)} color="primary" />
+                                            </IconButton><IconButton ><AnalyticsIcon /></IconButton><IconButton><CompareArrowsIcon /></IconButton>
+                                            </div>
+                                        }
+                                    >
+                                        <ListItemText style={{ color: "black" }} disablePadding primary={`${suggestion.name}`} />
+                                    </ListItem>
                                 ))}
                             </List>
                         </div>
@@ -303,10 +307,10 @@ export default function Home(props) {
                             <Pagination count={5} hidePrevButton hideNextButton page={page} variant="outlined" shape="rounded" onChange={selectUserWishlist} />
                         </Stack>
                     </Grid>
-                    <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem', zIndex : 1 }}>
-                        <h3>Hi {props.user.name}!</h3>
-                        <h1 style={{ color: "black", fontFamily: "Helvetica" }}>{stock}</h1>
-                        <p style={{ fontFamily: "Helvetica" }}> {stock !== '' ? <span>Price : </span> : null}{stockPrice}</p>
+                    <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem', zIndex: 1 }}>
+                        {stock === '' ? (<h3>Hi {props.user.name}!</h3>) : (
+                            <div> <h1 style={{ color: "black", fontFamily: "Helvetica" }}>{stock}</h1>
+                                <p style={{ fontFamily: "Helvetica" }}>  <span>Price : </span>{stockPrice}</p></div>)}
                     </Grid>
                 </Grid>
             </div>

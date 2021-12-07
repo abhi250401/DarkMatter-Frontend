@@ -13,7 +13,7 @@ const Phone = (props) => {
     let goto = useNavigate();
 
     if (props.user && props.user.userID) {
-        goto('/home');
+        goto('/user');
     }
 
     const firebaseConfig = {
