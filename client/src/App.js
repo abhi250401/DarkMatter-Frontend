@@ -6,7 +6,7 @@ import './App.css';
 function App() {
     return (
         <BrowserRouter>
-            <Suspense fallback={<div style={{ backgroundColor: '#000', color : '#fff', height : '100vh', display : 'flex', alignItems : 'center', justifyContent : 'center' }}>Loading...</div>}>
+            <Suspense fallback={<div style={{ backgroundColor: '#191919', color : '#999', height : '100vh', display : 'flex', alignItems : 'center', justifyContent : 'center' }}>Loading...</div>}>
                 <Routes>
                     {routes.map((route, i) =>
                     <Route

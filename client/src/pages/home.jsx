@@ -28,6 +28,7 @@ export default function Home(props) {
 
     const getUserWishlist = async function (listId) {
         setLoading(true);
+        setSuggestion([]);
         await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/${listId}`).then(response => {
             setwishlistData(response.data.data);
             <Alert severity="error">This is an error message!</Alert>
@@ -76,7 +77,8 @@ export default function Home(props) {
         const loadApiData = async () => {
             const response = await axios.get(process.env.REACT_APP_API_URL + '/admin/stocks');
             setApiData(response.data)
-        }
+        };
+
         loadApiData();
 
         /*const fetchWishlistData = async () => {
@@ -145,20 +147,15 @@ export default function Home(props) {
                 listId: page,
                 stockId: stock._id,
                 stockName: stock.name,
-
             }),
-        }).then(() => {
+        }).then((response) => {
             console.log(response);
+            if( response.status === 'success' ) {
+                getUserWishlist(page);
+            }
         }).catch(() => {
             return
-        })
-
-        getUserWishlist(page);
-        /*await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/${page}`).then(response => {
-            setwishlistData(response.data.data);
-        }).catch(err => {
-            console.log(err);
-        })*/
+        });
     }
 
     function renderRow(props) {
@@ -185,7 +182,7 @@ export default function Home(props) {
             <div>
                 <Grid container component="main" sx={{ height: 'calc( 100vh - 102px )' }}>
                     <Grid item xs={3} style={{
-                        position: 'relative'
+                        position: 'relative', zIndex : 0
                     }}>
                         {/*<Stack>
                             <Autocomplete
@@ -215,85 +212,89 @@ export default function Home(props) {
                                 )}
 
                                     />*/}
+                        <div class="search-wrapper" style={{ display : 'flex', alignItems : 'center', flexDirection : 'column' }}>
+                            <input style={{ padding: '.5rem', width: '100%', margin: 0, 'border' : '1px solid #ccc', 'border-radius' : 0 }} value={text} placeholder="Search..." onChange={(e) => searchStock(e.target.value)} />
 
-                        <input style={{ padding: "8px", width: "80%", margin: "7px" }} value={text} placeholder="search" onChange={(e) => searchStock(e.target.value)} />
-                        {/*suggestion && suggestion.map((suggestion, i) =>
-                            <div class="auto-container"><div class="autoContainer"
-                                style={{
-                                    color: "black",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    height: "auto",
-                                    paddingRight: "0.4em"
-                                }} key={i}>
-                                <span> {suggestion.name} </span>
-                                <a
+                            {/*suggestion && suggestion.map((suggestion, i) =>
+                                <div class="auto-container"><div class="autoContainer"
                                     style={{
-                                        paddingLeft: "1.2em",
-                                        color: "blue", cursor:
-                                            "pointer"
-                                    }}
-                                    onClick={() => addtoWishlist(suggestion)}>Add</a></div></div>
-                        )
-                        }
-
-                        {/* <div style={{ marginTop: "5vh", marginLeft: "2vh", padding: "0.9em" }}>{
-                            loading && wishlistData && wishlistData.map((suggestion) =>
-                                <div><div style={{ padding: "0.5em", color: "black", display: "flex", alignItems: "center", height: "auto" }} key={suggestion.stockId}>{suggestion.stockName} </div></div>
+                                        color: "black",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        height: "auto",
+                                        paddingRight: "0.4em"
+                                    }} key={i}>
+                                    <span> {suggestion.name} </span>
+                                    <a
+                                        style={{
+                                            paddingLeft: "1.2em",
+                                            color: "blue", cursor:
+                                                "pointer"
+                                        }}
+                                        onClick={() => addtoWishlist(suggestion)}>Add</a></div></div>
                             )
-                             }
-                             </div>
-                          */}
-                        {/*
-                            suggestion && suggestion.map((suggestion, i) =>
+                            }
 
-                                <FixedSizeList
-                                    height={200}
-                                    width={200}
-                                    itemSize={20}
-                                    itemCount={suggestion.length}
-                                    overscanCount={5}
+                            {/* <div style={{ marginTop: "5vh", marginLeft: "2vh", padding: "0.9em" }}>{
+                                loading && wishlistData && wishlistData.map((suggestion) =>
+                                    <div><div style={{ padding: "0.5em", color: "black", display: "flex", alignItems: "center", height: "auto" }} key={suggestion.stockId}>{suggestion.stockName} </div></div>
+                                )
+                                 }
+                                 </div>
+                              */}
+                            {/*
+                                suggestion && suggestion.map((suggestion, i) =>
+
+                                    <FixedSizeList
+                                        height={200}
+                                        width={200}
+                                        itemSize={20}
+                                        itemCount={suggestion.length}
+                                        overscanCount={5}
+                                    >
+                                        {renderRow(suggestion)}
+                                    </FixedSizeList>
+                            )*/}
+
+                            <List className={ ( suggestion && suggestion.length ) ? 'show' : 'hide' } sx={{
+                                    width: '100%',
+                                    // maxWidth: 330,
+                                    bgcolor: '#fff',
+                                    position: 'absolute',
+                                    overflow: 'auto',
+                                    // maxHeight: 300,
+                                    '& ul': { padding: 0 },
+                                    top: '2.25rem',
+                                    backgroundColor: '#fff',
+                                    height: '75%',
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    zIndex: 1,
+                                }}> 
+                                {suggestion && suggestion.map((suggestion, i) => (
+                                <ListItem
+                                    key={suggestion._id}
+                                    // disablePadding
+                                    secondaryAction={
+                                        <IconButton disablePadding>
+                                            <PlaylistAdd onClick={() => addtoWishlist(suggestion)} color="primary" />
+                                        </IconButton>
+                                    }
                                 >
-                                    {renderRow(suggestion)}
-                                </FixedSizeList>
-
-
-                        )*/}
-
-                        {suggestion && suggestion.map((suggestion, i) => (
-                            <List sx={{
-                                width: '95%',
-                                maxWidth: 330,
-                                bgcolor: 'background.paper',
-                                position: 'relative',
-                                overflow: 'auto',
-                                maxHeight: 300,
-                                '& ul': { padding: 0 },
-                            }}> <ListItem
-                                key={suggestion._id}
-                                disableGutters
-
-                                disablePadding
-                                secondaryAction={
-                                    <IconButton disablePadding>
-                                        <PlaylistAdd onClick={() => addtoWishlist(suggestion)} color="primary" />
-                                    </IconButton>
-                                }
-                            >
-                                    <ListItemText style={{ color: "black", marginLeft: "17px" }} disablePadding primary={`${suggestion.name}`} />
+                                    <ListItemText style={{ color: "black" }} disablePadding primary={`${suggestion.name}`} />
                                 </ListItem>
+                                ))}
                             </List>
-                        ))}
-                        <p style={{ color: "black", marginLeft: "15px", fontWeight: "200", background: "" }}> Wishlist {page}</p>
-
+                        </div>
+                        {/* <p style={{ color: "black", marginLeft: "15px", fontWeight: "200", background: "" }}> Wishlist {page}</p>*/}
                         {
                             loading && wishlistData && wishlistData.map((suggestion) => <ListItem key={suggestion.stockId} component="div" disablePadding>
 
                                 <ListItemButton onClick={() => { stockDetails(suggestion) }} style={{ color: "black" }}>
-
                                     <ListItemText onClick={() => { stockDetails(suggestion) }} primary={suggestion.stockName} />
-
-                                </ListItemButton><IconButton disablePadding>
+                                </ListItemButton>
+                                <IconButton disablePadding>
                                     <DeleteIcon onClick={() => removeFromWatchlist(suggestion)} color="primary" />
                                 </IconButton>
                             </ListItem>
@@ -302,7 +303,7 @@ export default function Home(props) {
                             <Pagination count={5} hidePrevButton hideNextButton page={page} variant="outlined" shape="rounded" onChange={selectUserWishlist} />
                         </Stack>
                     </Grid>
-                    <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem' }}>
+                    <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem', zIndex : 1 }}>
                         <h3>Hi {props.user.name}!</h3>
                         <h1 style={{ color: "black", fontFamily: "Helvetica" }}>{stock}</h1>
                         <p style={{ fontFamily: "Helvetica" }}> {stock !== '' ? <span>Price : </span> : null}{stockPrice}</p>

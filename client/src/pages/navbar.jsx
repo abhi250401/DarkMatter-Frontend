@@ -147,8 +147,8 @@ export default function PrimarySearchAppBar(props) {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <div style={{ backgroundColor: "#36454f", height: "5vh", fontSize: "0.8em", justifyContent: "center", alignItems: "center", display: "flex" }}>
-                TICKER COMES HERE....
+            <div style={{ backgroundColor: '#191919', color : '#999', height: '1.5rem', fontSize: '.75rem', padding : '.25rem .5rem', justifyContent: "center", alignItems: "center", display: "flex" }}>
+                TICKER COMES HERE...
             </div>
             <AppBar position="static" style={{ backgroundColor: "#f5f5f5", justifyContent: "space-between", display: "flex", color: "black" }}>
                 <Toolbar style={{ display: "flex", justifyContent: "flex-end", marginLeft: "1%" }}>
