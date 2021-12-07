@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Grid, Autocomplete, ListItem, ListItemButton, Box, ListItemText, Paper, Pagination, Stack, TextField } from '@mui/material';
+import { Grid, Autocomplete, IconButton, List, ListItem, ListItemButton, Box, ListItemText, Paper, Pagination, Stack, TextField, ControlCameraSharp } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
+import CommentIcon from '@mui/icons-material/Comment';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PlaylistAdd from '@mui/icons-material/PlaylistAdd';
 import axios from "axios";
 import Navbar from './navbar'
-import SearchBar from "material-ui-search-bar";
-import List from '@mui/material/List';
-import MuiAlert from '@mui/material/Alert';
-
-import DeleteIcon from '@mui/icons-material/Delete';
-import CommentIcon from '@mui/icons-material/Comment';
-import IconButton from '@mui/material/IconButton';
 import './home.css'
-import { ControlCameraSharp, PlaylistAdd } from '@mui/icons-material';
-import { FixedSizeList } from 'react-window';
+
 export default function Home(props) {
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
-
 
     const history = useNavigate();
     const [text, setText] = useState('')
@@ -30,6 +25,7 @@ export default function Home(props) {
     const [page, setPage] = React.useState(1);
     const [stock, setStock] = React.useState('');
     const [stockPrice, setStockPrice] = React.useState('');
+
     const getUserWishlist = async function (listId) {
         setLoading(true);
         await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/${listId}`).then(response => {
@@ -99,8 +95,6 @@ export default function Home(props) {
         getUserWishlist(1);
     }, [])
 
-
-
     const stockDetails = (wishlistData) => {
         setStock(wishlistData.stockName);
 
@@ -108,15 +102,11 @@ export default function Home(props) {
         axios.get(process.env.REACT_APP_API_URL + `/stockone/${wishlistData.stockId}`).then((response) => {
             setStockPrice(response.data.price);
 
-
-
-
-
         }).catch((err) => {
             console.log(err);
         })
-
     }
+
     const searchStock = (text) => {
         let matches = [];
 
@@ -158,16 +148,10 @@ export default function Home(props) {
 
             }),
         }).then(() => {
-
             console.log(response);
         }).catch(() => {
             return
-
         })
-
-
-
-
 
         getUserWishlist(page);
         /*await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/${page}`).then(response => {
@@ -175,8 +159,8 @@ export default function Home(props) {
         }).catch(err => {
             console.log(err);
         })*/
-
     }
+
     function renderRow(props) {
 
         console.log(props);
@@ -317,17 +301,11 @@ export default function Home(props) {
                         <Stack style={{ position: 'absolute', bottom: '.25rem', marginTop: "20px", left: '2rem' }}>
                             <Pagination count={5} hidePrevButton hideNextButton page={page} variant="outlined" shape="rounded" onChange={selectUserWishlist} />
                         </Stack>
-
-
                     </Grid>
                     <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem' }}>
                         <h3>Hi {props.user.name}!</h3>
-
                         <h1 style={{ color: "black", fontFamily: "Helvetica" }}>{stock}</h1>
-                        <p style={{ fontFamily: "Helvetica" }}> {stock !== '' ? <span>Price : </span> : null}
-                            {stockPrice
-                            }</p>
-
+                        <p style={{ fontFamily: "Helvetica" }}> {stock !== '' ? <span>Price : </span> : null}{stockPrice}</p>
                     </Grid>
                 </Grid>
             </div>
