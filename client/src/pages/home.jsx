@@ -13,6 +13,7 @@ import Navbar from './navbar'
 import Snackbar from '@mui/material/Snackbar';
 
 import './home.css'
+import { WifiTetheringErrorRoundedSharp } from '@mui/icons-material';
 
 export default function Home(props) {
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -31,7 +32,10 @@ export default function Home(props) {
     const [stockPrice, setStockPrice] = React.useState('');
     const [open, setOpen] = React.useState(false);
     const [error, setError] = React.useState(false);
-
+    const [message, setMessage] = React.useState('success');
+    const [status, setStatus] = React.useState('success');
+    const vertical = 'top';
+    const horizontal = 'center';
     const handleClick = () => {
         setOpen(true);
     };
@@ -334,17 +338,14 @@ export default function Home(props) {
                             <div> <h1 style={{ color: "black", fontFamily: "Helvetica" }}>{stock}</h1>
                                 <p style={{ fontFamily: "Helvetica" }}>  <span>Price : </span>{stockPrice}</p></div>)}
                     </Grid>
-                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                            Wishlist updated successfully
+                    <Snackbar anchorOrigin={{ vertical, horizontal }} open={open} autoHideDuration={6000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity={status} sx={{ width: '100%' }}>
+                            {message}
                         </Alert>
 
 
                     </Snackbar>
-                    <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}><Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                        Error
-                    </Alert>
-                    </Snackbar>
+
                 </Grid>
             </div>
         </div >
