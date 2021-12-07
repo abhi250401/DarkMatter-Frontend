@@ -242,7 +242,7 @@ export default function Home(props) {
 
                                     />*/}
                         <div class="search-wrapper" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                            <input style={{ padding: '.5rem', width: '100%', margin: 0, 'border': '1px solid #ccc', 'border-radius': 0 }} value={text} placeholder="Search..." onChange={(e) => searchStock(e.target.value)} />
+                            <input style={{ padding: '.5rem', width: '100%', margin: 0, border: '1px solid #ccc', borderRadius: 0 }} value={text} placeholder="Search..." onChange={(e) => searchStock(e.target.value)} />
 
                             {/*suggestion && suggestion.map((suggestion, i) =>
                                 <div class="auto-container"><div class="autoContainer"

@@ -117,7 +117,7 @@ const Routes = [
 				element: <UserProfile user={user} />
 			},
 			{
-				path: '*',
+				path: '',
 				element: <UserDashboard user={user} />
 			}
 		]

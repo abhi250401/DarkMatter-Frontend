@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Link, Outlet } from 'react-router-dom';
-import { Grid, Autocomplete, IconButton, List, ListItem, ListItemButton, Box, ListItemText, Paper, Pagination, Stack, TextField, ControlCameraSharp } from '@mui/material';
+import { Grid, Autocomplete, IconButton, List, ListItem, ListItemButton, Box, ListItemText, Paper, Pagination, Stack, Snackbar, TextField, ControlCameraSharp } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import CommentIcon from '@mui/icons-material/Comment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PlaylistAdd from '@mui/icons-material/PlaylistAdd';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import { WifiTetheringErrorRoundedSharp } from '@mui/icons-material';
 import axios from "axios";
 import Navbar from './navbar'
-import Snackbar from '@mui/material/Snackbar';
-
 import './home.css'
 
-export default function UserLayout(props) {
+export default function Home(props) {
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
 
-    const history = useNavigate();
+    const navigate = useNavigate();
     const [text, setText] = useState('')
     const [wishlistData, setwishlistData] = useState([])
     const [data, setdata] = useState(null);
@@ -31,7 +30,11 @@ export default function UserLayout(props) {
     const [stockPrice, setStockPrice] = React.useState('');
     const [open, setOpen] = React.useState(false);
     const [error, setError] = React.useState(false);
-
+    const [message, setMessage] = React.useState('success');
+    const [status, setStatus] = React.useState('success');
+    const vertical = 'top';
+    const horizontal = 'center';
+    
     const handleClick = () => {
         setOpen(true);
     };
@@ -56,8 +59,6 @@ export default function UserLayout(props) {
         })
     }
 
-
-
     const selectUserWishlist = async (event, listId) => {
         setPage(listId);
         getUserWishlist(listId);
@@ -70,6 +71,7 @@ export default function UserLayout(props) {
             })
         }*/
     }
+
     async function removeFromWatchlist(suggestion) {
         if (!props.user || !props.user.userID) {
             console.log('Invalid user');
@@ -93,7 +95,6 @@ export default function UserLayout(props) {
 
         getUserWishlist(page);
         setOpen(true)
-
     }
 
     useEffect(() => {
@@ -120,17 +121,17 @@ export default function UserLayout(props) {
         getUserWishlist(1);
     }, [])
 
-    const stockDetails = (wishlistData) => {
-        setStock(wishlistData.stockName);
+    const stockDetails = ( stock ) => {
+        navigate( `/stock/${stock.stockCode}` );
 
-
-        axios.get(process.env.REACT_APP_API_URL + `/stockone/${wishlistData.stockId}`).then((response) => {
+        /*setStock(stock.stockName);
+        axios.get(process.env.REACT_APP_API_URL + `/stockone/${stock.stockId}`).then((response) => {
             setStockPrice(response.data.marketCapital);
 
         }).catch((err) => {
             setError(true);
             console.log(err);
-        })
+        })*/
     }
 
     const searchStock = (text) => {
@@ -205,6 +206,11 @@ export default function UserLayout(props) {
         <div>
             <Navbar {...props} />
             <div>
+                <Snackbar anchorOrigin={{ vertical, horizontal }} open={open} autoHideDuration={4000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity={status} sx={{ width: '100%' }}>
+                        {message}
+                    </Alert>
+                </Snackbar>
                 <Grid container component="main" sx={{ height: 'calc( 100vh - 102px )' }}>
                     <Grid item xs={3} style={{
                         position: 'relative', zIndex: 0
@@ -238,7 +244,7 @@ export default function UserLayout(props) {
 
                                     />*/}
                         <div class="search-wrapper" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                            <input style={{ padding: '.5rem', width: '100%', margin: 0, 'border': '1px solid #ccc', 'border-radius': 0 }} value={text} placeholder="Search..." onChange={(e) => searchStock(e.target.value)} />
+                            <input style={{ padding: '.5rem', width: '100%', margin: 0, border: '1px solid #ccc', borderRadius: 0 }} value={text} placeholder="Search..." onChange={(e) => searchStock(e.target.value)} />
 
                             {/*suggestion && suggestion.map((suggestion, i) =>
                                 <div class="auto-container"><div class="autoContainer"
@@ -302,51 +308,43 @@ export default function UserLayout(props) {
                                         key={suggestion._id}
                                         // disablePadding
                                         secondaryAction={
-                                            <div> <IconButton disablePadding>
-                                                <PlaylistAdd onClick={() => addtoWishlist(suggestion)} color="primary" />
-                                            </IconButton><IconButton ><AnalyticsIcon /></IconButton><IconButton><CompareArrowsIcon /></IconButton>
+                                            <div> 
+                                                <IconButton disablePadding>
+                                                    <PlaylistAdd onClick={() => addtoWishlist(suggestion)} color="primary" />
+                                                </IconButton>
+                                                <IconButton >
+                                                    <AnalyticsIcon />
+                                                </IconButton>
+                                                <IconButton>
+                                                    <CompareArrowsIcon />
+                                                </IconButton>
                                             </div>
                                         }
                                     >
-                                        <ListItemText style={{ color: "black" }} disablePadding primary={`${suggestion.code}`} />
+                                        <ListItemText style={{ color: "black" }} primary={`${suggestion.code}`} />
                                     </ListItem>
                                 ))}
                             </List>
                         </div>
                         {/* <p style={{ color: "black", marginLeft: "15px", fontWeight: "200", background: "" }}> Wishlist {page}</p>*/}
                         {
-                            loading && wishlistData && wishlistData.map((suggestion) => <ListItem key={suggestion.stockId} component="div" disablePadding>
-
-                                <ListItemButton onClick={() => { stockDetails(suggestion) }} style={{ color: "black" }}>
-                                    <ListItemText onClick={() => { stockDetails(suggestion) }} primary={suggestion.stockCode} />
-                                </ListItemButton>
-                                <IconButton disablePadding>
-                                    <DeleteIcon onClick={() => removeFromWatchlist(suggestion)} color="primary" />
-                                </IconButton>
-                            </ListItem>
+                            loading && wishlistData && wishlistData.map((suggestion) => 
+                                <ListItem key={suggestion.stockId} component="div" disablePadding>
+                                    <ListItemButton onClick={() => { navigate( `/user/stock/${suggestion.stockCode}` ) }} style={{ color: "black" }}>
+                                        <ListItemText primary={suggestion.stockCode} />
+                                    </ListItemButton>
+                                    <IconButton disablePadding>
+                                        <DeleteIcon onClick={() => removeFromWatchlist(suggestion)} />
+                                    </IconButton>
+                                </ListItem>
                             )}
                         <Stack style={{ position: 'absolute', bottom: '.25rem', marginTop: "20px", left: '2rem' }}>
                             <Pagination count={5} hidePrevButton hideNextButton page={page} variant="outlined" shape="rounded" onChange={selectUserWishlist} />
                         </Stack>
                     </Grid>
                     <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem', zIndex: 1 }}>
-                        {stock === '' ? (<h3>Hi {props.user.name}!</h3>) : (
-                            <div> <h1 style={{ color: "black", fontFamily: "Helvetica" }}>{stock}</h1>
-                                <p style={{ fontFamily: "Helvetica" }}>  <span>Price : </span>{stockPrice}</p></div>)}
-
                         <Outlet />
                     </Grid>
-                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                            Wishlist updated successfully
-                        </Alert>
-
-
-                    </Snackbar>
-                    <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}><Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                        Error
-                    </Alert>
-                    </Snackbar>
                 </Grid>
             </div>
         </div >

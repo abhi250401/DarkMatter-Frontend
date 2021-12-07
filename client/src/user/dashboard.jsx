@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 export default function UserDashboard(props) {
     // const history = useNavigate();
-    const [user, setApiData] = React.useState(null)
+    const [user, setApiData] = React.useState(null);
     const [error, setError] = React.useState(false);
 
     useEffect(() => {
@@ -12,16 +12,11 @@ export default function UserDashboard(props) {
         };
 
         loadApiData();*/
-
-        setApiData({
-            name : 'Testing',
-            price : '2400'
-        })
     }, []);
 
     return (
         <div>
-            <h1 style={{ color: "black", fontFamily: "Helvetica" }}>Hi {user.name}!</h1>
+            <h1 style={{ color: "black", fontFamily: "Helvetica" }}>Hi {props.user.name}!</h1>
         </div >
     )
 }
