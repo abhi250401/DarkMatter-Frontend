@@ -8,6 +8,7 @@ const StockSchema = new mongoose.Schema({
 
         max: 255,
     },
+
     name: {
         type: String,
         required: true,
@@ -25,6 +26,9 @@ const StockSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    code: {
+        type: String
+    }
 
     /*  
     stockID

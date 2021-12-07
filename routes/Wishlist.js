@@ -6,7 +6,8 @@ router.post('/wishlist', async (req, res) => {
         stockId: req.body.stockId,
         userId: req.body.userId,
         listId: req.body.listId,
-        stockName: req.body.stockName
+        stockName: req.body.stockName,
+        stockCode: req.body.code
     };
 
     const stockAdded = await Wishlist.findOne(checkList).catch(error => { console.log(error) });

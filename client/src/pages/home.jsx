@@ -10,8 +10,9 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import axios from "axios";
 import Navbar from './navbar'
+import Snackbar from '@mui/material/Snackbar';
+
 import './home.css'
-import { AnalyticsRounded } from '@mui/icons-material';
 
 export default function Home(props) {
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -28,18 +29,34 @@ export default function Home(props) {
     const [page, setPage] = React.useState(1);
     const [stock, setStock] = React.useState('');
     const [stockPrice, setStockPrice] = React.useState('');
+    const [open, setOpen] = React.useState(false);
+    const [error, setError] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setError(false);
+        setOpen(false);
+    };
 
     const getUserWishlist = async function (listId) {
         setLoading(true);
         setSuggestion([]);
         await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/${listId}`).then(response => {
             setwishlistData(response.data.data);
-            <Alert severity="error">This is an error message!</Alert>
+
         }).catch(err => {
-            return <Alert severity="error">This is an error message!</Alert>
+
             console.log(err);
         })
     }
+
+
 
     const selectUserWishlist = async (event, listId) => {
         setPage(listId);
@@ -73,7 +90,10 @@ export default function Home(props) {
             }),
         })
 
+
         getUserWishlist(page);
+        setOpen(true)
+
     }
 
     useEffect(() => {
@@ -105,9 +125,10 @@ export default function Home(props) {
 
 
         axios.get(process.env.REACT_APP_API_URL + `/stockone/${wishlistData.stockId}`).then((response) => {
-            setStockPrice(response.data.price);
+            setStockPrice(response.data.marketCapital);
 
         }).catch((err) => {
+            setError(true);
             console.log(err);
         })
     }
@@ -150,15 +171,16 @@ export default function Home(props) {
                 listId: page,
                 stockId: stock._id,
                 stockName: stock.name,
+                code: stock.code
             }),
         }).then((response) => {
             console.log(response);
-            if (response.status === 'success') {
-                getUserWishlist(page);
-            }
+            setOpen(true)
+            getUserWishlist(page);
         }).catch(() => {
-            return
+            setError(true);
         });
+
     }
 
     function renderRow(props) {
@@ -286,7 +308,7 @@ export default function Home(props) {
                                             </div>
                                         }
                                     >
-                                        <ListItemText style={{ color: "black" }} disablePadding primary={`${suggestion.name}`} />
+                                        <ListItemText style={{ color: "black" }} disablePadding primary={`${suggestion.code}`} />
                                     </ListItem>
                                 ))}
                             </List>
@@ -296,7 +318,7 @@ export default function Home(props) {
                             loading && wishlistData && wishlistData.map((suggestion) => <ListItem key={suggestion.stockId} component="div" disablePadding>
 
                                 <ListItemButton onClick={() => { stockDetails(suggestion) }} style={{ color: "black" }}>
-                                    <ListItemText onClick={() => { stockDetails(suggestion) }} primary={suggestion.stockName} />
+                                    <ListItemText onClick={() => { stockDetails(suggestion) }} primary={suggestion.stockCode} />
                                 </ListItemButton>
                                 <IconButton disablePadding>
                                     <DeleteIcon onClick={() => removeFromWatchlist(suggestion)} color="primary" />
@@ -312,6 +334,17 @@ export default function Home(props) {
                             <div> <h1 style={{ color: "black", fontFamily: "Helvetica" }}>{stock}</h1>
                                 <p style={{ fontFamily: "Helvetica" }}>  <span>Price : </span>{stockPrice}</p></div>)}
                     </Grid>
+                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                            Wishlist updated successfully
+                        </Alert>
+
+
+                    </Snackbar>
+                    <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}><Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                        Error
+                    </Alert>
+                    </Snackbar>
                 </Grid>
             </div>
         </div >
