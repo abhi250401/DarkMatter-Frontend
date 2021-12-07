@@ -1,23 +1,19 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
-import routes from "./routes";
+import { BrowserRouter as Router, Routes, Route, useRoutes } from "react-router-dom";
+import routes from './routes';
 import './App.css';
+
+const AppRoutes = () => {
+  return useRoutes( routes );
+};
 
 function App() {
     return (
-        <BrowserRouter>
+        <Router>
             <Suspense fallback={<div style={{ backgroundColor: '#191919', color : '#999', height : '100vh', display : 'flex', alignItems : 'center', justifyContent : 'center' }}>Loading...</div>}>
-                <Routes>
-                    {routes.map((route, i) =>
-                    <Route
-                        key={i}
-                        path={route.path}
-                        element={route.element}
-                    />
-                    )}
-                </Routes>
+                <AppRoutes />
             </Suspense>
-        </BrowserRouter>
+        </Router>
     );
 }
 export default App;

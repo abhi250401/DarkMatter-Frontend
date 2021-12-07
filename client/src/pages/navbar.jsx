@@ -47,7 +47,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));*/
 
 export default function PrimarySearchAppBar(props) {
-
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     // const [loading, setloading] = useState('')
@@ -159,7 +158,7 @@ export default function PrimarySearchAppBar(props) {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        <Link to="/home" > DarkMatter</Link>
+                        <Link to="/user" > DarkMatter</Link>
                     </Typography>
 
                     <Box sx={{ flexGrow: 1 }} />
