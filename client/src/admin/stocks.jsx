@@ -350,13 +350,13 @@ export default function EnhancedTable(props) {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    <Link to={`/stock/${stock._id}`} >   {stock._id}  </Link>
+                                                    <Link to={`/admin/stock/${stock._id}`} >   {stock._id}  </Link>
                                                 </TableCell>
 
 
 
 
-                                                <TableCell>{stock.price}</TableCell>
+                                                <TableCell>{stock.closePrice}</TableCell>
                                                 <TableCell>{stock.name}</TableCell>
                                                 <TableCell>
                                                     <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/stock/${stock._id}`}>Edit</Button>

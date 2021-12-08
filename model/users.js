@@ -47,6 +47,9 @@ const UserSchema = new mongoose.Schema({
     status: {
         type: Number,
         required: true,
+    },
+    profileImg: {
+        type: String
     }
     /* 
     fileID

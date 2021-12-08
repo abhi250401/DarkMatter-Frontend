@@ -12,7 +12,7 @@ router.post('/stock', async (req, res) => {
         try {
             const stock = new Stocks({
                 name: req.body.name,
-                slug: req.body.slug,
+                code: req.body.code,
                 price: req.body.price,
                 description: req.body.description,
                 cateogary: req.body.cateogary,
@@ -25,6 +25,7 @@ router.post('/stock', async (req, res) => {
         }
     }
 });
+
 
 router.get('/admin/stocks', async (req, res) => {
 

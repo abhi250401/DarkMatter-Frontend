@@ -28,7 +28,17 @@ router.get('/wishlist/:id1/:id2', async (req, res) => {
     await Wishlist.find({
         listId: req.params.id2,
         userId: req.params.id1,
-    })
+    }).populate('stockData')
+        .then((data) => {
+            res.json({ status: 'success', data: data });
+        }).catch(err => {
+            res.json({ status: 'error', error: err });
+        })
+});
+router.get('/wishlist/:code', async (req, res) => {
+    await Wishlist.findOne({
+        code: req.params.code
+    }).populate('stockData')
         .then((data) => {
             res.json({ status: 'success', data: data });
         }).catch(err => {

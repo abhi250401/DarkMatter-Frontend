@@ -44,14 +44,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
             width: '20ch',
         },
     },
+
 }));*/
+
 
 export default function PrimarySearchAppBar(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     // const [loading, setloading] = useState('')
     // const history = useNavigate();
-
+    const goto = useNavigate();
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -70,6 +72,12 @@ export default function PrimarySearchAppBar(props) {
 
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
+    };
+    const signout = () => {
+        localStorage.removeItem('token');
+        goto('/');
+
+
     };
 
     const menuId = 'primary-search-account-menu';
@@ -94,8 +102,7 @@ export default function PrimarySearchAppBar(props) {
             <MenuItem >Change Password</MenuItem>
             <Link to="/admin/users">  <MenuItem onClick={handleMenuClose}>  Users</MenuItem></Link>
             <Link to="/admin/stocks"> <MenuItem onClick={handleMenuClose}> Stocks</MenuItem></Link>
-            <Link to="/admin/settings"><MenuItem onClick={handleMenuClose}> Settings </MenuItem></Link>
-            <Link to="/"><MenuItem onClick={handleMenuClose}> Signout </MenuItem></Link>
+            <Link to="/"><MenuItem onClick={() => signout()}> Signout </MenuItem></Link>
         </Menu>
     );
 
@@ -146,7 +153,7 @@ export default function PrimarySearchAppBar(props) {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <div style={{ backgroundColor: '#191919', color : '#999', height: '1.5rem', fontSize: '.75rem', padding : '.25rem .5rem', justifyContent: "center", alignItems: "center", display: "flex" }}>
+            <div style={{ backgroundColor: '#191919', color: '#999', height: '1.5rem', fontSize: '.75rem', padding: '.25rem .5rem', justifyContent: "center", alignItems: "center", display: "flex" }}>
                 TICKER COMES HERE...
             </div>
             <AppBar position="static" style={{ backgroundColor: "#f5f5f5", justifyContent: "space-between", display: "flex", color: "black" }}>

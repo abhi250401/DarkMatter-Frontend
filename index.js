@@ -4,12 +4,17 @@ const cors = require('cors');
 const User = require('./model/users');
 //import routes
 const authRoute = require('./routes/auth');
+let multer = require('multer');
+let uuid = require('uuid');
+
 const postRoute = require('./routes/posts');
 const Stocks = require('./model/stocks');
 const wishlist = require('./routes/wishlist');
 const stock = require('./routes/stock');
 //connect to db
 app.use(cors());
+
+
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb+srv://abhi:123456asdf@cluster0.05abf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
@@ -17,6 +22,52 @@ mongoose.connect('mongodb+srv://abhi:123456asdf@cluster0.05abf.mongodb.net/myFir
 //MIddleware
 app.use(express.json());
 
+/*const DIR = './public/';
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, uuid() + '-' + fileName)
+    }
+});
+
+var upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+});
+/*app.post('/user/image/:id', upload.single('profileImg'), (req, res, next) => {
+    const url = req.protocol + '://' + req.get('host')
+    const user = User.findById({
+        _id: req.params.id,
+      
+    });  
+        profileImg: url + '/public/' + req.file.filename
+    user.save().then(result => {
+        res.status(201).json({
+            message: "User registered successfully!",
+            userCreated: {
+                _id: result._id,
+                profileImg: result.profileImg
+            }
+        })
+    }).catch(err => {
+        console.log(err),
+            res.status(500).json({
+                error: err
+            });
+    })
+})
+
+*/
 
 //routemiddlewares 
 app.use('/api/user', authRoute);
@@ -65,8 +116,8 @@ app.get('/api/userone/:id', (req, res) => {
     })
 });
 
-app.get('/api/stockone/:id', (req, res) => {
-    Stocks.findById(req.params.id).then((data) => {
+app.get('/api/user/stock/:code', (req, res) => {
+    Stocks.findOne({ code: req.params.code }).then((data) => {
         res.json(data);
     }).catch(err => {
         console.log(err);

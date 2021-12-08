@@ -19,6 +19,7 @@ const wishListSchema = new mongoose.Schema({
     },
     stockCode: {
         type: String
-    }
+    },
+    stockData: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stock' }],
 });
 module.exports = mongoose.model('wishlist', wishListSchema);

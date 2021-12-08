@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { FormGroup, FormControl, InputLabel, Input, Button, makeStyles, Typography } from '@material-ui/core';
+import { FormGroup, FormControl, InputLabel, Input, makeStyles, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
+import EditIcon from '@mui/icons-material/Edit';
 import Navbar from './navbar'
+import { ButtonUnstyled } from '@mui/base';
 
 const useStyles = makeStyles({
     container: {
@@ -19,6 +21,7 @@ const EditUser = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
+    const [disabled, setDisabled] = useState(true);
     const classes = useStyles();
     let history = useNavigate();
 
@@ -44,9 +47,11 @@ const EditUser = () => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-
+    const edit = () => {
+        setDisabled(!disabled);
+    }
     const editUserDetails = async () => {
-        const response = await fetch(process.env.REACT_APP_API_URL + `/userone/${id}`, {
+        const response = await fetch(process.env.REACT_APP_API_URL + `/user/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,8 +64,8 @@ const EditUser = () => {
 
         const data = await response.json()
         if (data.acknowledged == true) {
-            // alert('successfull')
-            history('/admin/users'); console.log(data);
+            alert('successfull')
+
         } else {
             alert('error');
         }
@@ -72,17 +77,21 @@ const EditUser = () => {
     return (
         <div>
 
-            <FormGroup className={classes.container}>
-                <Typography variant="h4">Edit Information</Typography>
+            <FormGroup disabled="false" className={classes.container}>
+                <Typography variant="h4" style={{ display: "flex" }}>User Information</Typography>
+                <EditIcon onClick={() => edit()} />
                 <FormControl>
                     <InputLabel htmlFor="my-input">Name</InputLabel>
-                    <Input onChange={(e) => setName(e.target.value)} name="name" type="name" id="name" value={name} id="my-input" aria-describedby="my-helper-text" />
+                    <Input onChange={(e) => setName(e.target.value)} name="name" className="input" disabled={disabled} type="name" id="name" value={name} id="my-input" aria-describedby="my-helper-text" />
                 </FormControl>
 
                 <FormControl>
                     <InputLabel htmlFor="my-input">Email</InputLabel>
-                    <Input onChange={(e) => setEmail(e.target.value)} name="email" id="email" type="email" value={email} id="my-input" aria-describedby="my-helper-text" />
+                    <Input onChange={(e) => setEmail(e.target.value)} name="email" className="input" disabled={disabled} id="email" type="email" value={email} id="my-input" aria-describedby="my-helper-text" />
+                    <ButtonUnstyled disabled={disabled} onClick={() => editUserDetails()}>Edit</ButtonUnstyled>
                 </FormControl>
+
+
 
 
             </FormGroup>

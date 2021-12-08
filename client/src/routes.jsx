@@ -29,8 +29,8 @@ const DeleteStock = React.lazy(() => import( /*webpackChunkName: 'deleteStock'*/
 
 //  Check if user is logged in
 let user = {};
-const token = localStorage.getItem('token') || {};
-if (token) {
+const token = localStorage.getItem('token') || " ";
+if (token !== ' ') {
 	const decoded = jwt_decode(token);
 	if (decoded.expiry && Date.now() <= decoded.exp * 1000 && decoded.status && parseInt(decoded.status) === 1) {
 		user = decoded;
@@ -41,7 +41,7 @@ if (token) {
 		user = decoded;
 	}
 }
-// console.log( 'User', user);
+console.log('User', user);
 
 const Routes = [
 	{
@@ -67,7 +67,7 @@ const Routes = [
 	//	Admin Paths
 	{
 		path: '/admin',
-		element: <Admin user={user} />,
+
 		children: [
 			{
 				path: 'stocks/:id',
@@ -113,7 +113,7 @@ const Routes = [
 				element: <EditUser user={user} />
 			},
 			{
-				path: 'profile',
+				path: 'profile/:id',
 				element: <UserProfile user={user} />
 			},
 			{

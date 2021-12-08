@@ -27,8 +27,10 @@ const StockSchema = new mongoose.Schema({
         required: true,
     },
     code: {
+        required: true,
         type: String
-    }
+    },
+
 
     /*  
     stockID
