@@ -5,7 +5,7 @@ const User = require('./model/users');
 //import routes
 const authRoute = require('./routes/auth');
 let multer = require('multer');
-let uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 const postRoute = require('./routes/posts');
 const Stocks = require('./model/stocks');
@@ -22,14 +22,14 @@ mongoose.connect('mongodb+srv://abhi:123456asdf@cluster0.05abf.mongodb.net/myFir
 //MIddleware
 app.use(express.json());
 
-/*const DIR = './public/';
+const DIR = './public/';
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, DIR);
     },
     filename: (req, file, cb) => {
         const fileName = file.originalname.toLowerCase().split(' ').join('-');
-        cb(null, uuid() + '-' + fileName)
+        cb(null, uuidv4() + '-' + fileName)
     }
 });
 
@@ -44,30 +44,30 @@ var upload = multer({
         }
     }
 });
-/*app.post('/user/image/:id', upload.single('profileImg'), (req, res, next) => {
+app.put('/api/user/image/:id', upload.single('profileImg'), (req, res, next) => {
     const url = req.protocol + '://' + req.get('host')
-    const user = User.findById({
-        _id: req.params.id,
-      
-    });  
-        profileImg: url + '/public/' + req.file.filename
-    user.save().then(result => {
-        res.status(201).json({
-            message: "User registered successfully!",
-            userCreated: {
-                _id: result._id,
-                profileImg: result.profileImg
-            }
+    User.updateOne({ _id: req.params.id },
+        {
+            $set:
+                { profileImg: url + '/public/' + req.file.filename }
         })
-    }).catch(err => {
-        console.log(err),
-            res.status(500).json({
-                error: err
-            });
-    })
+        .then((result) => {
+            res.status(201).json({
+                message: "User registered successfully!",
+                userCreated: {
+                    _id: result._id,
+                    profileImg: result.profileImg
+                }
+            })
+        }).catch(err => {
+            console.log(err),
+                res.status(500).json({
+                    error: err
+                });
+        })
 })
 
-*/
+
 
 //routemiddlewares 
 app.use('/api/user', authRoute);

@@ -80,6 +80,7 @@ const EditUser = () => {
             <FormControl>
                 <Button variant="contained" color="primary" onClick={() => editUserDetails()}>Edit User</Button>
             </FormControl>
+
         </FormGroup>
     )
 }

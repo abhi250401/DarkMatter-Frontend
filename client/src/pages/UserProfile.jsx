@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FormGroup, FormControl, InputLabel, Input, makeStyles, Typography } from '@material-ui/core';
+import { FormGroup, FormControl, InputLabel, Input, Button, makeStyles, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
@@ -47,8 +47,20 @@ const EditUser = () => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [file, setFile] = useState('');
     const edit = () => {
         setDisabled(!disabled);
+    }
+    console.log(file);
+    const submitFile = async () => {
+
+        const formData = new FormData()
+        formData.append('profileImg', file)
+        axios.put(process.env.REACT_APP_API_URL + `/user/image/${id}`, formData, {
+        }).then(res => {
+            console.log(res)
+        })
+
     }
     const editUserDetails = async () => {
         const response = await fetch(process.env.REACT_APP_API_URL + `/user/${id}`, {
@@ -94,6 +106,13 @@ const EditUser = () => {
 
 
 
+            </FormGroup>
+            <FormGroup>
+                <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                />
+                <button onClick={() => submitFile()}> Upload File</button>
             </FormGroup>
         </div>
     )

@@ -65,7 +65,7 @@ const EditUser = () => {
         return <h1>loading....</h1>;
 
     return (
-        <FormGroup className={classes.container}>
+        <div> <FormGroup className={classes.container}>
             <Typography variant="h4">Edit Information</Typography>
             <FormControl>
                 <InputLabel htmlFor="my-input">Name</InputLabel>
@@ -81,6 +81,19 @@ const EditUser = () => {
                 <Button variant="contained" color="primary" onClick={() => editUserDetails()}>Edit User</Button>
             </FormControl>
         </FormGroup>
+            <FormGroup>
+                <Button
+                    variant="contained"
+                    component="label"
+                >
+                    Upload File
+                    <input
+                        type="file"
+
+                    />
+                </Button>
+            </FormGroup>
+        </div>
     )
 }
 
