@@ -34,11 +34,12 @@ if (token !== ' ') {
 	const decoded = jwt_decode(token);
 	if (decoded.expiry && Date.now() <= decoded.exp * 1000 && decoded.status && parseInt(decoded.status) === 1) {
 		user = decoded;
+		user.token = token;
 	}
-
 	//	To be removed
 	if (Date.now() <= decoded.exp * 1000) {
 		user = decoded;
+		user.token = token;
 	}
 }
 console.log('User', user);

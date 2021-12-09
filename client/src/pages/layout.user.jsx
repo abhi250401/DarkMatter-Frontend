@@ -8,7 +8,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import PlaylistAdd from '@mui/icons-material/PlaylistAdd';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-import { WifiTetheringErrorRoundedSharp } from '@mui/icons-material';
+import { KeyboardArrowUp, WifiTetheringErrorRoundedSharp } from '@mui/icons-material';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import axios from "axios";
 import Navbar from './navbar'
 import './home.css'
@@ -33,8 +35,9 @@ export default function Home(props) {
     const [message, setMessage] = React.useState('success');
     const [status, setStatus] = React.useState('success');
     const vertical = 'top';
+    const [color, setColor] = React.useState('');
     const horizontal = 'center';
-    
+
     const handleClick = () => {
         setOpen(true);
     };
@@ -121,8 +124,8 @@ export default function Home(props) {
         getUserWishlist(1);
     }, [])
 
-    const stockDetails = ( stock ) => {
-        navigate( `/stock/${stock.stockCode}` );
+    const stockDetails = (stock) => {
+        navigate(`/stock/${stock.stockCode}`);
 
         /*setStock(stock.stockName);
         axios.get(process.env.REACT_APP_API_URL + `/stockone/${stock.stockId}`).then((response) => {
@@ -308,7 +311,7 @@ export default function Home(props) {
                                         key={suggestion._id}
                                         // disablePadding
                                         secondaryAction={
-                                            <div> 
+                                            <div>
                                                 <IconButton disablePadding>
                                                     <PlaylistAdd onClick={() => addtoWishlist(suggestion)} color="primary" />
                                                 </IconButton>
@@ -328,10 +331,23 @@ export default function Home(props) {
                         </div>
                         {/* <p style={{ color: "black", marginLeft: "15px", fontWeight: "200", background: "" }}> Wishlist {page}</p>*/}
                         {
-                            loading && wishlistData && wishlistData.map((suggestion) => 
+                            loading && wishlistData && wishlistData.map((suggestion) =>
                                 <ListItem key={suggestion.stockId} component="div" disablePadding>
-                                    <ListItemButton onClick={() => { navigate( `/user/stock/${suggestion.stockCode}` ) }} style={{ color: "black" }}>
-                                        <ListItemText primary={suggestion.stockCode} />
+                                    <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockCode}`) }} style={{ color: "black" }}>
+                                        {suggestion.stock[0].closePrice > 100 ?
+                                            (<div><ListItemText sx={{ color: "green" }}
+                                                primary={suggestion.stock[0].code}
+                                                secondary={suggestion.stock[0].closePrice} />
+                                                <KeyboardArrowUpIcon />
+                                            </div>) :
+                                            (<div ><ListItemText sx={{ color: "red" }}
+                                                primary={suggestion.stock[0].code}
+                                                secondary={suggestion.stock[0].closePrice}
+                                            />
+
+                                                <KeyboardArrowDownIcon sx={{ m: 0 }} disablePadding />
+                                            </div>)}
+
                                     </ListItemButton>
                                     <IconButton disablePadding>
                                         <DeleteIcon onClick={() => removeFromWatchlist(suggestion)} />

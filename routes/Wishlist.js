@@ -2,9 +2,12 @@ const router = require('express').Router();
 const Wishlist = require('../model/wishlist');
 // https://mongoosejs.com/docs/populate.html
 router.post('/wishlist', async (req, res) => {
+
     const checkList = {
         stockId: req.body.stockId,
         userId: req.body.userId,
+        user: req.body.userId,
+        stock: req.body.stockId,
         listId: req.body.listId,
         stockName: req.body.stockName,
         stockCode: req.body.code
@@ -28,7 +31,7 @@ router.get('/wishlist/:id1/:id2', async (req, res) => {
     await Wishlist.find({
         listId: req.params.id2,
         userId: req.params.id1,
-    }).populate('stockData')
+    }).populate('stock')
         .then((data) => {
             res.json({ status: 'success', data: data });
         }).catch(err => {
@@ -38,7 +41,7 @@ router.get('/wishlist/:id1/:id2', async (req, res) => {
 router.get('/wishlist/:code', async (req, res) => {
     await Wishlist.findOne({
         code: req.params.code
-    }).populate('stockData')
+    }).populate('stock')
         .then((data) => {
             res.json({ status: 'success', data: data });
         }).catch(err => {

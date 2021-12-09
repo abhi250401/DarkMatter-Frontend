@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
     userId: {
         required: true,
-        type: Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId
     },
     name: {
         type: String,
@@ -51,7 +51,29 @@ const UserSchema = new mongoose.Schema({
     },
     profileImg: {
         type: String
-    }
+    },
+    /*lists: [
+        [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Stock'
+        }],
+        [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Stock'
+        }],
+        [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Stock'
+        }],
+        [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Stock'
+        }],
+        [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Stock'
+        }],
+    ]
     /* 
     fileID
     planID
@@ -71,5 +93,5 @@ const UserSchema = new mongoose.Schema({
     Updated
     planCategories
     */
-});
+}, { timestamps: true });
 module.exports = mongoose.model('User', UserSchema);

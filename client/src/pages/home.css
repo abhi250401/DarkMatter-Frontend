@@ -8,3 +8,8 @@ body{
 .hide {
   display: none;
 }
+.listdiv{
+  display: flex;
+  align-items:flex-end;
+  
+}

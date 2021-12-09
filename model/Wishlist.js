@@ -16,13 +16,10 @@ const wishListSchema = new mongoose.Schema({
     stockCode: {
         type: String
     },
-    user: [{ 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User' 
+
+    stock: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Stock'
     }],
-    stock: [{ 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Stock' 
-    }],
-});
+}, { timestamps: true });
 module.exports = mongoose.model('wishlist', wishListSchema);

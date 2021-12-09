@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const StockSchema = new mongoose.Schema({
     stockId: {
         required: true,
-        type: Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId
     },
     code: {
         required: true,
@@ -36,5 +36,5 @@ const StockSchema = new mongoose.Schema({
     created
     updated
     */
-});
+}, { timestamps: true });
 module.exports = mongoose.model('Stock', StockSchema);

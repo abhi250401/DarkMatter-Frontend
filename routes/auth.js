@@ -7,8 +7,8 @@ router.post('/register', async (req, res) => {
 
     const emailexist = await User.findOne({
         email: req.body.formData.email
-    }).catch(error => { 
-        console.log(error) 
+    }).catch(error => {
+        console.log(error)
     });
 
     if (emailexist) res.json({ status: 'error', error: 'This email id already exists' })
@@ -33,7 +33,7 @@ router.post('/register', async (req, res) => {
         });
 
         const savedUser = await user.save();
-        res.json({ status: 'success', data : savedUser })
+        res.json({ status: 'success', data: savedUser })
     }
     catch (err) {
         res.json({ status: 'error', error: 'failed login' })
@@ -70,19 +70,44 @@ router.post('/login', async (req, res) => {
     });
     return res.json({ status: 'success', user: token })
 })
+router.post('/user/wishlist', async (req, res) => {
+
+    const checkList = {
+        stockId: req.body.stockId,
+        userId: req.body.userId,
+        user: req.body.userId,
+        stock: req.body.stockId,
+        listId: req.body.listId,
+        stockName: req.body.stockName,
+        stockCode: req.body.code
+    };
+
+    const stockAdded = await Wishlist.findOne(checkList).catch(error => { console.log(error) });
+    if (stockAdded)
+        res.json({ status: 'error', error: 'This stock id already exists' })
+    if (!stockAdded) {
+        try {
+            const wishList = new Wishlist(checkList);
+            const savedWishlist = await wishList.save();
+            res.json({ status: 'success', data: savedWishlist })
+        } catch (err) {
+            res.json({ status: 'error', error: err })
+        }
+    }
+});
 
 router.post('/phoneauth', async (req, res) => {
     const user = await User.findOne({
         phone: req.body.phone_number
     })
-    .catch(error => {
-        console.log(error)
-        return res.json({ status: 'error' })
-    });
+        .catch(error => {
+            console.log(error)
+            return res.json({ status: 'error' })
+        });
 
     if (!user) {
         return res.json({ status: 'error' })
-    }else {
+    } else {
         return res.json({ status: 'success' });
     }
 })

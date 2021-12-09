@@ -30,9 +30,10 @@ export default function UserStockInfo(props) {
         <div>
             <h1 style={{ color: "black", fontFamily: "Helvetica" }}>{code}</h1>
             <p style={{ fontFamily: "Helvetica" }}>  <span> Name : </span>{stock.name}</p>
-            <p>{stock.peRatio}</p>
+
             <p>{stock.marketCaptial}</p>
             <p>{stock.sector}</p>
+            <p>{stock.peRatio}</p>
             <p>{stock.closePrice}</p>
 
 

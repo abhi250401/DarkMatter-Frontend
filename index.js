@@ -89,8 +89,15 @@ app.put('/api/user/:id', function (req, res) {
     }).catch((err) => {
         console.warn(err);
     })
-})
+});
 
+/*app.put('/api/user/wishlist/:id/:listId/:code', function (req, res) {
+    User.updateOne({ _id: req.params.id }, { $set: { lists:{ req.params.listId : [ req.params.code ]} } }).then((result) => {
+        res.status(201).json(result);
+    }).catch((err) => {
+        console.warn(err);
+    })
+})*/
 
 app.delete('/api/stock/:id', function (req, res) {
     Stocks.deleteOne({ _id: req.params.id }).then((result) => {

@@ -52,8 +52,8 @@ export default function Home(props) {
         setLoading(true);
         setSuggestion([]);
         await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/${listId}`).then(response => {
-            setwishlistData(response.data.data);
-
+            setwishlistData(response.data);
+            console.log(response);
         }).catch(err => {
 
             console.log(err);
@@ -319,14 +319,14 @@ export default function Home(props) {
                         </div>
                         {/* <p style={{ color: "black", marginLeft: "15px", fontWeight: "200", background: "" }}> Wishlist {page}</p>*/}
                         {
-                            loading && wishlistData && wishlistData.map((suggestion) => <ListItem key={suggestion.stockId} component="div" disablePadding>
+                            loading && wishlistData && wishlistData.map((suggestion) => <ListItem key={suggestion.stockId} component="div">
 
-                                <ListItemButton onClick={() => { stockDetails(suggestion) }} style={{ color: "black" }}>
+                                {/*<ListItemButton onClick={() => { stockDetails(suggestion) }} style={{ color: "black" }}>
                                     <ListItemText onClick={() => { stockDetails(suggestion) }} primary={suggestion.stockCode} />
                                 </ListItemButton>
                                 <IconButton disablePadding>
                                     <DeleteIcon onClick={() => removeFromWatchlist(suggestion)} color="primary" />
-                                </IconButton>
+                                </IconButton>*/}
                             </ListItem>
                             )}
                         <Stack style={{ position: 'absolute', bottom: '.25rem', marginTop: "20px", left: '2rem' }}>
