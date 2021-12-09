@@ -18,7 +18,6 @@ dist/
 *.log
 
 # Package files
-package-lock.json
 *.jar
 
 # Maven
@@ -50,3 +49,4 @@ Thumbs.db
 *.mov
 *.wmv
 
+package-lock.json

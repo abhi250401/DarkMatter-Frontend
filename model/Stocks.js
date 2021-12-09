@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 const StockSchema = new mongoose.Schema({
     stockId: {
+        required: true,
+        type: Schema.Types.ObjectId
+    },
+    code: {
+        required: true,
         type: String
     },
-    slug: {
-        type: String,
-
-        max: 255,
-    },
-
     name: {
         type: String,
         required: true,
@@ -22,15 +21,14 @@ const StockSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    catergory: {
+        type: String,
+        required: false
+    },
     price: {
         type: Number,
         required: true,
     },
-    code: {
-        required: true,
-        type: String
-    },
-
 
     /*  
     stockID
