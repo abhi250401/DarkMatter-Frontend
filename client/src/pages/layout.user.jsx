@@ -12,6 +12,7 @@ import { KeyboardArrowUp, WifiTetheringErrorRoundedSharp } from '@mui/icons-mate
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import axios from "axios";
+import SettingsIcon from '@mui/icons-material/Settings';
 import Navbar from './navbar'
 import './home.css'
 
@@ -179,7 +180,8 @@ export default function Home(props) {
             }),
         }).then((response) => {
             console.log(response);
-            setOpen(true)
+            setOpen(true);
+            setText('');
             getUserWishlist(page);
         }).catch(() => {
             setError(true);
@@ -332,30 +334,58 @@ export default function Home(props) {
                         {/* <p style={{ color: "black", marginLeft: "15px", fontWeight: "200", background: "" }}> Wishlist {page}</p>*/}
                         {
                             loading && wishlistData && wishlistData.map((suggestion) =>
+
+
                                 <ListItem key={suggestion.stockId} component="div" disablePadding>
-                                    <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockCode}`) }} style={{ color: "black" }}>
+                                    <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockCode}`) }} style={{ color: "black", }}>
                                         {suggestion.stock[0].closePrice > 100 ?
-                                            (<div><ListItemText sx={{ color: "green" }}
+                                            (<Grid container direction="row" alignItems="center" ><ListItemText sx={{ color: "green", width: "60%" }}
+                                                primaryTypographyProps={{ fontSize: '0.9rem' }}
+                                                secondaryTypographyProps={{ fontSize: '0.8rem' }}
                                                 primary={suggestion.stock[0].code}
-                                                secondary={suggestion.stock[0].closePrice} />
-                                                <KeyboardArrowUpIcon />
-                                            </div>) :
-                                            (<div ><ListItemText sx={{ color: "red" }}
-                                                primary={suggestion.stock[0].code}
-                                                secondary={suggestion.stock[0].closePrice}
                                             />
+                                                <ListItemText sx={{ color: "green" }}
+                                                    primaryTypographyProps={{ fontSize: '0.9rem' }}
+                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                    primary={suggestion.stock[0].closePrice}
+
+                                                />
+
+                                                <KeyboardArrowUpIcon />
+                                            </Grid>) :
+                                            (<Grid container direction="row" alignItems="center" >
+                                                <ListItemText sx={{ color: "red", minWidth: "60%", }}
+                                                    primaryTypographyProps={{ fontSize: '0.9rem' }}
+                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                    primary={suggestion.stock[0].code}
+                                                />
+                                                <ListItemText sx={{ color: "gray", width: "5%", }}
+                                                    primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                    primary="5"
+                                                />
+                                                <ListItemText sx={{ color: "red" }}
+                                                    primaryTypographyProps={{ fontSize: '0.9rem' }}
+                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                    primary={suggestion.stock[0].closePrice}
+
+                                                />
 
                                                 <KeyboardArrowDownIcon sx={{ m: 0 }} disablePadding />
-                                            </div>)}
+                                            </Grid>)}
 
                                     </ListItemButton>
                                     <IconButton disablePadding>
                                         <DeleteIcon onClick={() => removeFromWatchlist(suggestion)} />
                                     </IconButton>
                                 </ListItem>
+
                             )}
-                        <Stack style={{ position: 'absolute', bottom: '.25rem', marginTop: "20px", left: '2rem' }}>
-                            <Pagination count={5} hidePrevButton hideNextButton page={page} variant="outlined" shape="rounded" onChange={selectUserWishlist} />
+
+                        <Stack style={{ position: 'absolute', bottom: '.25rem', marginTop: "20px", left: '2rem', }}>
+                            <Grid container direction="row" alignItems="center" >
+                                <Pagination count={5} hidePrevButton hideNextButton page={page} variant="outlined" shape="rounded" onChange={selectUserWishlist} />
+                                <SettingsIcon color="primary" sx={{ ml: '10px' }} /></Grid>
                         </Stack>
                     </Grid>
                     <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem', zIndex: 1 }}>
