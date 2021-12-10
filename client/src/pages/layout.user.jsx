@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Link, Outlet } from 'react-router-dom';
-import { Grid, Button, Autocomplete, IconButton, List, ListItem, ListItemButton, Box, ListItemText, Paper, Pagination, Stack, Snackbar, TextField, ControlCameraSharp, Container, Typography } from '@mui/material';
+import { Grid, Button, Autocomplete, IconButton, List, ListItem, ListItemButton, Box, ListItemText, Paper, Pagination, Stack, Snackbar, TextField, ControlCameraSharp, Container, Typography, Divider } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import Popover from '@mui/material/Popover';
 import Radio from '@mui/material/Radio';
@@ -418,13 +418,13 @@ export default function Home(props) {
                                         horizontal: 'left',
                                     }}
                                 >
-                                    <Grid container direction="row" alignItems="center" sx={{ width: "250px" }}>
+                                    <Grid container direction="row" alignItems="center" sx={{ width: "200px" }}>
 
                                         <Container>
                                             <Typography >Sort By</Typography>
-                                            <Button variant="contained">A-Z</Button>
+                                            <Button sx={{ m: "8px" }} variant="contained">A-Z</Button>
                                             <Button variant="contained">%</Button>
-                                            <Button variant="contained">EXG</Button>
+
                                         </Container>
                                         <Container>
                                             <FormControl component="fieldset">
@@ -441,7 +441,9 @@ export default function Home(props) {
                                             </FormControl>
 
                                         </Container>
-                                        <Container>
+                                        <Divider sx={{ color: "gray", width: "170px" }} variant="middle" />
+
+                                        <Container sx={{ mt: "10px" }}>
                                             <FormControl component="fieldset">
                                                 <FormLabel component="legend">Change Format</FormLabel>
                                                 <RadioGroup
@@ -457,14 +459,7 @@ export default function Home(props) {
 
 
                                         </Container>
-                                        <Container>
-                                            <FormGroup>
-                                                <FormControlLabel control={<Checkbox defaultChecked />} label="Show Direction" />
-                                                <FormControlLabel control={<Checkbox />} label="Show Change" />
-                                                <FormControlLabel control={<Checkbox />} label="Show holdings" />
 
-                                            </FormGroup>
-                                        </Container>
 
                                     </Grid>
                                 </Popover>    <SettingsIcon color="primary" sx={{ ml: '10px' }} aria-describedby={id} onClick={handleClickP} /></Grid>
