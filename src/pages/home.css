@@ -1,0 +1,15 @@
+.autoContainer { 
+  display:flex ; 
+  justify-content: center;
+}
+body{
+  color:black;
+}
+.hide {
+  display: none;
+}
+.listdiv{
+  display: flex;
+  align-items:flex-end;
+  
+}
