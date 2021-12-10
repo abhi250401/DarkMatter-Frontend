@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Link, Outlet } from 'react-router-dom';
-import { Grid, Autocomplete, IconButton, List, ListItem, ListItemButton, Box, ListItemText, Paper, Pagination, Stack, Snackbar, TextField, ControlCameraSharp } from '@mui/material';
+import { Grid, Button, Autocomplete, IconButton, List, ListItem, ListItemButton, Box, ListItemText, Paper, Pagination, Stack, Snackbar, TextField, ControlCameraSharp, Container, Typography } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
+import Popover from '@mui/material/Popover';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Checkbox from '@mui/material/Checkbox';
+import { FormGroup } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PlaylistAdd from '@mui/icons-material/PlaylistAdd';
@@ -15,6 +23,7 @@ import axios from "axios";
 import SettingsIcon from '@mui/icons-material/Settings';
 import Navbar from './navbar'
 import './home.css'
+import { grid } from '@mui/system';
 
 export default function Home(props) {
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -42,7 +51,18 @@ export default function Home(props) {
     const handleClick = () => {
         setOpen(true);
     };
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
+    const handleClickP = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseP = () => {
+        setAnchorEl(null);
+    };
+
+    const open1 = Boolean(anchorEl);
+    const id = open1 ? 'simple-popover' : undefined;
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -249,7 +269,7 @@ export default function Home(props) {
 
                                     />*/}
                         <div class="search-wrapper" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                            <input style={{ padding: '.5rem', width: '100%', margin: 0, border: '1px solid #ccc', borderRadius: 0 }} value={text} placeholder="Search..." onChange={(e) => searchStock(e.target.value)} />
+                            <input style={{ padding: '.5rem', width: '93%', margin: '5px', border: '1px solid #ccc', borderRadius: '4px' }} value={text} placeholder="Search..." onChange={(e) => searchStock(e.target.value)} />
 
                             {/*suggestion && suggestion.map((suggestion, i) =>
                                 <div class="auto-container"><div class="autoContainer"
@@ -385,14 +405,76 @@ export default function Home(props) {
                         <Stack style={{ position: 'absolute', bottom: '.25rem', marginTop: "20px", left: '2rem', }}>
                             <Grid container direction="row" alignItems="center" >
                                 <Pagination count={5} hidePrevButton hideNextButton page={page} variant="outlined" shape="rounded" onChange={selectUserWishlist} />
-                                <SettingsIcon color="primary" sx={{ ml: '10px' }} /></Grid>
+                                <Popover
+                                    open={open1}
+                                    anchorEl={anchorEl}
+                                    onClose={handleCloseP}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left',
+                                    }}
+                                >
+                                    <Grid container direction="row" alignItems="center" sx={{ width: "250px" }}>
+
+                                        <Container>
+                                            <Typography >Sort By</Typography>
+                                            <Button variant="contained">A-Z</Button>
+                                            <Button variant="contained">%</Button>
+                                            <Button variant="contained">EXG</Button>
+                                        </Container>
+                                        <Container>
+                                            <FormControl component="fieldset">
+                                                <FormLabel component="legend">Change</FormLabel>
+                                                <RadioGroup
+                                                    aria-label="Change"
+                                                    defaultValue="ClosePrice"
+                                                    name="radio-buttons-group"
+                                                >
+                                                    <FormControlLabel value="OpenPrice" control={<Radio />} label="Close Price" />
+                                                    <FormControlLabel value="ClosePrice" control={<Radio />} label="Open Price" />
+
+                                                </RadioGroup>
+                                            </FormControl>
+
+                                        </Container>
+                                        <Container>
+                                            <FormControl component="fieldset">
+                                                <FormLabel component="legend">Change Format</FormLabel>
+                                                <RadioGroup
+                                                    aria-label="Change"
+                                                    defaultValue="ClosePrice"
+                                                    name="radio-buttons-group"
+                                                >
+                                                    <FormControlLabel value="OpenPrice" control={<Radio />} label="Percentage" />
+                                                    <FormControlLabel value="ClosePrice" control={<Radio />} label="Absolute" />
+
+                                                </RadioGroup>
+                                            </FormControl>
+
+
+                                        </Container>
+                                        <Container>
+                                            <FormGroup>
+                                                <FormControlLabel control={<Checkbox defaultChecked />} label="Show Direction" />
+                                                <FormControlLabel control={<Checkbox />} label="Show Change" />
+                                                <FormControlLabel control={<Checkbox />} label="Show holdings" />
+
+                                            </FormGroup>
+                                        </Container>
+
+                                    </Grid>
+                                </Popover>    <SettingsIcon color="primary" sx={{ ml: '10px' }} aria-describedby={id} onClick={handleClickP} /></Grid>
                         </Stack>
                     </Grid>
                     <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem', zIndex: 1 }}>
                         <Outlet />
                     </Grid>
                 </Grid>
-            </div>
+            </div >
         </div >
     )
 }
