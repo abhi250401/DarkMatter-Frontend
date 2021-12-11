@@ -31,7 +31,7 @@ router.get('/wishlist/:id1/:id2', async (req, res) => {
     await Wishlist.find({
         listId: req.params.id2,
         userId: req.params.id1,
-    }).populate('stock')
+    }).populate('stockId')
         .then((data) => {
             res.json({ status: 'success', data: data });
         }).catch(err => {

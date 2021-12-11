@@ -70,6 +70,7 @@ const Routes = [
 		path: '/admin',
 
 		children: [
+
 			{
 				path: 'stocks/:id',
 				element: <Error user={user} />

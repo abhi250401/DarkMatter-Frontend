@@ -352,17 +352,17 @@ export default function Home(props) {
 
 
                                 <ListItem key={suggestion.stockId} component="div" disablePadding>
-                                    <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockCode}`) }} style={{ color: "black", }}>
-                                        {suggestion.stock[0].closePrice > 100 ?
+                                    <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }} style={{ color: "black", }}>
+                                        {suggestion.stockId.closePrice > 100 ?
                                             (<Grid container direction="row" alignItems="center" ><ListItemText sx={{ color: "green", width: "60%" }}
                                                 primaryTypographyProps={{ fontSize: '0.9rem' }}
                                                 secondaryTypographyProps={{ fontSize: '0.8rem' }}
-                                                primary={suggestion.stock[0].code}
+                                                primary={suggestion.stockId.code}
                                             />
                                                 <ListItemText sx={{ color: "green" }}
                                                     primaryTypographyProps={{ fontSize: '0.9rem' }}
                                                     secondaryTypographyProps={{ fontSize: '0.8rem' }}
-                                                    primary={suggestion.stock[0].closePrice}
+                                                    primary={suggestion.stockId.closePrice}
 
                                                 />
 
@@ -372,7 +372,7 @@ export default function Home(props) {
                                                 <ListItemText sx={{ color: "red", minWidth: "60%", }}
                                                     primaryTypographyProps={{ fontSize: '0.9rem' }}
                                                     secondaryTypographyProps={{ fontSize: '0.8rem' }}
-                                                    primary={suggestion.stock[0].code}
+                                                    primary={suggestion.stockId.code}
                                                 />
                                                 <ListItemText sx={{ color: "gray", width: "5%", }}
                                                     primaryTypographyProps={{ fontSize: '0.8rem' }}
@@ -382,7 +382,7 @@ export default function Home(props) {
                                                 <ListItemText sx={{ color: "red" }}
                                                     primaryTypographyProps={{ fontSize: '0.9rem' }}
                                                     secondaryTypographyProps={{ fontSize: '0.8rem' }}
-                                                    primary={suggestion.stock[0].closePrice}
+                                                    primary={suggestion.stockId.closePrice}
 
                                                 />
 

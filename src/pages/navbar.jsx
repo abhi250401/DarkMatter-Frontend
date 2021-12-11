@@ -75,7 +75,10 @@ export default function PrimarySearchAppBar(props) {
     };
     const signout = () => {
         localStorage.removeItem('token');
-        goto('/');
+
+
+        goto('/'); window.location.reload();
+
 
 
     };

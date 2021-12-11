@@ -283,6 +283,11 @@ export default function EnhancedTable(props) {
         return (
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "white" }}>Loading ...</h1></div>
         );
+    if (!props.user || !props.user.userID)
+        return (
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "black" }}>No access ...
+                <Link to="/login" > Login</Link>  </h1></div >
+        );
     return (
         <div><Navbar {...props} />
             <Box sx={{ width: "100%" }}>
