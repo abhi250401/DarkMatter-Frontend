@@ -29,6 +29,8 @@ const EditUser = () => {
                 setUser(response.data);
                 setName(response.data.name);
                 setEmail(response.data.email);
+                setPhone(response.data.phone);
+                setrole(response.data.role);
 
             }).catch(err => {
                 console.log(err);
@@ -38,7 +40,8 @@ const EditUser = () => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-
+    const [phone, setPhone] = useState('');
+    const [role, setrole] = useState('')
 
     const editUserDetails = async () => {
         const response = await fetch(process.env.REACT_APP_API_URL + `/user/${id}`, {
@@ -49,6 +52,8 @@ const EditUser = () => {
             body: JSON.stringify({
                 name,
                 email,
+                phone,
+                role
             }),
         })
 
@@ -76,9 +81,16 @@ const EditUser = () => {
                 <InputLabel htmlFor="my-input">Email</InputLabel>
                 <Input onChange={(e) => setEmail(e.target.value)} name="email" id="email" type="email" value={email} id="my-input" aria-describedby="my-helper-text" />
             </FormControl>
+            <FormControl>
+                <InputLabel htmlFor="my-input">Phone</InputLabel>
+                <Input onChange={(e) => setPhone(e.target.value)} name="email" id="email" type="email" value={phone} id="my-input" aria-describedby="my-helper-text" />
+            </FormControl>
+            <FormControl>
+                <InputLabel htmlFor="my-input">Role</InputLabel>
+                <Input onChange={(e) => setrole(e.target.value)} name="email" id="email" type="email" value={role} id="my-input" aria-describedby="my-helper-text" />
+            </FormControl>
 
             <FormControl>
-                <Button variant="contained" color="primary" onClick={() => editUserDetails()}>Edit User</Button>
             </FormControl>
 
         </FormGroup>

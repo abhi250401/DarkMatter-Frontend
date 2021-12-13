@@ -390,8 +390,8 @@ export default function EnhancedTable(props) {
 
 
                                                 <TableCell>
-                                                    <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/${user._id}`}>Edit</Button>
-                                                    <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/${user._id}`}>Delete</Button>
+                                                    <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/admin/users/edit/${user._id}`}>Edit</Button>
+                                                    <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/admin/users/delete/${user._id}`}>Delete</Button>
                                                 </TableCell>
                                             </TableRow>
 

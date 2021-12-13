@@ -42,7 +42,12 @@ export default function Home(props) {
     const vertical = 'top';
     const [color, setColor] = React.useState('');
     const horizontal = 'center';
+    const [value, setValue] = React.useState('ClosePrice');
 
+    const handleChange = (event) => {
+        setValue(event.target.value);
+        console.log(value);
+    };
     const handleClick = () => {
         setOpen(true);
     };
@@ -72,11 +77,14 @@ export default function Home(props) {
         await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/${listId}`).then(response => {
             setwishlistData(response.data.data);
 
+
+
         }).catch(err => {
 
             console.log(err);
         })
     }
+
 
     const selectUserWishlist = async (event, listId) => {
         setPage(listId);
@@ -359,12 +367,17 @@ export default function Home(props) {
                                                 secondaryTypographyProps={{ fontSize: '0.8rem' }}
                                                 primary={suggestion.stockId.code}
                                             />
-                                                <ListItemText sx={{ color: "green" }}
+                                                {value === 'ClosePrice' ? (<ListItemText sx={{ color: "green" }}
                                                     primaryTypographyProps={{ fontSize: '0.9rem' }}
                                                     secondaryTypographyProps={{ fontSize: '0.8rem' }}
                                                     primary={suggestion.stockId.closePrice}
 
-                                                />
+                                                />) : (<ListItemText sx={{ color: "green" }}
+                                                    primaryTypographyProps={{ fontSize: '0.9rem' }}
+                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                    primary={suggestion.stockId.price}
+
+                                                />)}
 
                                                 <KeyboardArrowUpIcon />
                                             </Grid>) :
@@ -379,12 +392,17 @@ export default function Home(props) {
                                                     secondaryTypographyProps={{ fontSize: '0.8rem' }}
                                                     primary="5"
                                                 />
-                                                <ListItemText sx={{ color: "red" }}
+                                                {value === 'ClosePrice' ? (<ListItemText sx={{ color: "red" }}
                                                     primaryTypographyProps={{ fontSize: '0.9rem' }}
                                                     secondaryTypographyProps={{ fontSize: '0.8rem' }}
                                                     primary={suggestion.stockId.closePrice}
 
-                                                />
+                                                />) : (<ListItemText sx={{ color: "red" }}
+                                                    primaryTypographyProps={{ fontSize: '0.9rem' }}
+                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                    primary={suggestion.stockId.price}
+
+                                                />)}
 
                                                 <KeyboardArrowDownIcon sx={{ m: 0 }} disablePadding />
                                             </Grid>)}
@@ -425,13 +443,13 @@ export default function Home(props) {
                                             <FormControl component="fieldset">
                                                 <FormLabel component="legend">Change</FormLabel>
                                                 <RadioGroup
-                                                    aria-label="Change"
-                                                    defaultValue="ClosePrice"
-                                                    name="radio-buttons-group"
+                                                    aria-label="gender"
+                                                    name="controlled-radio-buttons-group"
+                                                    value={value}
+                                                    onChange={handleChange}
                                                 >
-                                                    <FormControlLabel value="OpenPrice" control={<Radio />} label="Close Price" />
-                                                    <FormControlLabel value="ClosePrice" control={<Radio />} label="Open Price" />
-
+                                                    <FormControlLabel value="OpenPrice" control={<Radio />} label="OpenPrice" />
+                                                    <FormControlLabel value="ClosePrice" control={<Radio />} label="ClosePrice" />
                                                 </RadioGroup>
                                             </FormControl>
 

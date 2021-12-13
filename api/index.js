@@ -87,7 +87,7 @@ app.delete('/api/user/:id', function (req, res) {
 });
 
 app.put('/api/user/:id', function (req, res) {
-    User.updateOne({ _id: req.params.id }, { $set: { name: req.body.name, email: req.body.email } }).then((result) => {
+    User.updateOne({ _id: req.params.id }, { $set: { name: req.body.name, email: req.body.email, phone: req.body.phone, role: req.body.role } }).then((result) => {
         res.status(201).json(result);
     }).catch((err) => {
         console.warn(err);
@@ -119,6 +119,7 @@ app.put('/api/stock/:id', function (req, res) {
 })
 
 app.get('/api/userone/:id', (req, res) => {
+
     User.findById(req.params.id).then((data) => {
         res.json(data);
     }).catch(err => {

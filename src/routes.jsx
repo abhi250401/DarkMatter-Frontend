@@ -80,8 +80,8 @@ const Routes = [
 				element: <Stocks user={user} />
 			},
 			{
-				path: 'users/:id/edit',
-				element: <Error user={user} />
+				path: 'users/edit/:id',
+				element: <EditUser user={user} />
 			},
 			{
 				path: 'users/:id',
