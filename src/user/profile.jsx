@@ -160,7 +160,7 @@ const EditUser = (props) => {
                 />
                 <button style={{/* width: "100px", marginBottom: "5px", display: "flex", padding: "6px", justifyContent: "center" */ }} onClick={() => submitFile()}> Upload File</button>
             </FormGroup>
-            <ButtonUnstyled style={{/* width: "100px", margin: "auto", display: "flex", padding: "6px", justifyContent: "center" */ }} disabled={disabled} onClick={() => editUserDetails()}>Edit</ButtonUnstyled>
+            {!disabled ? (<ButtonUnstyled style={{/* width: "100px", margin: "auto", display: "flex", padding: "6px", justifyContent: "center" */ }} disabled={disabled} onClick={() => editUserDetails()}>save</ButtonUnstyled>) : null}
 
         </div>
     )
