@@ -4,6 +4,7 @@ import { Link, Outlet } from 'react-router-dom';
 import { Grid, Button, Box, IconButton, List, ListItem, ListItemButton, ListItemText, Paper, Pagination, Stack, Snackbar, Container, Typography, Divider, createTheme } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+
 import Popover from '@mui/material/Popover';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -21,6 +22,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Navbar from './navbar'
 import './home.css'
 import { responsiveFontSizes } from '@material-ui/core';
+import { BusinessCenterOutlined } from '@material-ui/icons';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 
 export default function Home(props) {
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -55,12 +58,13 @@ export default function Home(props) {
         ChangeFormat
     ]
     localStorage.setItem('SortingList', SortingArray)
-    console.log(SortingArray[1])
+    //  console.log(SortingArray[1])
 
     const handleChange = (event) => {
         setValue(event.target.value);
+        setOpen(false)
 
-        console.log(value);
+        //  console.log(value);
     };
     const handleChangeFormat = (event) => {
         setChangeFormat(event.target.value);
@@ -74,6 +78,7 @@ export default function Home(props) {
 
     const handleClickP = (event) => {
         setAnchorEl(event.currentTarget);
+        setOpen(false)
     };
     const ChangeSortBy = () => {
         setSortby()
@@ -165,10 +170,10 @@ export default function Home(props) {
         const loadApiData = async () => {
             const response = await axios.get(process.env.REACT_APP_API_URL + '/admin/stocks');
             setApiData(response.data)
-            console.log(response.data)
+            // console.log(response.data)
         };
 
-        loadApiData();
+        //  loadApiData();
 
         /*const fetchWishlistData = async () => {
             await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/0`).then(response => {
@@ -417,11 +422,12 @@ export default function Home(props) {
                                     <ListItem key={suggestion.stockId} component="div" disablePadding style={{ border: "2px", borderBlockColor: "black", borderBottomColor: "black" }}>
                                         <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }} style={{ color: "black", }}>
                                             {suggestion.stockId.closePrice > 100 ?
-                                                (<Grid container direction="row" alignItems="center" ><ListItemText sx={{ color: "green", minWidth: "60%" }}
+                                                (<Grid container direction="row" alignItems="center" ><ListItemText sx={{ color: "green", minWidth: "50%" }}
                                                     primaryTypographyProps={{ fontSize: '0.8rem' }}
                                                     secondaryTypographyProps={{ fontSize: '0.7rem' }}
                                                     primary={suggestion.stockId.code}
                                                 />
+                                                    <BusinessCenterIcon sx={{ color: "gray", mr: 1 }} />
                                                     <ListItemText sx={{ color: "gray", width: "5%", }}
                                                         primaryTypographyProps={{ fontSize: '0.8rem' }}
                                                         secondaryTypographyProps={{ fontSize: '0.7rem' }}
@@ -448,11 +454,12 @@ export default function Home(props) {
                                                     />{ChangeFormat === 'Percentage' ? ('%') : null}
                                                 </Grid>) :
                                                 (<Grid container direction="row" alignItems="center" >
-                                                    <ListItemText sx={{ color: "red", minWidth: "60%", }}
+                                                    <ListItemText sx={{ color: "red", minWidth: "50%", }}
                                                         primaryTypographyProps={{ fontSize: '0.8rem' }}
                                                         secondaryTypographyProps={{ fontSize: '0.7rem' }}
                                                         primary={suggestion.stockId.code}
                                                     />
+                                                    <BusinessCenterIcon sx={{ color: "gray", mr: 1 }} />
                                                     <ListItemText sx={{ color: "gray", width: "5%", }}
                                                         primaryTypographyProps={{ fontSize: '0.8rem' }}
                                                         secondaryTypographyProps={{ fontSize: '0.7rem' }}
@@ -491,7 +498,7 @@ export default function Home(props) {
 
                             )}
 
-                        <Stack style={{ position: 'absolute', bottom: '.25rem', marginTop: "20px", left: '2rem', }}>
+                        <Stack style={{ position: 'absolute', bottom: '.25rem', marginTop: "20px", left: '0.2rem', }}>
                             <Grid container direction="row" alignItems="center" >
                                 <Pagination count={5} hidePrevButton hideNextButton page={page} variant="outlined" shape="rounded" onChange={selectUserWishlist} />
                                 <Popover
@@ -552,7 +559,7 @@ export default function Home(props) {
 
 
                                     </Grid>
-                                </Popover>    <SettingsIcon color="primary" sx={{ ml: '10px' }} aria-describedby={id} onClick={handleClickP} /></Grid>
+                                </Popover>    <SettingsIcon color="primary" sx={{ ml: 18 }} aria-describedby={id} onClick={handleClickP} /></Grid>
                         </Stack>
                     </Grid>
                     <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem', zIndex: 1 }}>

@@ -158,9 +158,9 @@ const EditUser = (props) => {
                     type="file"
                     onChange={(e) => setFile(e.target.files[0])}
                 />
-                <button style={{ width: "100px", marginBottom: "5px", display: "flex", padding: "6px", justifyContent: "center" }} onClick={() => submitFile()}> Upload File</button>
+                <button style={{/* width: "100px", marginBottom: "5px", display: "flex", padding: "6px", justifyContent: "center" */ }} onClick={() => submitFile()}> Upload File</button>
             </FormGroup>
-            <ButtonUnstyled style={{ width: "100px", margin: "auto", display: "flex", padding: "6px", justifyContent: "center" }} disabled={disabled} onClick={() => editUserDetails()}>Edit</ButtonUnstyled>
+            <ButtonUnstyled style={{/* width: "100px", margin: "auto", display: "flex", padding: "6px", justifyContent: "center" */ }} disabled={disabled} onClick={() => editUserDetails()}>Edit</ButtonUnstyled>
 
         </div>
     )
