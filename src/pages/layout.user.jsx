@@ -153,7 +153,7 @@ export default function Home(props) {
     const sortedList = async (prop) => {
 
 
-        await axios.get(process.env.REACT_APP_API_URL + `/user/sorted/wishlist/${props.user.userID}/${SortingArray}/${prop}`).then(response => {
+        await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/${SortingArray}/${prop}`).then(response => {
             setwishlistData(response.data.data);
 
 
@@ -498,7 +498,7 @@ export default function Home(props) {
 
                             )}
 
-                        <Stack style={{ position: 'absolute', bottom: '.25rem', marginTop: "20px", left: '0.2rem', }}>
+                        <Stack style={{ position: 'absolute', bottom: '.25rem', marginTop: "20px", left: '2rem', }}>
                             <Grid container direction="row" alignItems="center" >
                                 <Pagination count={5} hidePrevButton hideNextButton page={page} variant="outlined" shape="rounded" onChange={selectUserWishlist} />
                                 <Popover
@@ -559,7 +559,7 @@ export default function Home(props) {
 
 
                                     </Grid>
-                                </Popover>    <SettingsIcon color="primary" sx={{ ml: 18 }} aria-describedby={id} onClick={handleClickP} /></Grid>
+                                </Popover>    <SettingsIcon color="primary" sx={{ ml: 1 }} aria-describedby={id} onClick={handleClickP} /></Grid>
                         </Stack>
                     </Grid>
                     <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem', zIndex: 1 }}>

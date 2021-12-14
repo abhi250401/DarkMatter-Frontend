@@ -9,10 +9,10 @@ import { SendToMobile } from '@mui/icons-material';
 
 const useStyles = makeStyles({
     container: {
-        width: '50%',
-        margin: '5% 0 0 25%',
+        //  width: '50%',
+        // margin: '5% 0 0 25%',
         '& > *': {
-            marginTop: 20
+            //      marginTop: 20
         }
     }
 })
