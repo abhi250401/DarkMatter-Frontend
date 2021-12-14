@@ -19,6 +19,7 @@ import axios from "axios";
 import SettingsIcon from '@mui/icons-material/Settings';
 import Navbar from './navbar'
 import './home.css'
+import { responsiveFontSizes } from '@material-ui/core';
 
 export default function Home(props) {
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -128,6 +129,7 @@ export default function Home(props) {
         const loadApiData = async () => {
             const response = await axios.get(process.env.REACT_APP_API_URL + '/admin/stocks');
             setApiData(response.data)
+            console.log(response.data)
         };
 
         loadApiData();
@@ -167,6 +169,8 @@ export default function Home(props) {
         const loadApiData = async () => {
             const response = await axios.get(process.env.REACT_APP_API_URL + '/admin/stocks');
             setApiData(response.data)
+
+
         }
 
         if (!apiData.length) {
@@ -175,8 +179,11 @@ export default function Home(props) {
 
         if (text.length >= 3) {
             matches = apiData.filter(stock => {
-                const regex = new RegExp(`${text}`, 'gi');
-                return stock.name.match(regex);
+
+                if (stock.name) {
+                    const regex = new RegExp(`${text}`, 'gi');
+                    return stock.name.match(regex);
+                }
             })
         }
         setSuggestion(matches);

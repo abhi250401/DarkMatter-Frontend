@@ -27,9 +27,17 @@ const EditUser = (props) => {
     const [disabled, setDisabled] = useState(true);
     const classes = useStyles();
     let history = useNavigate();
+    console.log(props);
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API_URL + `/userone/${id}`)
+        axios.get(process.env.REACT_APP_API_URL + `/userone/`,
+            {
+                headers: {
+                    "Authorization": `${props.user._id}`
+
+                }
+            }
+        )
             .then(response => {
                 console.log(response.data);
                 setLoading(true);
@@ -67,7 +75,7 @@ const EditUser = (props) => {
 
         const formData = new FormData()
         formData.append('profileImg', file)
-        axios.put(process.env.REACT_APP_API_URL + `/user/image/${id}`, formData, {
+        axios.put(process.env.REACT_APP_API_URL + `/user/image/${props.user._id}`, formData, {
         }).then(res => {
             console.log(res)
         })

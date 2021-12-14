@@ -101,7 +101,7 @@ export default function PrimarySearchAppBar(props) {
             onClose={handleMenuClose}
         >
 
-            <Link to={`/user/profile/${props.user.userID || 0}`}>    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
+            <Link to="/user/profile">    <MenuItem onClick={handleMenuClose}> Profile</MenuItem></Link>
             <MenuItem >Change Password</MenuItem>
             <Link to="/admin/users">  <MenuItem onClick={handleMenuClose}>  Users</MenuItem></Link>
             <Link to="/admin/stocks"> <MenuItem onClick={handleMenuClose}> Stocks</MenuItem></Link>

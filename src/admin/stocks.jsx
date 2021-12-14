@@ -319,10 +319,12 @@ export default function EnhancedTable(props) {
                  rows.slice().sort(getComparator(order, orderBy)) */}
                                 {stableSort(stocks, getComparator(order, orderBy))
                                     .filter((val) => {
-                                        if (searchTerm === " ")
-                                            return val
-                                        else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                            return val
+                                        if (val.name) {
+                                            if (searchTerm === " ")
+                                                return val
+                                            else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                                return val
+                                            }
                                         }
                                     })
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -362,7 +364,7 @@ export default function EnhancedTable(props) {
 
 
                                                 <TableCell>{stock.closePrice}</TableCell>
-                                                <TableCell>{stock.name}</TableCell>
+                                                {stock.name ? (<TableCell>{stock.name}</TableCell>) : null}
                                                 <TableCell>
                                                     <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/stock/${stock._id}`}>Edit</Button>
                                                     <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/stock/${stock._id}`}>Delete</Button>

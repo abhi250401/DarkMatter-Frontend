@@ -1,6 +1,6 @@
 import React from 'react';
 import jwt_decode from 'jwt-decode';
-
+import axios from 'axios';
 //	Public pages
 const FirstPage = React.lazy(() => import( /*webpackChunkName: 'index'*/ './pages/index'));
 const Error = React.lazy(() => import( /*webpackChunkName: 'error'*/ './pages/error'));
@@ -26,9 +26,10 @@ const Stocks = React.lazy(() => import( /*webpackChunkName: 'stocks'*/ './admin/
 const AddStock = React.lazy(() => import( /*webpackChunkName: 'addStock'*/ './admin/addStock'));
 const EditStock = React.lazy(() => import( /*webpackChunkName: 'editStock'*/ './admin/editStock'));
 const DeleteStock = React.lazy(() => import( /*webpackChunkName: 'deleteStock'*/ './admin/deleteStock'));
-
 //  Check if user is logged in
 let user = {};
+
+
 const token = localStorage.getItem('token') || " ";
 if (token !== ' ') {
 	const decoded = jwt_decode(token);
@@ -42,7 +43,9 @@ if (token !== ' ') {
 		user.token = token;
 	}
 }
-console.log('User', user);
+axios.defaults.headers.common['Authorization'] = token;//
+
+console.log(user.role);
 
 const Routes = [
 	{
@@ -115,7 +118,7 @@ const Routes = [
 				element: <EditUser user={user} />
 			},
 			{
-				path: 'profile/:id',
+				path: 'profile',
 				element: <UserProfile user={user} />
 			},
 			{

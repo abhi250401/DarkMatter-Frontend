@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
 let multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
@@ -26,7 +27,7 @@ mongoose.connect('mongodb+srv://abhi:123456asdf@cluster0.05abf.mongodb.net/myFir
 //  Middleware
 app.use(express.json());
 
-const DIR = '../public/uploads/';
+const DIR = '../public/images';
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, DIR);
@@ -111,6 +112,9 @@ app.delete('/api/stock/:id', function (req, res) {
 });
 
 app.put('/api/stock/:id', function (req, res) {
+    const authorizationHeader = authHeader = req.get("Authorization");
+
+
     Stocks.updateOne({ _id: req.params.id }, { $set: { name: req.body.name, price: req.body.price } }).then((result) => {
         res.status(201).json(result);
     }).catch((err) => {
@@ -118,9 +122,12 @@ app.put('/api/stock/:id', function (req, res) {
     })
 })
 
-app.get('/api/userone/:id', (req, res) => {
-
-    User.findById(req.params.id).then((data) => {
+app.get('/api/userone', (req, res) => {
+    const authorizationHeader = authHeader = req.get("Authorization");
+    console.log(authorizationHeader)
+    const verified = jwt.verify(authorizationHeader, "hisdi");
+    console.log(verified)
+    User.findById(authorizationHeader).then((data) => {
         res.json(data);
     }).catch(err => {
         console.log(err);
@@ -128,6 +135,12 @@ app.get('/api/userone/:id', (req, res) => {
 });
 
 app.get('/api/user/stock/:code', (req, res) => {
+    //user auth 
+    const authorizationHeader = { authHeader } = req.get("Authorization");
+    console.log(authorizationHeader)
+    const verified = jwt.verify(authorizationHeader, "hisdi");
+    console.log(verified)
+    //user auth
     Stocks.findOne({ code: req.params.code }).then((data) => {
         res.json(data);
     }).catch(err => {
