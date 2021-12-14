@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Link, Outlet } from 'react-router-dom';
-import { Grid, Button, IconButton, List, ListItem, ListItemButton, ListItemText, Paper, Pagination, Stack, Snackbar, Container, Typography, Divider } from '@mui/material';
+import { Grid, Button, Box, IconButton, List, ListItem, ListItemButton, ListItemText, Paper, Pagination, Stack, Snackbar, Container, Typography, Divider, createTheme } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import Popover from '@mui/material/Popover';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -44,10 +45,27 @@ export default function Home(props) {
     const [color, setColor] = React.useState('');
     const horizontal = 'center';
     const [value, setValue] = React.useState('ClosePrice');
+    const [sortBy, setSortby] = React.useState('A-Z');
+    const [ChangeBy, setChangeBy] = React.useState('OpenPrice');
+    const [ChangeFormat, setChangeFormat] = React.useState('Absolute');
+
+    const SortingArray = [
+        sortBy,
+        value,
+        ChangeFormat
+    ]
+    localStorage.setItem('SortingList', SortingArray)
+    console.log(SortingArray[1])
 
     const handleChange = (event) => {
         setValue(event.target.value);
+
         console.log(value);
+    };
+    const handleChangeFormat = (event) => {
+        setChangeFormat(event.target.value);
+
+
     };
     const handleClick = () => {
         setOpen(true);
@@ -57,6 +75,9 @@ export default function Home(props) {
     const handleClickP = (event) => {
         setAnchorEl(event.currentTarget);
     };
+    const ChangeSortBy = () => {
+        setSortby()
+    }
 
     const handleCloseP = () => {
         setAnchorEl(null);
@@ -124,6 +145,21 @@ export default function Home(props) {
         getUserWishlist(page);
         setOpen(true)
     }
+    const sortedList = async (prop) => {
+
+
+        await axios.get(process.env.REACT_APP_API_URL + `/user/sorted/wishlist/${props.user.userID}/${SortingArray}/${prop}`).then(response => {
+            setwishlistData(response.data.data);
+
+
+
+        }).catch(err => {
+
+            console.log(err);
+        })
+    }
+
+
 
     useEffect(() => {
         const loadApiData = async () => {
@@ -156,7 +192,7 @@ export default function Home(props) {
         /*setStock(stock.stockName);
         axios.get(process.env.REACT_APP_API_URL + `/stockone/${stock.stockId}`).then((response) => {
             setStockPrice(response.data.marketCapital);
-
+    
         }).catch((err) => {
             setError(true);
             console.log(err);
@@ -189,7 +225,18 @@ export default function Home(props) {
         setSuggestion(matches);
         setText(text);
     }
-
+    const theme = createTheme({
+        overrides: {
+            // Name of the component
+            MuiListItem: {
+                // Name of the rule
+                root: {
+                    // Some CSS
+                    borderBottom: "3px solid rgb(212, 212, 212)"
+                },
+            },
+        },
+    });
     async function addtoWishlist(stock) {
         if (!props.user || !props.user.userID) {
             console.log('Invalid user');
@@ -365,60 +412,82 @@ export default function Home(props) {
                         {
                             loading && wishlistData && wishlistData.map((suggestion) =>
 
+                                <MuiThemeProvider theme={theme}>
 
-                                <ListItem key={suggestion.stockId} component="div" disablePadding>
-                                    <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }} style={{ color: "black", }}>
-                                        {suggestion.stockId.closePrice > 100 ?
-                                            (<Grid container direction="row" alignItems="center" ><ListItemText sx={{ color: "green", width: "60%" }}
-                                                primaryTypographyProps={{ fontSize: '0.9rem' }}
-                                                secondaryTypographyProps={{ fontSize: '0.8rem' }}
-                                                primary={suggestion.stockId.code}
-                                            />
-                                                {value === 'ClosePrice' ? (<ListItemText sx={{ color: "green" }}
-                                                    primaryTypographyProps={{ fontSize: '0.9rem' }}
-                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
-                                                    primary={suggestion.stockId.closePrice}
-
-                                                />) : (<ListItemText sx={{ color: "green" }}
-                                                    primaryTypographyProps={{ fontSize: '0.9rem' }}
-                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
-                                                    primary={suggestion.stockId.price}
-
-                                                />)}
-
-                                                <KeyboardArrowUpIcon />
-                                            </Grid>) :
-                                            (<Grid container direction="row" alignItems="center" >
-                                                <ListItemText sx={{ color: "red", minWidth: "60%", }}
-                                                    primaryTypographyProps={{ fontSize: '0.9rem' }}
-                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
+                                    <ListItem key={suggestion.stockId} component="div" disablePadding style={{ border: "2px", borderBlockColor: "black", borderBottomColor: "black" }}>
+                                        <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }} style={{ color: "black", }}>
+                                            {suggestion.stockId.closePrice > 100 ?
+                                                (<Grid container direction="row" alignItems="center" ><ListItemText sx={{ color: "green", minWidth: "60%" }}
+                                                    primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                    secondaryTypographyProps={{ fontSize: '0.7rem' }}
                                                     primary={suggestion.stockId.code}
                                                 />
-                                                <ListItemText sx={{ color: "gray", width: "5%", }}
-                                                    primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
-                                                    primary="5"
-                                                />
-                                                {value === 'ClosePrice' ? (<ListItemText sx={{ color: "red" }}
-                                                    primaryTypographyProps={{ fontSize: '0.9rem' }}
-                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
-                                                    primary={suggestion.stockId.closePrice}
+                                                    <ListItemText sx={{ color: "gray", width: "5%", }}
+                                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                                        primary="0"
+                                                    />
+                                                    {value === 'ClosePrice' ? (<ListItemText sx={{ color: "green" }}
+                                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                                        primary={suggestion.stockId.closePrice}
 
-                                                />) : (<ListItemText sx={{ color: "red" }}
-                                                    primaryTypographyProps={{ fontSize: '0.9rem' }}
-                                                    secondaryTypographyProps={{ fontSize: '0.8rem' }}
-                                                    primary={suggestion.stockId.price}
+                                                    />) : (<ListItemText sx={{ color: "green" }}
+                                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                                        primary={suggestion.stockId.price}
 
-                                                />)}
+                                                    />)}
 
-                                                <KeyboardArrowDownIcon sx={{ m: 0 }} disablePadding />
-                                            </Grid>)}
+                                                    <KeyboardArrowUpIcon sx={{ mr: 2 }} />
+                                                    <ListItemText sx={{ color: "green" }}
+                                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                                        primary='0'
 
-                                    </ListItemButton>
-                                    <IconButton disablePadding>
-                                        <DeleteIcon onClick={() => removeFromWatchlist(suggestion)} />
-                                    </IconButton>
-                                </ListItem>
+                                                    />{ChangeFormat === 'Percentage' ? ('%') : null}
+                                                </Grid>) :
+                                                (<Grid container direction="row" alignItems="center" >
+                                                    <ListItemText sx={{ color: "red", minWidth: "60%", }}
+                                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                                        primary={suggestion.stockId.code}
+                                                    />
+                                                    <ListItemText sx={{ color: "gray", width: "5%", }}
+                                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                                        primary="0"
+                                                    />
+                                                    {value === 'ClosePrice' ? (<ListItemText sx={{ color: "red" }}
+                                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                                        primary={suggestion.stockId.closePrice}
+
+                                                    />) : (<ListItemText sx={{ color: "red" }}
+                                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                                        primary={suggestion.stockId.price}
+
+                                                    />)}
+
+                                                    <KeyboardArrowDownIcon sx={{ m: 0, mr: 2 }} disablePadding />
+
+                                                    <ListItemText sx={{ color: "red" }}
+                                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                                        primary='0'
+
+                                                    />{ChangeFormat === 'Percentage' ? ('%') : null}
+                                                </Grid>)}
+
+                                        </ListItemButton>
+                                        <IconButton disablePadding>
+                                            <DeleteIcon onClick={() => removeFromWatchlist(suggestion)} />
+                                        </IconButton>
+                                    </ListItem>
+                                    <Divider sx={{ color: "gray", width: "100%" }} />
+                                </MuiThemeProvider>
+
 
                             )}
 
@@ -442,15 +511,15 @@ export default function Home(props) {
 
                                         <Container>
                                             <Typography >Sort By</Typography>
-                                            <Button sx={{ m: "8px" }} variant="contained">A-Z</Button>
-                                            <Button variant="contained">%</Button>
+                                            <Button sx={{ m: "8px" }} onClick={() => sortedList('A-Z')} variant="contained">A-Z</Button>
+                                            <Button variant="contained" onClick={() => sortedList('%')}>%</Button>
 
                                         </Container>
                                         <Container>
                                             <FormControl component="fieldset">
                                                 <FormLabel component="legend">Change</FormLabel>
                                                 <RadioGroup
-                                                    aria-label="gender"
+
                                                     name="controlled-radio-buttons-group"
                                                     value={value}
                                                     onChange={handleChange}
@@ -468,11 +537,12 @@ export default function Home(props) {
                                                 <FormLabel component="legend">Change Format</FormLabel>
                                                 <RadioGroup
                                                     aria-label="Change"
-                                                    defaultValue="ClosePrice"
-                                                    name="radio-buttons-group"
+                                                    name="controlled-radio-buttons-group"
+                                                    onChange={handleChangeFormat}
+                                                    value={ChangeFormat}
                                                 >
-                                                    <FormControlLabel value="OpenPrice" control={<Radio />} label="Percentage" />
-                                                    <FormControlLabel value="ClosePrice" control={<Radio />} label="Absolute" />
+                                                    <FormControlLabel value="Percentage" control={<Radio />} label="Percentage" />
+                                                    <FormControlLabel value="Absolute" control={<Radio />} label="Absolute" />
 
                                                 </RadioGroup>
                                             </FormControl>

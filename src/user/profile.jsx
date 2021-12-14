@@ -30,10 +30,10 @@ const EditUser = (props) => {
     console.log(props);
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API_URL + `/userone/`,
+        axios.get(process.env.REACT_APP_API_URL + `/userone`,
             {
                 headers: {
-                    "Authorization": `${props.user._id}`
+
 
                 }
             }

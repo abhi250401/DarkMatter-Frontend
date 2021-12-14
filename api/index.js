@@ -20,6 +20,7 @@ const wishlist = require('./routes/wishlist');
 app.use(cors());
 
 const mongoose = require('mongoose');
+const stocks = require('./model/stocks');
 
 mongoose.connect('mongodb+srv://abhi:123456asdf@cluster0.05abf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     () => console.log('connected to db'));
@@ -127,7 +128,7 @@ app.get('/api/userone', (req, res) => {
     console.log(authorizationHeader)
     const verified = jwt.verify(authorizationHeader, "hisdi");
     console.log(verified)
-    User.findById(authorizationHeader).then((data) => {
+    User.findById(verified._id).then((data) => {
         res.json(data);
     }).catch(err => {
         console.log(err);
@@ -147,5 +148,6 @@ app.get('/api/user/stock/:code', (req, res) => {
         console.log(err);
     })
 });
+
 
 app.listen(process.env.PORT || 3000, () => console.log('server up and running'))

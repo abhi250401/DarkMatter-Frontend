@@ -7,7 +7,7 @@ export default function UserDashboard(props) {
 
     useEffect(() => {
         const loadApiData = async () => {
-            await axios.get(process.env.REACT_APP_API_URL + `/userone`, { headers: { Authorization: ` ${props.user._id}` } })
+            await axios.get(process.env.REACT_APP_API_URL + `/userone`,)
                 .then(response => {
                     console.log(response.data);
                     setApiData(response.data);
