@@ -173,7 +173,7 @@ export default function Home(props) {
             // console.log(response.data)
         };
 
-        //  loadApiData();
+        loadApiData();
 
         /*const fetchWishlistData = async () => {
             await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/0`).then(response => {
@@ -213,12 +213,13 @@ export default function Home(props) {
 
 
         }
-
         if (!apiData.length) {
             loadApiData();
         }
 
+
         if (text.length >= 3) {
+
             matches = apiData.filter(stock => {
 
                 if (stock.name) {
@@ -227,6 +228,8 @@ export default function Home(props) {
                 }
             })
         }
+        if (matches.length > 20)
+            matches.length = 20
         setSuggestion(matches);
         setText(text);
     }
