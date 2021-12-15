@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { FormGroup, FormControl, InputLabel, Input, makeStyles, Typography } from '@material-ui/core';
+import { FormGroup, FormControl, InputLabel, Input, makeStyles, Typography, TextField } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
@@ -130,8 +133,16 @@ const EditUser = (props) => {
                 </FormControl>
 
                 <FormControl>
-                    <InputLabel htmlFor="my-input">Dob</InputLabel>
-                    <Input name="aadhaar" className="input" disabled={disabled} value={dob} id="my-input" aria-describedby="my-helper-text" />
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            label="Date of Birth"
+                            value={dob}
+                            onChange={(newValue) => {
+                                setdob(newValue);
+                            }}
+                            renderInput={(params) => <TextField {...params} />}
+                        />
+                    </LocalizationProvider>
                 </FormControl>
 
 

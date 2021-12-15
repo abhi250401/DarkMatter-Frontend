@@ -150,11 +150,17 @@ export default function Home(props) {
         getUserWishlist(page);
         setOpen(true)
     }
-    const sortedList = async (prop) => {
+    const sortedList = async () => {
 
 
-        await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/${SortingArray}/${prop}`).then(response => {
-            setwishlistData(response.data.data);
+        await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${page}`, {
+            params: {
+                sortBy,
+                ChangeFormat,
+                value
+            }
+        }).then(response => {
+
 
 
 
@@ -385,7 +391,7 @@ export default function Home(props) {
                                 overflow: 'auto',
                                 // maxHeight: 300,
                                 '& ul': { padding: 0 },
-                                top: '2.25rem',
+                                top: '2.4rem',
                                 backgroundColor: '#fff',
                                 height: '75%',
                                 left: 0,
