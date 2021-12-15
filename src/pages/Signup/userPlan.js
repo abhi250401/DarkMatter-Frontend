@@ -1,23 +1,10 @@
 import React from "react";
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetail from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Radio from '@mui/material/Radio';
+
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import RadioGroup from '@mui/material/RadioGroup';
-import ListItemText from '@material-ui/core/ListItemText'
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import { Select } from "@mui/material";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+
 
 export const Review = ({ formData, setForm, navigation }) => {
     const { go } = navigation;
@@ -27,7 +14,7 @@ export const Review = ({ formData, setForm, navigation }) => {
     async function registerUser(event) {
         event.preventDefault()
 
-        const response = await fetch( process.env.API_URL + '/user/register', {
+        const response = await fetch(process.env.API_URL + '/user/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,7 +28,7 @@ export const Review = ({ formData, setForm, navigation }) => {
 
         if (data.status === 'ok') {
             console.log('registration success')
-        }else {
+        } else {
             alert('error email already exists')
         }
     }

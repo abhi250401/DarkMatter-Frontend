@@ -1,18 +1,10 @@
 import React, { useState } from "react";
 
 import TextField from "@material-ui/core/TextField";
-
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const theme = createTheme();
+
+
 export const Names = ({ formData, setForm, navigation, step }) => {
     const { firstName, phone, email, password } = formData;
     return (

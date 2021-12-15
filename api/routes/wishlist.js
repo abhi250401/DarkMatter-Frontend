@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Wishlist = require('../model/wishlist');
+const jwt = require('jsonwebtoken');
+
 // https://mongoosejs.com/docs/populate.html
 router.post('/wishlist', async (req, res) => {
 
@@ -27,10 +29,14 @@ router.post('/wishlist', async (req, res) => {
     }
 });
 
-router.get('/wishlist/:id1/:id2', async (req, res) => {
+router.get('/wishlist', async (req, res) => {
+    const authorizationHeader = { authHeader } = req.get("Authorization");
+    console.log(authorizationHeader)
+    const verified = jwt.verify(authorizationHeader, "hisdi");
+
     await Wishlist.find({
-        listId: req.params.id2,
-        userId: req.params.id1,
+        listId: req.query.listId,
+        userId: verified._id,
     }).populate('stockId')
         .then((data) => {
             res.json({ status: 'success', data: data });

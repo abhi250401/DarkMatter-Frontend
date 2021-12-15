@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FormGroup, FormControl, InputLabel, Input, Button, makeStyles, Typography } from '@material-ui/core';
+import { FormGroup, FormControl, InputLabel, Input, makeStyles, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
@@ -15,7 +15,6 @@ const useStyles = makeStyles({
 })
 
 const EditUser = () => {
-    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
     const classes = useStyles();
@@ -26,7 +25,6 @@ const EditUser = () => {
             .then(response => {
                 // console.log(response.data);
                 setLoading(true);
-                setUser(response.data);
                 setName(response.data.name);
                 setEmail(response.data.email);
                 setPhone(response.data.phone);

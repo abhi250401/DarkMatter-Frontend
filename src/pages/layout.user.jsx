@@ -21,8 +21,7 @@ import axios from "axios";
 import SettingsIcon from '@mui/icons-material/Settings';
 import Navbar from './navbar'
 import './home.css'
-import { responsiveFontSizes } from '@material-ui/core';
-import { BusinessCenterOutlined } from '@material-ui/icons';
+
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 
 export default function Home(props) {
@@ -101,7 +100,14 @@ export default function Home(props) {
     const getUserWishlist = async function (listId) {
         setLoading(true);
         setSuggestion([]);
-        await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${props.user.userID}/${listId}`).then(response => {
+        await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist`, {
+            params: {
+                sortBy,
+                ChangeFormat,
+                listId,
+                value
+            }
+        }).then(response => {
             setwishlistData(response.data.data);
 
 
@@ -150,25 +156,7 @@ export default function Home(props) {
         getUserWishlist(page);
         setOpen(true)
     }
-    const sortedList = async () => {
 
-
-        await axios.get(process.env.REACT_APP_API_URL + `/user/wishlist/${page}`, {
-            params: {
-                sortBy,
-                ChangeFormat,
-                value
-            }
-        }).then(response => {
-
-
-
-
-        }).catch(err => {
-
-            console.log(err);
-        })
-    }
 
 
 
@@ -388,7 +376,7 @@ export default function Home(props) {
                                 // maxWidth: 330,
                                 bgcolor: '#fff',
                                 position: 'absolute',
-                                overflow: 'auto',
+                                overflowY: 'auto',
                                 // maxHeight: 300,
                                 '& ul': { padding: 0 },
                                 top: '2.4rem',
@@ -423,7 +411,7 @@ export default function Home(props) {
                             </List>
                         </div>
                         {/* <p style={{ color: "black", marginLeft: "15px", fontWeight: "200", background: "" }}> Wishlist {page}</p>*/}
-                        {
+                        <div style={{ overflowY: "auto", height: "70vh" }}>     {
                             loading && wishlistData && wishlistData.map((suggestion) =>
 
                                 <MuiThemeProvider theme={theme}>
@@ -497,78 +485,88 @@ export default function Home(props) {
                                                 </Grid>)}
 
                                         </ListItemButton>
-                                        <IconButton disablePadding>
-                                            <DeleteIcon onClick={() => removeFromWatchlist(suggestion)} />
+                                        <IconButton onClick={() => removeFromWatchlist(suggestion)}>
+                                            <DeleteIcon />
                                         </IconButton>
                                     </ListItem>
                                     <Divider sx={{ color: "gray", width: "100%" }} />
+
                                 </MuiThemeProvider>
 
 
-                            )}
+                            )}</div>
 
-                        <Stack style={{ position: 'absolute', bottom: '.25rem', marginTop: "20px", left: '2rem', }}>
-                            <Grid container direction="row" alignItems="center" >
+                        <Stack style={{
+                            position: 'absolute', width: "100%", background: "#FAF9F6", padding: "5px", bottom: 0
+                        }}  >
+                            < Grid container
+                                direction="row"
+                                justifyContent="space-between"
+
+                                alignItems="center" >
                                 <Pagination count={5} hidePrevButton hideNextButton page={page} variant="outlined" shape="rounded" onChange={selectUserWishlist} />
-                                <Popover
-                                    open={open1}
-                                    anchorEl={anchorEl}
-                                    onClose={handleCloseP}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'left',
-                                    }}
-                                >
-                                    <Grid container direction="row" alignItems="center" sx={{ width: "200px" }}>
+                                <SettingsIcon color="primary" sx={{ mr: 2 }} aria-describedby={id} onClick={handleClickP} />
+                            </Grid>
+                            <Popover
+                                open={open1}
+                                anchorEl={anchorEl}
+                                onClose={handleCloseP}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                            >
+                                <Grid container direction="row" alignItems="center" sx={{ width: "200px" }}>
 
-                                        <Container>
-                                            <Typography >Sort By</Typography>
-                                            <Button sx={{ m: "8px" }} onClick={() => sortedList('A-Z')} variant="contained">A-Z</Button>
-                                            <Button variant="contained" onClick={() => sortedList('%')}>%</Button>
+                                    <Container>
+                                        <Typography >Sort By</Typography>
+                                        <Button sx={{ m: "8px" }} onClick={() => getUserWishlist(page)} variant="contained">A-Z</Button>
+                                        <Button variant="contained" onClick={() => getUserWishlist(page)}>%</Button>
 
-                                        </Container>
-                                        <Container>
-                                            <FormControl component="fieldset">
-                                                <FormLabel component="legend">Change</FormLabel>
-                                                <RadioGroup
+                                    </Container>
+                                    <Container>
+                                        <FormControl component="fieldset">
+                                            <FormLabel component="legend">Change</FormLabel>
+                                            <RadioGroup
 
-                                                    name="controlled-radio-buttons-group"
-                                                    value={value}
-                                                    onChange={handleChange}
-                                                >
-                                                    <FormControlLabel value="OpenPrice" control={<Radio />} label="OpenPrice" />
-                                                    <FormControlLabel value="ClosePrice" control={<Radio />} label="ClosePrice" />
-                                                </RadioGroup>
-                                            </FormControl>
+                                                name="controlled-radio-buttons-group"
+                                                value={value}
+                                                onChange={handleChange}
+                                            >
+                                                <FormControlLabel value="OpenPrice" control={<Radio />} label="OpenPrice" />
+                                                <FormControlLabel value="ClosePrice" control={<Radio />} label="ClosePrice" />
+                                            </RadioGroup>
+                                        </FormControl>
 
-                                        </Container>
-                                        <Divider sx={{ color: "gray", width: "170px" }} variant="middle" />
+                                    </Container>
+                                    <Divider sx={{ color: "gray", width: "170px" }} variant="middle" />
 
-                                        <Container sx={{ mt: "10px" }}>
-                                            <FormControl component="fieldset">
-                                                <FormLabel component="legend">Change Format</FormLabel>
-                                                <RadioGroup
-                                                    aria-label="Change"
-                                                    name="controlled-radio-buttons-group"
-                                                    onChange={handleChangeFormat}
-                                                    value={ChangeFormat}
-                                                >
-                                                    <FormControlLabel value="Percentage" control={<Radio />} label="Percentage" />
-                                                    <FormControlLabel value="Absolute" control={<Radio />} label="Absolute" />
+                                    <Container sx={{ mt: "10px" }}>
+                                        <FormControl component="fieldset">
+                                            <FormLabel component="legend">Change Format</FormLabel>
+                                            <RadioGroup
+                                                aria-label="Change"
+                                                name="controlled-radio-buttons-group"
+                                                onChange={handleChangeFormat}
+                                                value={ChangeFormat}
+                                            >
+                                                <FormControlLabel value="Percentage" control={<Radio />} label="Percentage" />
+                                                <FormControlLabel value="Absolute" control={<Radio />} label="Absolute" />
 
-                                                </RadioGroup>
-                                            </FormControl>
-
-
-                                        </Container>
+                                            </RadioGroup>
+                                        </FormControl>
 
 
-                                    </Grid>
-                                </Popover>    <SettingsIcon color="primary" sx={{ ml: 1 }} aria-describedby={id} onClick={handleClickP} /></Grid>
+                                    </Container>
+
+
+                                </Grid>
+                            </Popover>
+
                         </Stack>
                     </Grid>
                     <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem', zIndex: 1 }}>
