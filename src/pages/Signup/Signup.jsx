@@ -19,6 +19,7 @@ import { Names } from "./userBasic";
 import { Address } from "./userKyc";
 import { Review } from "./userPlan";
 import { Submit } from "./userResponse.jsx";
+import { useNavigate } from 'react-router';
 
 function Copyright(props) {
     return (
@@ -53,7 +54,11 @@ const defaultData = {
     phone,
     email: "",
 };
-export default function Checkout() {
+export default function Checkout(prop) {
+    const goto = useNavigate();
+    if (prop.user && prop.user.userID) {
+        goto('/user');
+    }
     const [formData, setForm] = useForm(defaultData);
     const [activeStep, setActiveStep] = React.useState(0);
 

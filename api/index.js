@@ -128,11 +128,20 @@ app.put('/api/stock/:id', function (req, res) {
 app.get('/api/userone', (req, res) => {
     const authorizationHeader = authHeader = req.get("Authorization");
     const verified = jwt.verify(authorizationHeader, "hisdi");
-    User.findById(verified._id).then((data) => {
-        res.json(data);
-    }).catch(err => {
-        console.log(err);
-    })
+    if (req.query._id) {
+        User.findById(req.query._id).then((data) => {
+            res.json(data);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+    else {
+        User.findById(verified._id).then((data) => {
+            res.json(data);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 });
 
 app.get('/api/user/stock/:code', (req, res) => {

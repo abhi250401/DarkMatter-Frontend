@@ -6,26 +6,26 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import Performance from '../Performance/Performance';
-import Analysis from '../Analysis/Analysis';
-import { Link, Outlet } from 'react-router-dom';
+
+import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router';
+import StockInfo from '../StockInfo/StockInfo';
 export default function UserStockInfo(props) {
     const { id } = useParams();
     const code = id;
-    console.log(code);
-    const [stock, setData] = React.useState({
-    });
-    const navigate = useNavigate();
+    const val = localStorage.getItem("value") || 1;
+
+    const [value, setValue] = React.useState(val);
+
+    localStorage.setItem('value', value);
+
     useEffect(() => {
-        const loadData = async () => {
-            const response = await axios.get(process.env.REACT_APP_API_URL + `/user/stock/${code}`);
-            setData(response.data)
-            console.log(stock);
-        };
-        loadData();
-    }, [id]);
-    const [value, setValue] = React.useState('1');
+        if (window.location.pathname === `/user/stock/${code}`)
+            setValue('1');
+    }, [window.location.pathname])
+    const navigate = useNavigate();
+
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -36,21 +36,20 @@ export default function UserStockInfo(props) {
             <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
-                        <Tab label="Stock Inforamtion" value="1" onClick={() => navigate(`/user/stock/${code}`)} />
+                        <Tab label="Info" value="1" onClick={() => navigate(`/user/stock/${code}`)} />
                         <Tab label="Analysis" value="2" onClick={() => navigate(`/user/stock/${code}/Analysis`)} />
                         <Tab label="Performance" value="3" onClick={() => navigate(`/user/stock/${code}/Performance`)} />
+                        <Tab label="Compare" value="4" onClick={() => navigate(`/user/stock/${code}/Compare`)} />
+                        <Tab label="Shortlist" value="5" onClick={() => navigate(`/user/stock/${code}/Shortlist`)} />
+
                     </TabList>
                 </Box>
-                <TabPanel value="1"><div>
-                    <h1 style={{ color: "black", fontFamily: "Helvetica" }}>{code}</h1>
-                    <p style={{ fontFamily: "Helvetica" }}>  <span> Name : </span>{stock.name}</p>
-                    <p>{stock.marketCaptial}</p>
-                    <p>{stock.sector}</p>
-                    <p>{stock.peRatio}</p>
-                    <p>{stock.closePrice}</p>
-                </div></TabPanel>
+                <TabPanel value="1"><StockInfo /></TabPanel>
                 <TabPanel value="2"><Outlet /></TabPanel>
                 <TabPanel value="3"><Outlet /></TabPanel>
+                <TabPanel value="4"><Outlet /></TabPanel>
+                <TabPanel value="5"><Outlet /></TabPanel>
+
             </TabContext>
         </Box>
     )

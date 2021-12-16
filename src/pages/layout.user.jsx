@@ -14,7 +14,7 @@ export default function Home(props) {
         <div>
             <Navbar {...props} />
             <Grid container component="main" sx={{ height: 'calc( 100vh - 102px )' }}>
-                < Wishlist {...props} />
+                <Wishlist {...props} />
                 <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", padding: '.5rem 2rem', zIndex: 1 }}>
                     <Outlet />
                 </Grid>

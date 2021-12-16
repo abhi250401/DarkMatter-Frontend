@@ -3,6 +3,9 @@ import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import Performance from './components/Performance/Performance';
 import Analysis from './components/Analysis/Analysis';
+import Shortlist from './components/Shortlist/Shortlist';
+import Compare from './components/Compare/Compare';
+import StockInfo from './components/StockInfo/StockInfo';
 //	Public pages
 const FirstPage = React.lazy(() => import( /*webpackChunkName: 'index'*/ './pages/index'));
 const Error = React.lazy(() => import( /*webpackChunkName: 'error'*/ './pages/error'));
@@ -90,7 +93,7 @@ const Routes = [
 			},
 			{
 				path: 'users/:id',
-				element: <Error user={user} />
+				element: <UserProfile user={user} />
 			},
 			{
 				path: 'users',
@@ -119,9 +122,18 @@ const Routes = [
 						path: 'Performance',
 						element: <Performance />
 					},
+
 					{
 						path: 'Analysis',
 						element: <Analysis />
+					},
+					{
+						path: 'Shortlist',
+						element: <Shortlist />
+					},
+					{
+						path: 'Compare',
+						element: <Compare />
 					}
 				]
 			},

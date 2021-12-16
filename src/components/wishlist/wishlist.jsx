@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
-import { Grid, Button, Box, IconButton, List, ListItem, ListItemButton, ListItemText, Paper, Pagination, Stack, Snackbar, Container, Typography, Divider, createTheme } from '@mui/material';
+import { Grid, Button, IconButton, List, ListItem, ListItemButton, ListItemText, Pagination, Stack, Snackbar, Container, Typography, Divider, createTheme } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import Skeleton from '@mui/material/Skeleton';
 import CircularProgress from '@mui/material/CircularProgress';
+import { makeStyles } from '@material-ui/core';
 
 import Popover from '@mui/material/Popover';
 import Radio from '@mui/material/Radio';
@@ -20,8 +20,8 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import axios from "axios";
 import SettingsIcon from '@mui/icons-material/Settings';
-
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+
 export default function Wishlist(props) {
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -128,6 +128,7 @@ export default function Wishlist(props) {
             setLoading(false);
         })
     }
+    const [color, setColor] = React.useState("black");
 
     const selectUserWishlist = async (event, listId) => {
         setPage(listId);
@@ -205,16 +206,10 @@ export default function Wishlist(props) {
         setSuggestion(matches);
         setText(text);
     }
-    const theme = createTheme({
-        overrides: {
-            // Name of the component
-            MuiListItem: {
-                // Name of the rule
-                root: {
-                    // Some CSS
-                    borderBottom: "3px solid rgb(212, 212, 212)"
-                },
-            },
+    const useStyles = makeStyles({
+
+        secondStyle: {
+            color: props => props.color,
         },
     });
     async function addtoWishlist(stock) {
@@ -278,11 +273,11 @@ export default function Wishlist(props) {
                 }}>
                     {suggestion && suggestion.map((suggestion, i) => (
                         <ListItem
-                            key={suggestion._id}
+                            key={i}
                             secondaryAction={
                                 <div>
-                                    <IconButton >
-                                        <PlaylistAdd onClick={() => addtoWishlist(suggestion)} color="primary" />
+                                    <IconButton onClick={() => addtoWishlist(suggestion)} >
+                                        <PlaylistAdd color="primary" />
                                     </IconButton>
                                     <IconButton >
                                         <AnalyticsIcon />
@@ -301,10 +296,45 @@ export default function Wishlist(props) {
             {loading ? (Loading()
             ) : (<div style={{ overflowY: "auto", height: "70vh" }}>
                 {wishlistData && wishlistData.map((suggestion) =>
-                    <MuiThemeProvider theme={theme}>
-                        <ListItem key={suggestion.stockId} component="div" disablePadding style={{ border: "2px", borderBlockColor: "black", borderBottomColor: "black" }}>
-                            <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }} style={{ color: "black", }}>
-                                {suggestion.stockId.closePrice > 100 ?
+                    <div>
+                        <ListItem key={suggestion.stockId.code} component="div" disablePadding style={{ border: "2px", borderBlockColor: "black", borderBottomColor: "black" }}>
+                            <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }} style={{ color: "" }}>
+
+                                <Grid container direction="row" alignItems="center" >
+                                    <ListItemText
+
+                                        sx={{ color: color, minWidth: "50%" }}
+                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                        primary={suggestion.stockId.code}
+                                    />
+                                    <BusinessCenterIcon sx={{ color: "#ccc", mr: 1 }} />
+                                    <ListItemText sx={{ color: "gray", width: "5%", }}
+                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                        primary="0"
+                                    />
+                                    {value === 'ClosePrice' ? (
+                                        <ListItemText
+                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                            primary={suggestion.stockId.closePrice}
+                                        />) : (
+                                        <ListItemText
+                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                            primary={suggestion.stockId.price}
+                                        />)}
+
+                                    <KeyboardArrowUpIcon sx={{ mr: 2 }} />
+                                    <ListItemText
+                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
+                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                        primary='0'
+
+                                    />{format === 'Percentage' ? ('%') : null}
+                                </Grid>
+                                {/*suggestion.stockId.closePrice > 100 ?
                                     (<Grid container direction="row" alignItems="center" ><ListItemText sx={{ color: "green", minWidth: "50%" }}
                                         primaryTypographyProps={{ fontSize: '0.8rem' }}
                                         secondaryTypographyProps={{ fontSize: '0.7rem' }}
@@ -359,20 +389,20 @@ export default function Wishlist(props) {
                                             primary={suggestion.stockId.price}
 
                                         />)}
-                                        <KeyboardArrowDownIcon sx={{ m: 0, mr: 2 }} disablePadding />   <ListItemText sx={{ color: "red" }}
+                                        <KeyboardArrowDownIcon sx={{ m: 0, mr: 2 }} />   <ListItemText sx={{ color: "red" }}
                                             primaryTypographyProps={{ fontSize: '0.8rem' }}
                                             secondaryTypographyProps={{ fontSize: '0.7rem' }}
                                             primary='0'
 
                                         />{format === 'Percentage' ? ('%') : null}
-                                    </Grid>)}
+                                </Grid>)*/}
                             </ListItemButton>
                             <IconButton onClick={() => removeFromWatchlist(suggestion)}>
                                 <DeleteIcon />
                             </IconButton>
                         </ListItem>
                         <Divider sx={{ color: "gray", width: "100%" }} />
-                    </MuiThemeProvider>
+                    </div>
                 )}</div>)}
 
             <Stack style={{

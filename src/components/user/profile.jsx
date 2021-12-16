@@ -29,15 +29,13 @@ const EditUser = (props) => {
     const [role, setrole] = useState('')
     const [disabled, setDisabled] = useState(true);
     const classes = useStyles();
-    let history = useNavigate();
     console.log(props);
 
     useEffect(() => {
         axios.get(process.env.REACT_APP_API_URL + `/userone`,
             {
-                headers: {
-
-
+                params: {
+                    _id: id
                 }
             }
         )

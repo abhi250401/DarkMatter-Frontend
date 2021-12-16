@@ -11,7 +11,7 @@ export default function Performance() {
     }, [id]);
     return (
         <div>
-            Performance Component of {code} hi
+            Performance Component of {code}
         </div>
     )
 }
