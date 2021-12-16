@@ -56,7 +56,7 @@ const EditUser = () => {
         })
 
         const data = await response.json()
-        if (data.acknowledged == true) {
+        if (data.acknowledged === true) {
             // alert('successfull')
             history('/admin/users'); console.log(data);
         } else {
@@ -72,20 +72,20 @@ const EditUser = () => {
             <Typography variant="h4">Edit Information</Typography>
             <FormControl>
                 <InputLabel htmlFor="my-input">Name</InputLabel>
-                <Input onChange={(e) => setName(e.target.value)} name="name" type="name" id="name" value={name} id="my-input" aria-describedby="my-helper-text" />
+                <Input onChange={(e) => setName(e.target.value)} name="name" type="name" id="name" value={name} aria-describedby="my-helper-text" />
             </FormControl>
 
             <FormControl>
                 <InputLabel htmlFor="my-input">Email</InputLabel>
-                <Input onChange={(e) => setEmail(e.target.value)} name="email" id="email" type="email" value={email} id="my-input" aria-describedby="my-helper-text" />
+                <Input onChange={(e) => setEmail(e.target.value)} name="email" id="email" type="email" value={email} aria-describedby="my-helper-text" />
             </FormControl>
             <FormControl>
                 <InputLabel htmlFor="my-input">Phone</InputLabel>
-                <Input onChange={(e) => setPhone(e.target.value)} name="email" id="email" type="email" value={phone} id="my-input" aria-describedby="my-helper-text" />
+                <Input onChange={(e) => setPhone(e.target.value)} name="email" id="email" type="email" value={phone} aria-describedby="my-helper-text" />
             </FormControl>
             <FormControl>
                 <InputLabel htmlFor="my-input">Role</InputLabel>
-                <Input onChange={(e) => setrole(e.target.value)} name="email" id="email" type="email" value={role} id="my-input" aria-describedby="my-helper-text" />
+                <Input onChange={(e) => setrole(e.target.value)} name="email" id="email" type="email" value={role} aria-describedby="my-helper-text" />
             </FormControl>
 
             <FormControl>

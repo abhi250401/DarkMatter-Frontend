@@ -31,7 +31,6 @@ router.post('/wishlist', async (req, res) => {
 
 router.get('/wishlist', async (req, res) => {
     const authorizationHeader = { authHeader } = req.get("Authorization");
-    console.log(authorizationHeader)
     const verified = jwt.verify(authorizationHeader, "hisdi");
 
     await Wishlist.find({

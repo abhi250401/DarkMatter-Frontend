@@ -85,11 +85,10 @@ const EditUser = (props) => {
 
     }
     const editUserDetails = async () => {
-        const response = await fetch(process.env.REACT_APP_API_URL + `/user/${id}`, {
+        const response = await fetch(process.env.REACT_APP_API_URL + `/user`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": `Bearer ${props.user.userId}`
             },
             body: JSON.stringify({
                 name,
@@ -101,7 +100,7 @@ const EditUser = (props) => {
         })
 
         const data = await response.json()
-        if (data.acknowledged == true) {
+        if (data.acknowledged === true) {
             alert('successfull')
 
         } else {
@@ -120,16 +119,16 @@ const EditUser = (props) => {
                 <EditIcon onClick={() => edit()} />
                 <FormControl>
                     <InputLabel htmlFor="my-input">Name</InputLabel>
-                    <Input onChange={(e) => setName(e.target.value)} name="name" className="input" disabled={disabled} type="name" id="name" value={name} id="my-input" aria-describedby="my-helper-text" />
+                    <Input onChange={(e) => setName(e.target.value)} name="name" className="input" disabled={disabled} type="name" id="name" value={name} aria-describedby="my-helper-text" />
                 </FormControl>
 
                 <FormControl>
                     <InputLabel htmlFor="my-input">Email</InputLabel>
-                    <Input onChange={(e) => setEmail(e.target.value)} name="email" className="input" disabled={disabled} id="email" type="email" value={email} id="my-input" aria-describedby="my-helper-text" />
+                    <Input onChange={(e) => setEmail(e.target.value)} name="email" className="input" disabled={disabled} id="email" type="email" value={email} aria-describedby="my-helper-text" />
                 </FormControl>
                 <FormControl>
                     <InputLabel htmlFor="my-input">Aadhaar</InputLabel>
-                    <Input name="aadhaar" className="input" disabled value={aadhaar} id="my-input" aria-describedby="my-helper-text" />
+                    <Input name="aadhaar" className="input" disabled value={aadhaar} aria-describedby="my-helper-text" />
                 </FormControl>
 
                 <FormControl>
@@ -148,17 +147,17 @@ const EditUser = (props) => {
 
                 <FormControl>
                     <InputLabel htmlFor="my-input">Phone</InputLabel>
-                    <Input onChange={(e) => setPhone(e.target.value)} name="email" id="email" type="email" value={phone} id="my-input" aria-describedby="my-helper-text" />
+                    <Input onChange={(e) => setPhone(e.target.value)} name="email" id="email" type="email" value={phone} aria-describedby="my-helper-text" />
                 </FormControl>
                 {props.user.role === 1 ? (
                     <>
                         <FormControl>
                             <InputLabel htmlFor="my-input">Role</InputLabel>
-                            <Input onChange={(e) => setrole(e.target.value)} name="role" id="role" type="role" value={role} id="my-input" aria-describedby="my-helper-text" />
+                            <Input onChange={(e) => setrole(e.target.value)} name="role" id="role" type="role" value={role} aria-describedby="my-helper-text" />
                         </FormControl>
                         <FormControl>
                             <InputLabel htmlFor="my-input">Verified</InputLabel>
-                            <Input onChange={(e) => setVerify(e.target.value)} name="verify" id="verify" type="verify" value={verify} id="my-input" aria-describedby="my-helper-text" />
+                            <Input onChange={(e) => setVerify(e.target.value)} name="verify" id="verify" type="verify" value={verify} aria-describedby="my-helper-text" />
                         </FormControl>
                     </>) : null}
 

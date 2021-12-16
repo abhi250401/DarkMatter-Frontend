@@ -1,6 +1,8 @@
 import React from 'react';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
+import Performance from './components/Performance/Performance';
+import Analysis from './components/Analysis/Analysis';
 //	Public pages
 const FirstPage = React.lazy(() => import( /*webpackChunkName: 'index'*/ './pages/index'));
 const Error = React.lazy(() => import( /*webpackChunkName: 'error'*/ './pages/error'));
@@ -14,11 +16,11 @@ const A = React.lazy(() => import( /*webpackChunkName: 'index'*/ './pages/Signup
 // const Navbar = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './pages/navbar'));
 const UserLayout = React.lazy(() => import( /*webpackChunkName: 'UserLayout'*/ './pages/layout.user'));
 // const Home = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './pages/home'));
-const EditUser = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './user/userEdit'));
-const DeleteUser = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './user/userDelete'));
-const UserProfile = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './user/profile'));
-const UserStockInfo = React.lazy(() => import( /*webpackChunkName: 'UserStockInfo'*/ './user/stock'));
-const UserDashboard = React.lazy(() => import( /*webpackChunkName: 'UserDashboard'*/ './user/dashboard'));
+const EditUser = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './components/user/userEdit'));
+const DeleteUser = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './components/user/userDelete'));
+const UserProfile = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './components/user/profile'));
+const UserStockInfo = React.lazy(() => import( /*webpackChunkName: 'UserStockInfo'*/ './components/user/stock'));
+const UserDashboard = React.lazy(() => import( /*webpackChunkName: 'UserDashboard'*/ './components/user/dashboard'));
 
 //	Admin pages
 const Admin = React.lazy(() => import( /*webpackChunkName: 'users'*/ './admin/users'));
@@ -83,7 +85,7 @@ const Routes = [
 				element: <Stocks user={user} />
 			},
 			{
-				path: 'users/edit/:id',
+				path: 'users/:id/edit',
 				element: <EditUser user={user} />
 			},
 			{
@@ -111,8 +113,20 @@ const Routes = [
 			},*/
 			{
 				path: 'stock/:id',
-				element: <UserStockInfo user={user} />
+				element: <UserStockInfo user={user} />,
+				children: [
+					{
+						path: 'Performance',
+						element: <Performance />
+					},
+					{
+						path: 'Analysis',
+						element: <Analysis />
+					}
+				]
 			},
+
+
 			{
 				path: 'profile/edit',
 				element: <EditUser user={user} />

@@ -88,8 +88,10 @@ app.delete('/api/user/:id', function (req, res) {
     })
 });
 
-app.put('/api/user/:id', function (req, res) {
-    User.updateOne({ _id: req.params.id }, { $set: { name: req.body.name, email: req.body.email, phone: req.body.phone, role: req.body.role } }).then((result) => {
+app.put('/api/user', function (req, res) {
+    const authorizationHeader = authHeader = req.get("Authorization");
+    const verified = jwt.verify(authorizationHeader, "hisdi");
+    User.updateOne({ _id: verified._id }, { $set: { name: req.body.name, email: req.body.email, phone: req.body.phone, role: req.body.role } }).then((result) => {
         res.status(201).json(result);
     }).catch((err) => {
         console.warn(err);
@@ -125,9 +127,7 @@ app.put('/api/stock/:id', function (req, res) {
 
 app.get('/api/userone', (req, res) => {
     const authorizationHeader = authHeader = req.get("Authorization");
-    console.log(authorizationHeader)
     const verified = jwt.verify(authorizationHeader, "hisdi");
-    console.log(verified)
     User.findById(verified._id).then((data) => {
         res.json(data);
     }).catch(err => {
@@ -138,9 +138,7 @@ app.get('/api/userone', (req, res) => {
 app.get('/api/user/stock/:code', (req, res) => {
     //user auth 
     const authorizationHeader = { authHeader } = req.get("Authorization");
-    console.log(authorizationHeader)
     const verified = jwt.verify(authorizationHeader, "hisdi");
-    console.log(verified)
     //user auth
     Stocks.findOne({ code: req.params.code }).then((data) => {
         res.json(data);
