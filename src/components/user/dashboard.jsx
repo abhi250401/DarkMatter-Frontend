@@ -15,20 +15,20 @@ export default function UserDashboard(props) {
         const loadApiData = async () => {
             await axios.get(process.env.REACT_APP_API_URL + `/userone`,)
                 .then(response => {
-                    console.log(response.data);
                     setApiData(response.data);
-
                 }).catch(err => {
                     console.log(err);
                 })
         }
         loadApiData();
     }, []);
+    
     const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
     return (
         <div>
             <h1>Hi {user && user.name}!!</h1>

@@ -68,23 +68,18 @@ const EditUser = (props) => {
             })
     }, []);
 
-
-
     return (
         <div>
             <Typography variant="h4" > User Profile</Typography>
             <EditIcon sx={{ mr: 2, mt: 2, mb: 2 }} onClick={() => navigate('edit')} />
             <DocumentScannerIcon sx={{ mr: 2, mt: 2, mb: 2 }} onClick={() => navigate('update/kyc')} />
-
             <div>
                 <Typography variant="body1">Name : {name}</Typography>
-
                 <Typography variant="body1">role: {role}</Typography>
                 <Typography variant="body1"> Phone : {phone}</Typography>
                 <Typography variant="body1"> Email : {email}</Typography>
                 <Typography variant="body1">Status : {status}</Typography>
                 <Typography variant="body1">Verified : {verify}</Typography>
-
             </div>
         </div>
     )

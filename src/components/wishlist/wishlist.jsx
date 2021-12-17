@@ -286,39 +286,37 @@ export default function Wishlist(props) {
             </div>
             {loading ? (Loading()
             ) : (<div style={{ overflowY: "auto", height: "70vh" }}>
-                {wishlistData && wishlistData.map((suggestion) =>
-                    <div>
-                        <ListItem className={(suggestion.stockId.closePrice > 10 ? 'text-success' : 'text-error')} key={suggestion.stockId.code} component="div" disableGutters disablePadding divider aria-label="User stock lists">
-                            <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }}>
-                                <Grid container direction="row" alignItems="center" >
+                {wishlistData && wishlistData.map((suggestion,i) =>
+                    <ListItem className={(suggestion.stockId.closePrice > 10 ? 'text-success' : 'text-error')} key={i} component="div" disableGutters disablePadding divider aria-label="User stock lists">
+                        <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }}>
+                            <Grid container direction="row" alignItems="center" >
+                                <ListItemText
+                                    sx={{ minWidth: "50%" }}
+                                    primary={suggestion.stockId.code}
+                                />
+                                <BusinessCenterIcon sx={{ color: "#ccc", mr: 1 }} />
+                                <ListItemText sx={{ color: "#979797", width: "5%", }}
+                                    primary="0"
+                                />
+                                {value === 'ClosePrice' ? (
                                     <ListItemText
-                                        sx={{ minWidth: "50%" }}
-                                        primary={suggestion.stockId.code}
-                                    />
-                                    <BusinessCenterIcon sx={{ color: "#ccc", mr: 1 }} />
-                                    <ListItemText sx={{ color: "#979797", width: "5%", }}
-                                        primary="0"
-                                    />
-                                    {value === 'ClosePrice' ? (
-                                        <ListItemText
-                                            primary={suggestion.stockId.closePrice}
-                                        />) : (
-                                        <ListItemText
-                                            primary={suggestion.stockId.price}
-                                        />)}
+                                        primary={suggestion.stockId.closePrice}
+                                    />) : (
+                                    <ListItemText
+                                        primary={suggestion.stockId.price}
+                                    />)}
 
-                                    <KeyboardArrowUpIcon sx={{ mr: 2 }} />
-                                    <ListItemText
-                                        primary="0"
-                                    />{format === 'percentage' ? ('%') : null}
-                                </Grid>
-                            </ListItemButton>
-                            <IconButton onClick={() => removeFromWatchlist(suggestion)}>
-                                <DeleteIcon />
-                            </IconButton>
-                        </ListItem>
+                                <KeyboardArrowUpIcon sx={{ mr: 2 }} />
+                                <ListItemText
+                                    primary="0"
+                                />{format === 'percentage' ? ('%') : null}
+                            </Grid>
+                        </ListItemButton>
+                        <IconButton onClick={() => removeFromWatchlist(suggestion)}>
+                            <DeleteIcon />
+                        </IconButton>
                         <Divider />
-                    </div>
+                    </ListItem>
                 )}</div>)}
 
             <Stack style={{
