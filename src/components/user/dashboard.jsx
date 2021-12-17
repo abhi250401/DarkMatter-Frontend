@@ -22,7 +22,7 @@ export default function UserDashboard(props) {
         }
         loadApiData();
     }, []);
-    
+
     const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
@@ -30,7 +30,7 @@ export default function UserDashboard(props) {
     };
 
     return (
-        <div>
+        <div style={{ margin: "20px " }}>
             <h1>Hi {user && user.name}!!</h1>
         </div>
     )

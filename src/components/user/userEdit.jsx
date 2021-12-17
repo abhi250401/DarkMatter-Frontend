@@ -4,21 +4,13 @@ import { useParams } from 'react-router-dom';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
 import { ButtonUnstyled } from '@mui/base';
 import { SendToMobile } from '@mui/icons-material';
 
-const useStyles = makeStyles({
-    container: {
-        //  width: '50%',
-        // margin: '5% 0 0 25%',
-        '& > *': {
-            //      marginTop: 20
-        }
-    }
-})
+
 
 const EditUser = (props) => {
     const [user, setUser] = useState(null);
@@ -27,8 +19,7 @@ const EditUser = (props) => {
     const { id } = useParams();
     const [phone, setPhone] = useState('');
     const [role, setrole] = useState('')
-    const [disabled, setDisabled] = useState(true);
-    const classes = useStyles();
+    const goto = useNavigate();
     console.log(props);
 
     useEffect(() => {
@@ -60,7 +51,6 @@ const EditUser = (props) => {
         _id: `${id}`
     };
 
-    console.log(Token)
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -68,20 +58,8 @@ const EditUser = (props) => {
     const [pan, setPan] = useState('');
     const [dob, setdob] = useState('');
     const [aadhaar, setAadhaar] = useState('');
-    const edit = () => {
-        setDisabled(!disabled);
-    }
-    console.log(file);
-    const submitFile = async () => {
 
-        const formData = new FormData()
-        formData.append('profileImg', file)
-        axios.put(process.env.REACT_APP_API_URL + `/user/image/${props.user._id}`, formData, {
-        }).then(res => {
-            console.log(res)
-        })
 
-    }
     const editUserDetails = async () => {
         const response = await fetch(process.env.REACT_APP_API_URL + `/user`, {
             method: 'PUT',
@@ -110,19 +88,18 @@ const EditUser = (props) => {
         return <h1>loading....</h1>;
 
     return (
-        <div>
+        <div style={{ margin: "20px " }}>
 
-            <FormGroup disabled="false" className={classes.container}>
+            <FormGroup >
                 <Typography variant="h4" style={{ display: "flex" }}>User Information</Typography>
-                <EditIcon onClick={() => edit()} />
                 <FormControl>
                     <InputLabel htmlFor="my-input">Name</InputLabel>
-                    <Input onChange={(e) => setName(e.target.value)} name="name" className="input" disabled={disabled} type="name" id="name" value={name} aria-describedby="my-helper-text" />
+                    <Input onChange={(e) => setName(e.target.value)} name="name" className="input" type="name" id="name" value={name} aria-describedby="my-helper-text" />
                 </FormControl>
 
                 <FormControl>
                     <InputLabel htmlFor="my-input">Email</InputLabel>
-                    <Input onChange={(e) => setEmail(e.target.value)} name="email" className="input" disabled={disabled} id="email" type="email" value={email} aria-describedby="my-helper-text" />
+                    <Input onChange={(e) => setEmail(e.target.value)} name="email" className="input" id="email" type="email" value={email} aria-describedby="my-helper-text" />
                 </FormControl>
                 <FormControl>
                     <InputLabel htmlFor="my-input">Aadhaar</InputLabel>
@@ -159,15 +136,10 @@ const EditUser = (props) => {
                         </FormControl>
                     </>) : null}
             </FormGroup>
-            <FormGroup style={{ display: "flex", justifyContent: "center", alignContent: "center", margin: "auto" }}>
-                <input
-                    style={{ display: "flex", justifyContent: "center", alignContent: "center", marginTop: "10px" }}
-                    type="file"
-                    onChange={(e) => setFile(e.target.files[0])}
-                />
-                <button style={{/* width: "100px", marginBottom: "5px", display: "flex", padding: "6px", justifyContent: "center" */ }} onClick={() => submitFile()}> Upload File</button>
-            </FormGroup>
-            {!disabled ? (<ButtonUnstyled style={{/* width: "100px", margin: "auto", display: "flex", padding: "6px", justifyContent: "center" */ }} disabled={disabled} onClick={() => editUserDetails()}>save</ButtonUnstyled>) : null}
+
+            <ButtonUnstyled onClick={() => editUserDetails()}>save</ButtonUnstyled>
+            <ButtonUnstyled onClick={() => goto('/user/profile')}>Go Back</ButtonUnstyled>
+
         </div>
     )
 }

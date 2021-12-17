@@ -27,6 +27,8 @@ const UserStockInfo = React.lazy(() => import( /*webpackChunkName: 'UserStockInf
 const UserDashboard = React.lazy(() => import( /*webpackChunkName: 'UserDashboard'*/ './components/user/dashboard'));
 
 //	Admin pages
+const AdminLayout = React.lazy(() => import( /*webpackChunkName: 'UserLayout'*/ './pages/layout.admin'));
+
 const Admin = React.lazy(() => import( /*webpackChunkName: 'users'*/ './admin/users'));
 const Stocks = React.lazy(() => import( /*webpackChunkName: 'stocks'*/ './admin/stocks'));
 const AddStock = React.lazy(() => import( /*webpackChunkName: 'addStock'*/ './admin/addStock'));
@@ -77,7 +79,7 @@ const Routes = [
 	//	Admin Paths
 	{
 		path: '/admin',
-
+		element: <AdminLayout user={user} />,
 		children: [
 
 			{

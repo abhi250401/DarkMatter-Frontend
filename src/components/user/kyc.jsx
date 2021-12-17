@@ -4,11 +4,12 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import axios from "axios";
 import { FormGroup } from "@material-ui/core";
+import { useNavigate } from "react-router";
 import { Typography } from "@material-ui/core";
 export default function Kyc(props) {
 
     const [file, setFile] = React.useState('');
-
+    const goto = useNavigate();
     const submitFile = async () => {
 
         const formData = new FormData()
@@ -68,6 +69,7 @@ export default function Kyc(props) {
                 <button style={{/* width: "100px", marginBottom: "5px", display: "flex", padding: "6px", justifyContent: "center" */ }} onClick={() => submitFile()}> Upload File</button>
             </FormGroup>
             <button>Update</button>
-        </Container>
+            <button onClick={() => goto('/user/profile')} >go back</button>
+        </Container >
     );
 };
