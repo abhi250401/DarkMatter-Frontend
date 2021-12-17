@@ -306,7 +306,7 @@ export default function EnhancedTable(props) {
         );
 
     return (
-        <div><Navbar {...props} />
+        <div>
             <Box sx={{ width: "100%" }}>
                 <Paper sx={{ width: "100%", mb: 2 }}>
                     <EnhancedTableToolbar numSelected={selected.length} />

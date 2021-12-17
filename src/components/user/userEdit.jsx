@@ -138,7 +138,7 @@ const EditUser = (props) => {
             </FormGroup>
 
             <ButtonUnstyled onClick={() => editUserDetails()}>save</ButtonUnstyled>
-            <ButtonUnstyled onClick={() => goto('/user/profile')}>Go Back</ButtonUnstyled>
+            <ButtonUnstyled onClick={() => goto(-1)}>Go Back</ButtonUnstyled>
 
         </div>
     )

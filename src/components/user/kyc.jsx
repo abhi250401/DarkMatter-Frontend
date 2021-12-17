@@ -69,7 +69,7 @@ export default function Kyc(props) {
                 <button style={{/* width: "100px", marginBottom: "5px", display: "flex", padding: "6px", justifyContent: "center" */ }} onClick={() => submitFile()}> Upload File</button>
             </FormGroup>
             <button>Update</button>
-            <button onClick={() => goto('/user/profile')} >go back</button>
+            <button onClick={() => goto(-1)} >go back</button>
         </Container >
     );
 };

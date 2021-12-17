@@ -289,7 +289,7 @@ export default function EnhancedTable(props) {
                 <Link to="/login" > Login</Link>  </h1></div >
         );
     return (
-        <div><Navbar {...props} />
+        <div>
             <Box sx={{ width: "100%" }}>
 
                 <Paper sx={{ width: "100%", mb: 2 }}>
