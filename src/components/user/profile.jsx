@@ -100,7 +100,6 @@ const EditUser = (props) => {
         const data = await response.json()
         if (data.acknowledged === true) {
             alert('successfull')
-
         } else {
             alert('error');
         }
@@ -149,16 +148,15 @@ const EditUser = (props) => {
                 </FormControl>
                 {props.user.role === 1 ? (
                     <>
-                        <FormControl>
-                            <InputLabel htmlFor="my-input">Role</InputLabel>
-                            <Input onChange={(e) => setrole(e.target.value)} name="role" id="role" type="role" value={role} aria-describedby="my-helper-text" />
-                        </FormControl>
-                        <FormControl>
-                            <InputLabel htmlFor="my-input">Verified</InputLabel>
-                            <Input onChange={(e) => setVerify(e.target.value)} name="verify" id="verify" type="verify" value={verify} aria-describedby="my-helper-text" />
-                        </FormControl>
+                    <FormControl>
+                        <InputLabel htmlFor="my-input">Role</InputLabel>
+                        <Input onChange={(e) => setrole(e.target.value)} name="role" id="role" type="role" value={role} aria-describedby="my-helper-text" />
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel htmlFor="my-input">Verified</InputLabel>
+                        <Input onChange={(e) => setVerify(e.target.value)} name="verify" id="verify" type="verify" value={verify} aria-describedby="my-helper-text" />
+                    </FormControl>
                     </>) : null}
-
             </FormGroup>
             <FormGroup style={{ display: "flex", justifyContent: "center", alignContent: "center", margin: "auto" }}>
                 <input
@@ -169,7 +167,6 @@ const EditUser = (props) => {
                 <button style={{/* width: "100px", marginBottom: "5px", display: "flex", padding: "6px", justifyContent: "center" */ }} onClick={() => submitFile()}> Upload File</button>
             </FormGroup>
             {!disabled ? (<ButtonUnstyled style={{/* width: "100px", margin: "auto", display: "flex", padding: "6px", justifyContent: "center" */ }} disabled={disabled} onClick={() => editUserDetails()}>save</ButtonUnstyled>) : null}
-
         </div>
     )
 }

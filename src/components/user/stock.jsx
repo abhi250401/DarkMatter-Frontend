@@ -10,12 +10,13 @@ import TabPanel from '@mui/lab/TabPanel';
 import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import StockInfo from '../StockInfo/StockInfo';
+
 export default function UserStockInfo(props) {
     const { id } = useParams();
     const code = id;
-    const val = localStorage.getItem("value") || 1;
-
+    const val = localStorage.getItem('value') || 1;
     const [value, setValue] = React.useState(val);
+    const navigate = useNavigate();
 
     localStorage.setItem('value', value);
 
@@ -23,25 +24,21 @@ export default function UserStockInfo(props) {
         if (window.location.pathname === `/user/stock/${code}`)
             setValue('1');
     }, [window.location.pathname])
-    const navigate = useNavigate();
-
-
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     }
-    return (
 
+    return (
         <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                         <Tab label="Info" value="1" onClick={() => navigate(`/user/stock/${code}`)} />
-                        <Tab label="Analysis" value="2" onClick={() => navigate(`/user/stock/${code}/Analysis`)} />
-                        <Tab label="Performance" value="3" onClick={() => navigate(`/user/stock/${code}/Performance`)} />
-                        <Tab label="Compare" value="4" onClick={() => navigate(`/user/stock/${code}/Compare`)} />
-                        <Tab label="Shortlist" value="5" onClick={() => navigate(`/user/stock/${code}/Shortlist`)} />
-
+                        <Tab label="Analysis" value="2" onClick={() => navigate(`/user/stock/${code}/analysis`)} />
+                        <Tab label="Performance" value="3" onClick={() => navigate(`/user/stock/${code}/performance`)} />
+                        <Tab label="Compare" value="4" onClick={() => navigate(`/user/stock/${code}/compare`)} />
+                        <Tab label="Shortlist" value="5" onClick={() => navigate(`/user/stock/${code}/shortlist`)} />
                     </TabList>
                 </Box>
                 <TabPanel value="1"><StockInfo /></TabPanel>
@@ -49,7 +46,6 @@ export default function UserStockInfo(props) {
                 <TabPanel value="3"><Outlet /></TabPanel>
                 <TabPanel value="4"><Outlet /></TabPanel>
                 <TabPanel value="5"><Outlet /></TabPanel>
-
             </TabContext>
         </Box>
     )

@@ -254,7 +254,6 @@ export default function Wishlist(props) {
                 <input style={{ position: '', padding: '.5rem', width: '93%', margin: '5px', border: '1px solid #ccc', borderRadius: '4px' }}
                     value={text} placeholder="Search..." onChange={(e) => searchStock(e.target.value)} />
 
-
                 {!stockLoad ? (<List className={(suggestion && suggestion.length) ? 'show' : 'hide'} sx={{
                     width: '100%',
                     // maxWidth: 330,
@@ -297,9 +296,8 @@ export default function Wishlist(props) {
             ) : (<div style={{ overflowY: "auto", height: "70vh" }}>
                 {wishlistData && wishlistData.map((suggestion) =>
                     <div>
-                        <ListItem key={suggestion.stockId.code} component="div" disablePadding style={{ border: "2px", borderBlockColor: "black", borderBottomColor: "black" }}>
-                            <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }} style={{ color: "" }}>
-
+                        <ListItem className={ (suggestion.stockId.closePrice > 10 ? 'text-success' : 'text-error' ) } key={suggestion.stockId.code} component="div" disableGutters disablePadding divider aria-label="User stock lists">
+                            <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }}>
                                 <Grid container direction="row" alignItems="center" >
                                     <ListItemText
 
@@ -334,74 +332,12 @@ export default function Wishlist(props) {
 
                                     />{format === 'Percentage' ? ('%') : null}
                                 </Grid>
-                                {/*suggestion.stockId.closePrice > 100 ?
-                                    (<Grid container direction="row" alignItems="center" ><ListItemText sx={{ color: "green", minWidth: "50%" }}
-                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
-                                        primary={suggestion.stockId.code}
-                                    />
-                                        <BusinessCenterIcon sx={{ color: "#ccc", mr: 1 }} />
-                                        <ListItemText sx={{ color: "gray", width: "5%", }}
-                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
-                                            primary="0"
-                                        />
-                                        {value === 'ClosePrice' ? (<ListItemText sx={{ color: "green" }}
-                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
-                                            primary={suggestion.stockId.closePrice}
-
-                                        />) : (<ListItemText sx={{ color: "green" }}
-                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
-                                            primary={suggestion.stockId.price}
-
-                                        />)}
-
-                                        <KeyboardArrowUpIcon sx={{ mr: 2 }} />
-                                        <ListItemText sx={{ color: "green" }}
-                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
-                                            primary='0'
-
-                                        />{format === 'Percentage' ? ('%') : null}
-                                    </Grid>) :
-                                    (<Grid container direction="row" alignItems="center" >
-                                        <ListItemText sx={{ color: "red", minWidth: "50%", }}
-                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
-                                            primary={suggestion.stockId.code}
-                                        />
-                                        <BusinessCenterIcon sx={{ color: "#ccc", mr: 1 }} />
-                                        <ListItemText sx={{ color: "gray", width: "5%", }}
-                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
-                                            primary="0"
-                                        />
-                                        {value === 'ClosePrice' ? (<ListItemText sx={{ color: "red" }}
-                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
-                                            primary={suggestion.stockId.closePrice}
-
-                                        />) : (<ListItemText sx={{ color: "red" }}
-                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
-                                            primary={suggestion.stockId.price}
-
-                                        />)}
-                                        <KeyboardArrowDownIcon sx={{ m: 0, mr: 2 }} />   <ListItemText sx={{ color: "red" }}
-                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
-                                            primary='0'
-
-                                        />{format === 'Percentage' ? ('%') : null}
-                                </Grid>)*/}
                             </ListItemButton>
                             <IconButton onClick={() => removeFromWatchlist(suggestion)}>
                                 <DeleteIcon />
                             </IconButton>
                         </ListItem>
-                        <Divider sx={{ color: "gray", width: "100%" }} />
+                        <Divider />
                     </div>
                 )}</div>)}
 

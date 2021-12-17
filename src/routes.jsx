@@ -106,39 +106,29 @@ const Routes = [
 		path: '/user',
 		element: <UserLayout user={user} />,
 		children: [
-			/*{
-				path: 'stocks/compare',
-				element: <CompareStocks user={user} />
-			},
-			{
-				path: 'stocks/performance',
-				element: <StocksPerformance user={user} />
-			},*/
 			{
 				path: 'stock/:id',
 				element: <UserStockInfo user={user} />,
 				children: [
 					{
-						path: 'Performance',
+						path: 'performance',
 						element: <Performance />
 					},
 
 					{
-						path: 'Analysis',
+						path: 'analysis',
 						element: <Analysis />
 					},
 					{
-						path: 'Shortlist',
+						path: 'shortlist',
 						element: <Shortlist />
 					},
 					{
-						path: 'Compare',
+						path: 'compare',
 						element: <Compare />
 					}
 				]
 			},
-
-
 			{
 				path: 'profile/edit',
 				element: <EditUser user={user} />

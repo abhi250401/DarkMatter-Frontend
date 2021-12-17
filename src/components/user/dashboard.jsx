@@ -31,8 +31,7 @@ export default function UserDashboard(props) {
     };
     return (
         <div>
-            <h1 style={{ color: "black", fontFamily: "Helvetica" }}>Hi {user && user.name}!!</h1>
-
-        </div >
+            <h1>Hi {user && user.name}!!</h1>
+        </div>
     )
 }

@@ -6,7 +6,7 @@ body {
     background-color:var(--text-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+    color: #000;
 }
 
 code {
@@ -15,3 +15,10 @@ code {
 }
 
 
+.text-success {
+    color: green;
+}
+
+.text-error {
+    color: red;
+}
