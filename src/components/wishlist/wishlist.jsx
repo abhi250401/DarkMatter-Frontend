@@ -240,7 +240,7 @@ export default function Wishlist(props) {
 
     }
     return (
-        <Grid item xs={3} style={{
+        <Grid id="user-wishlist" item xs={3} style={{
             position: 'relative', zIndex: 0
         }}>
             <Snackbar anchorOrigin={{ vertical, horizontal }} open={open} autoHideDuration={4000} onClose={handleClose}>
@@ -287,7 +287,7 @@ export default function Wishlist(props) {
                                 </div>
                             }
                         >
-                            <ListItemText style={{ color: "black" }} primary={`${suggestion.code}`} />
+                            <ListItemText primary={`${suggestion.code}`} />
                         </ListItem>
                     ))}
                 </List>) : null}
@@ -300,37 +300,25 @@ export default function Wishlist(props) {
                             <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }}>
                                 <Grid container direction="row" alignItems="center" >
                                     <ListItemText
-
-                                        sx={{ color: color, minWidth: "50%" }}
-                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                        sx={{  minWidth: "50%" }}
                                         primary={suggestion.stockId.code}
                                     />
                                     <BusinessCenterIcon sx={{ color: "#ccc", mr: 1 }} />
-                                    <ListItemText sx={{ color: "gray", width: "5%", }}
-                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
+                                    <ListItemText sx={{ color: "#979797", width: "5%", }}
                                         primary="0"
                                     />
                                     {value === 'ClosePrice' ? (
                                         <ListItemText
-                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
                                             primary={suggestion.stockId.closePrice}
                                         />) : (
                                         <ListItemText
-                                            primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                            secondaryTypographyProps={{ fontSize: '0.7rem' }}
                                             primary={suggestion.stockId.price}
                                         />)}
 
                                     <KeyboardArrowUpIcon sx={{ mr: 2 }} />
                                     <ListItemText
-                                        primaryTypographyProps={{ fontSize: '0.8rem' }}
-                                        secondaryTypographyProps={{ fontSize: '0.7rem' }}
-                                        primary='0'
-
-                                    />{format === 'Percentage' ? ('%') : null}
+                                        primary="0"
+                                    />{format === 'percentage' ? ('%') : null}
                                 </Grid>
                             </ListItemButton>
                             <IconButton onClick={() => removeFromWatchlist(suggestion)}>
@@ -342,12 +330,11 @@ export default function Wishlist(props) {
                 )}</div>)}
 
             <Stack style={{
-                position: 'absolute', width: "100%", background: "#FAF9F6", padding: "5px", bottom: 0
+                position: 'absolute', width: "100%", backgroundColor: "#FAF9F6", padding: "5px", bottom: 0
             }}  >
                 < Grid container
                     direction="row"
                     justifyContent="space-between"
-
                     alignItems="center" >
                     <Pagination count={5} hidePrevButton hideNextButton page={page} variant="outlined" shape="rounded" onChange={selectUserWishlist} />
                     <SettingsIcon color="primary" sx={{ mr: 2 }} aria-describedby={id} onClick={handleClickP} />
@@ -366,28 +353,26 @@ export default function Wishlist(props) {
                     }}
                 >
                     <Grid container direction="row" alignItems="center" sx={{ width: "200px" }}>
-
                         <Container>
                             <Typography >Sort By</Typography>
                             <Button sx={{ m: "8px" }} onClick={() => sortedList()} variant="contained">A-Z</Button>
                             <Button variant="contained" onClick={() => sortedList()}>%</Button>
-
                         </Container>
+                        <Divider sx={{ color: '#979797', width: '100%' }} />
                         <Container>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Change</FormLabel>
                                 <RadioGroup
-
                                     name="controlled-radio-buttons-group"
                                     value={value}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel value="OpenPrice" control={<Radio />} label="OpenPrice" />
-                                    <FormControlLabel value="ClosePrice" control={<Radio />} label="ClosePrice" />
+                                    <FormControlLabel value="OpenPrice" control={<Radio />} label="Open Price" />
+                                    <FormControlLabel value="ClosePrice" control={<Radio />} label="Close Price" />
                                 </RadioGroup>
                             </FormControl>
                         </Container>
-                        <Divider sx={{ color: "gray", width: "170px" }} variant="middle" />
+                        <Divider sx={{ color: '#979797', width: '100%' }} />
                         <Container sx={{ mt: "10px" }}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Change Format</FormLabel>
@@ -397,8 +382,8 @@ export default function Wishlist(props) {
                                     onChange={handleChangeFormat}
                                     value={format}
                                 >
-                                    <FormControlLabel value="Percentage" control={<Radio />} label="Percentage" />
-                                    <FormControlLabel value="Absolute" control={<Radio />} label="Absolute" />
+                                    <FormControlLabel value="percentage" control={<Radio />} label="Percentage" />
+                                    <FormControlLabel value="value" control={<Radio />} label="Absolute" />
                                 </RadioGroup>
                             </FormControl>
                         </Container>

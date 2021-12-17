@@ -22,3 +22,9 @@ code {
 .text-error {
     color: red;
 }
+
+#user-wishlist,
+#user-wishlist p,
+#user-wishlist span {
+    font-size: .75rem !important;
+}
