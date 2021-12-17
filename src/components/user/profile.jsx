@@ -7,8 +7,10 @@ import DatePicker from '@mui/lab/DatePicker';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
+
 import { ButtonUnstyled } from '@mui/base';
 import { SendToMobile } from '@mui/icons-material';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 
 const useStyles = makeStyles({
     container: {
@@ -21,6 +23,13 @@ const useStyles = makeStyles({
 })
 
 const EditUser = (props) => {
+    const navigate = useNavigate();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [file, setFile] = useState('');
+    const [pan, setPan] = useState('');
+    const [dob, setdob] = useState('');
+    const [aadhaar, setAadhaar] = useState('');
     const [user, setUser] = useState(null);
     const [verify, setVerify] = useState('');
     const [loading, setLoading] = useState(false);
@@ -28,6 +37,7 @@ const EditUser = (props) => {
     const [phone, setPhone] = useState('');
     const [role, setrole] = useState('')
     const [disabled, setDisabled] = useState(true);
+    const [status, setstatus] = useState('')
     const classes = useStyles();
     console.log(props);
 
@@ -45,6 +55,7 @@ const EditUser = (props) => {
                 setPhone(response.data.phone);
                 setrole(response.data.role);
                 setUser(response.data);
+                setstatus(response.data.status)
                 setName(response.data.name);
                 setEmail(response.data.email);
                 setVerify(response.data.verify);
@@ -56,117 +67,25 @@ const EditUser = (props) => {
                 console.log(err);
             })
     }, []);
-    const Token = {
-        _id: `${id}`
-    };
 
-    console.log(Token)
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [file, setFile] = useState('');
-    const [pan, setPan] = useState('');
-    const [dob, setdob] = useState('');
-    const [aadhaar, setAadhaar] = useState('');
-    const edit = () => {
-        setDisabled(!disabled);
-    }
-    console.log(file);
-    const submitFile = async () => {
-
-        const formData = new FormData()
-        formData.append('profileImg', file)
-        axios.put(process.env.REACT_APP_API_URL + `/user/image/${props.user._id}`, formData, {
-        }).then(res => {
-            console.log(res)
-        })
-
-    }
-    const editUserDetails = async () => {
-        const response = await fetch(process.env.REACT_APP_API_URL + `/user`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name,
-                email,
-                phone,
-                role,
-                verify
-            }),
-        })
-
-        const data = await response.json()
-        if (data.acknowledged === true) {
-            alert('successfull')
-        } else {
-            alert('error');
-        }
-    }
-
-    if (!loading)
-        return <h1>loading....</h1>;
 
     return (
         <div>
+            <Typography variant="h4" > User Profile</Typography>
+            <EditIcon sx={{ mr: 2, mt: 2, mb: 2 }} onClick={() => navigate('edit')} />
+            <DocumentScannerIcon sx={{ mr: 2, mt: 2, mb: 2 }} onClick={() => navigate('update/kyc')} />
 
-            <FormGroup disabled="false" className={classes.container}>
-                <Typography variant="h4" style={{ display: "flex" }}>User Information</Typography>
-                <EditIcon onClick={() => edit()} />
-                <FormControl>
-                    <InputLabel htmlFor="my-input">Name</InputLabel>
-                    <Input onChange={(e) => setName(e.target.value)} name="name" className="input" disabled={disabled} type="name" id="name" value={name} aria-describedby="my-helper-text" />
-                </FormControl>
+            <div>
+                <Typography variant="body1">Name : {name}</Typography>
 
-                <FormControl>
-                    <InputLabel htmlFor="my-input">Email</InputLabel>
-                    <Input onChange={(e) => setEmail(e.target.value)} name="email" className="input" disabled={disabled} id="email" type="email" value={email} aria-describedby="my-helper-text" />
-                </FormControl>
-                <FormControl>
-                    <InputLabel htmlFor="my-input">Aadhaar</InputLabel>
-                    <Input name="aadhaar" className="input" disabled value={aadhaar} aria-describedby="my-helper-text" />
-                </FormControl>
+                <Typography variant="body1">role: {role}</Typography>
+                <Typography variant="body1"> Phone : {phone}</Typography>
+                <Typography variant="body1"> Email : {email}</Typography>
+                <Typography variant="body1">Status : {status}</Typography>
+                <Typography variant="body1">Verified : {verify}</Typography>
 
-                <FormControl>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                            label="Date of Birth"
-                            value={dob}
-                            onChange={(newValue) => {
-                                setdob(newValue);
-                            }}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </LocalizationProvider>
-                </FormControl>
-
-
-                <FormControl>
-                    <InputLabel htmlFor="my-input">Phone</InputLabel>
-                    <Input onChange={(e) => setPhone(e.target.value)} name="email" id="email" type="email" value={phone} aria-describedby="my-helper-text" />
-                </FormControl>
-                {props.user.role === 1 ? (
-                    <>
-                    <FormControl>
-                        <InputLabel htmlFor="my-input">Role</InputLabel>
-                        <Input onChange={(e) => setrole(e.target.value)} name="role" id="role" type="role" value={role} aria-describedby="my-helper-text" />
-                    </FormControl>
-                    <FormControl>
-                        <InputLabel htmlFor="my-input">Verified</InputLabel>
-                        <Input onChange={(e) => setVerify(e.target.value)} name="verify" id="verify" type="verify" value={verify} aria-describedby="my-helper-text" />
-                    </FormControl>
-                    </>) : null}
-            </FormGroup>
-            <FormGroup style={{ display: "flex", justifyContent: "center", alignContent: "center", margin: "auto" }}>
-                <input
-                    style={{ display: "flex", justifyContent: "center", alignContent: "center", marginTop: "10px" }}
-                    type="file"
-                    onChange={(e) => setFile(e.target.files[0])}
-                />
-                <button style={{/* width: "100px", marginBottom: "5px", display: "flex", padding: "6px", justifyContent: "center" */ }} onClick={() => submitFile()}> Upload File</button>
-            </FormGroup>
-            {!disabled ? (<ButtonUnstyled style={{/* width: "100px", margin: "auto", display: "flex", padding: "6px", justifyContent: "center" */ }} disabled={disabled} onClick={() => editUserDetails()}>save</ButtonUnstyled>) : null}
+            </div>
         </div>
     )
 }

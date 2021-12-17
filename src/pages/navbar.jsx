@@ -133,7 +133,7 @@ export default function PrimarySearchAppBar(props) {
                     color="inherit"
                 >
 
-                    <Link to="/login" >       <Button variant="outlined" style={{ backgroundColor: "white", marginLeft: "20px", height: "50px" }}>LOGIN</Button></Link>
+                    <Link to="/login" >       LOGIN</Link>
 
 
                 </IconButton>

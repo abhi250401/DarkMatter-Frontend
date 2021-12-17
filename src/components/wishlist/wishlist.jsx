@@ -4,8 +4,6 @@ import { Grid, Button, IconButton, List, ListItem, ListItemButton, ListItemText,
 import MuiAlert from '@mui/material/Alert';
 import Skeleton from '@mui/material/Skeleton';
 import CircularProgress from '@mui/material/CircularProgress';
-import { makeStyles } from '@material-ui/core';
-
 import Popover from '@mui/material/Popover';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -128,7 +126,6 @@ export default function Wishlist(props) {
             setLoading(false);
         })
     }
-    const [color, setColor] = React.useState("black");
 
     const selectUserWishlist = async (event, listId) => {
         setPage(listId);
@@ -206,12 +203,7 @@ export default function Wishlist(props) {
         setSuggestion(matches);
         setText(text);
     }
-    const useStyles = makeStyles({
 
-        secondStyle: {
-            color: props => props.color,
-        },
-    });
     async function addtoWishlist(stock) {
         if (!props.user || !props.user.userID) {
             console.log('Invalid user');
@@ -296,11 +288,11 @@ export default function Wishlist(props) {
             ) : (<div style={{ overflowY: "auto", height: "70vh" }}>
                 {wishlistData && wishlistData.map((suggestion) =>
                     <div>
-                        <ListItem className={ (suggestion.stockId.closePrice > 10 ? 'text-success' : 'text-error' ) } key={suggestion.stockId.code} component="div" disableGutters disablePadding divider aria-label="User stock lists">
+                        <ListItem className={(suggestion.stockId.closePrice > 10 ? 'text-success' : 'text-error')} key={suggestion.stockId.code} component="div" disableGutters disablePadding divider aria-label="User stock lists">
                             <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }}>
                                 <Grid container direction="row" alignItems="center" >
                                     <ListItemText
-                                        sx={{  minWidth: "50%" }}
+                                        sx={{ minWidth: "50%" }}
                                         primary={suggestion.stockId.code}
                                     />
                                     <BusinessCenterIcon sx={{ color: "#ccc", mr: 1 }} />

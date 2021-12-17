@@ -1,64 +1,106 @@
 import { useState, useEffect } from 'react';
-import { FormGroup, FormControl, InputLabel, Input, makeStyles, Typography } from '@material-ui/core';
+import { FormGroup, FormControl, InputLabel, Input, makeStyles, Typography, TextField } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
+import EditIcon from '@mui/icons-material/Edit';
+import { ButtonUnstyled } from '@mui/base';
+import { SendToMobile } from '@mui/icons-material';
 
 const useStyles = makeStyles({
     container: {
-        width: '50%',
-        margin: '5% 0 0 25%',
+        //  width: '50%',
+        // margin: '5% 0 0 25%',
         '& > *': {
-            marginTop: 20
+            //      marginTop: 20
         }
     }
 })
 
-const EditUser = () => {
+const EditUser = (props) => {
+    const [user, setUser] = useState(null);
+    const [verify, setVerify] = useState('');
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
+    const [phone, setPhone] = useState('');
+    const [role, setrole] = useState('')
+    const [disabled, setDisabled] = useState(true);
     const classes = useStyles();
-    let history = useNavigate();
+    console.log(props);
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API_URL + `/userone/${id}`)
+        axios.get(process.env.REACT_APP_API_URL + `/userone`,
+            {
+                params: {
+                    _id: id
+                }
+            }
+        )
             .then(response => {
-                // console.log(response.data);
+                console.log(response.data);
                 setLoading(true);
-                setName(response.data.name);
-                setEmail(response.data.email);
                 setPhone(response.data.phone);
                 setrole(response.data.role);
-
+                setUser(response.data);
+                setName(response.data.name);
+                setEmail(response.data.email);
+                setVerify(response.data.verify);
+                console.log(role);
+                setAadhaar(response.data.aadhaar);
+                setdob(response.data.dob);
+                setPan(response.data.pan)
             }).catch(err => {
                 console.log(err);
             })
-
     }, []);
+    const Token = {
+        _id: `${id}`
+    };
+
+    console.log(Token)
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [role, setrole] = useState('')
+    const [file, setFile] = useState('');
+    const [pan, setPan] = useState('');
+    const [dob, setdob] = useState('');
+    const [aadhaar, setAadhaar] = useState('');
+    const edit = () => {
+        setDisabled(!disabled);
+    }
+    console.log(file);
+    const submitFile = async () => {
 
+        const formData = new FormData()
+        formData.append('profileImg', file)
+        axios.put(process.env.REACT_APP_API_URL + `/user/image/${props.user._id}`, formData, {
+        }).then(res => {
+            console.log(res)
+        })
+
+    }
     const editUserDetails = async () => {
-        const response = await fetch(process.env.REACT_APP_API_URL + `/user/${id}`, {
+        const response = await fetch(process.env.REACT_APP_API_URL + `/user`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization2': `${props.user.userID}`
             },
             body: JSON.stringify({
                 name,
                 email,
                 phone,
-                role
+                role,
+                verify
             }),
         })
 
         const data = await response.json()
         if (data.acknowledged === true) {
-            // alert('successfull')
-            history('/admin/users'); console.log(data);
+            alert('successfull')
         } else {
             alert('error');
         }
@@ -68,30 +110,65 @@ const EditUser = () => {
         return <h1>loading....</h1>;
 
     return (
-        <FormGroup className={classes.container}>
-            <Typography variant="h4">Edit Information</Typography>
-            <FormControl>
-                <InputLabel htmlFor="my-input">Name</InputLabel>
-                <Input onChange={(e) => setName(e.target.value)} name="name" type="name" id="name" value={name} aria-describedby="my-helper-text" />
-            </FormControl>
+        <div>
 
-            <FormControl>
-                <InputLabel htmlFor="my-input">Email</InputLabel>
-                <Input onChange={(e) => setEmail(e.target.value)} name="email" id="email" type="email" value={email} aria-describedby="my-helper-text" />
-            </FormControl>
-            <FormControl>
-                <InputLabel htmlFor="my-input">Phone</InputLabel>
-                <Input onChange={(e) => setPhone(e.target.value)} name="email" id="email" type="email" value={phone} aria-describedby="my-helper-text" />
-            </FormControl>
-            <FormControl>
-                <InputLabel htmlFor="my-input">Role</InputLabel>
-                <Input onChange={(e) => setrole(e.target.value)} name="email" id="email" type="email" value={role} aria-describedby="my-helper-text" />
-            </FormControl>
+            <FormGroup disabled="false" className={classes.container}>
+                <Typography variant="h4" style={{ display: "flex" }}>User Information</Typography>
+                <EditIcon onClick={() => edit()} />
+                <FormControl>
+                    <InputLabel htmlFor="my-input">Name</InputLabel>
+                    <Input onChange={(e) => setName(e.target.value)} name="name" className="input" disabled={disabled} type="name" id="name" value={name} aria-describedby="my-helper-text" />
+                </FormControl>
 
-            <FormControl>
-            </FormControl>
+                <FormControl>
+                    <InputLabel htmlFor="my-input">Email</InputLabel>
+                    <Input onChange={(e) => setEmail(e.target.value)} name="email" className="input" disabled={disabled} id="email" type="email" value={email} aria-describedby="my-helper-text" />
+                </FormControl>
+                <FormControl>
+                    <InputLabel htmlFor="my-input">Aadhaar</InputLabel>
+                    <Input name="aadhaar" className="input" disabled value={aadhaar} aria-describedby="my-helper-text" />
+                </FormControl>
 
-        </FormGroup>
+                <FormControl>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            label="Date of Birth"
+                            value={dob}
+                            onChange={(newValue) => {
+                                setdob(newValue);
+                            }}
+                            renderInput={(params) => <TextField {...params} />}
+                        />
+                    </LocalizationProvider>
+                </FormControl>
+
+
+                <FormControl>
+                    <InputLabel htmlFor="my-input">Phone</InputLabel>
+                    <Input onChange={(e) => setPhone(e.target.value)} name="email" id="email" type="email" value={phone} aria-describedby="my-helper-text" />
+                </FormControl>
+                {props.user.role === 1 ? (
+                    <>
+                        <FormControl>
+                            <InputLabel htmlFor="my-input">Role</InputLabel>
+                            <Input onChange={(e) => setrole(e.target.value)} name="role" id="role" type="role" value={role} aria-describedby="my-helper-text" />
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel htmlFor="my-input">Verified</InputLabel>
+                            <Input onChange={(e) => setVerify(e.target.value)} name="verify" id="verify" type="verify" value={verify} aria-describedby="my-helper-text" />
+                        </FormControl>
+                    </>) : null}
+            </FormGroup>
+            <FormGroup style={{ display: "flex", justifyContent: "center", alignContent: "center", margin: "auto" }}>
+                <input
+                    style={{ display: "flex", justifyContent: "center", alignContent: "center", marginTop: "10px" }}
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                />
+                <button style={{/* width: "100px", marginBottom: "5px", display: "flex", padding: "6px", justifyContent: "center" */ }} onClick={() => submitFile()}> Upload File</button>
+            </FormGroup>
+            {!disabled ? (<ButtonUnstyled style={{/* width: "100px", margin: "auto", display: "flex", padding: "6px", justifyContent: "center" */ }} disabled={disabled} onClick={() => editUserDetails()}>save</ButtonUnstyled>) : null}
+        </div>
     )
 }
 

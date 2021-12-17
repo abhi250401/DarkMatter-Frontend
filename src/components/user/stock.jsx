@@ -41,11 +41,11 @@ export default function UserStockInfo(props) {
                         <Tab label="Shortlist" value="5" onClick={() => navigate(`/user/stock/${code}/shortlist`)} />
                     </TabList>
                 </Box>
-                <TabPanel value="1"><StockInfo /></TabPanel>
-                <TabPanel value="2"><Outlet /></TabPanel>
-                <TabPanel value="3"><Outlet /></TabPanel>
-                <TabPanel value="4"><Outlet /></TabPanel>
-                <TabPanel value="5"><Outlet /></TabPanel>
+                <TabPanel sx={{ p: 0 }} value="1"><StockInfo /></TabPanel>
+                <TabPanel sx={{ p: 0 }} value="2"><Outlet /></TabPanel>
+                <TabPanel sx={{ p: 0 }} value="3"><Outlet /></TabPanel>
+                <TabPanel sx={{ p: 0 }} value="4"><Outlet /></TabPanel>
+                <TabPanel sx={{ p: 0 }} value="5"><Outlet /></TabPanel>
             </TabContext>
         </Box>
     )

@@ -18,6 +18,7 @@ const A = React.lazy(() => import( /*webpackChunkName: 'index'*/ './pages/Signup
 //	User pages
 // const Navbar = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './pages/navbar'));
 const UserLayout = React.lazy(() => import( /*webpackChunkName: 'UserLayout'*/ './pages/layout.user'));
+const Kyc = React.lazy(() => import(/*webpackChunkName: 'adminUsers'*/ './components/user/kyc'));
 // const Home = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './pages/home'));
 const EditUser = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './components/user/userEdit'));
 const DeleteUser = React.lazy(() => import( /*webpackChunkName: 'adminUsers'*/ './components/user/userDelete'));
@@ -132,6 +133,10 @@ const Routes = [
 			{
 				path: 'profile/edit',
 				element: <EditUser user={user} />
+			},
+			{
+				path: 'profile/update/kyc',
+				element: <Kyc user={user} />
 			},
 			{
 				path: 'profile',
