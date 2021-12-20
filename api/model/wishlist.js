@@ -14,6 +14,7 @@ const wishListSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Stock',
-    }
+    },
+
 }, { timestamps: true });
 module.exports = mongoose.model('wishlist', wishListSchema);

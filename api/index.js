@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-
+const holdings = require('./routes/holdings')
 let multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 
@@ -76,6 +76,8 @@ app.put('/api/user/image/:id', upload.single('profileImg'), (req, res, next) => 
 
 //routemiddlewares 
 app.use('/api/user', authRoute);
+app.use('/api/user', holdings);
+
 app.use('/api/user', wishlist);
 app.use('/api', stock);
 app.use('/api/posts', postRoute);
@@ -90,13 +92,23 @@ app.delete('/api/user/:id', function (req, res) {
 
 app.put('/api/user', function (req, res) {
     const authorizationHeader = authHeader = req.get("Authorization");
-    const verified = jwt.verify(authorizationHeader, "hisdi");
-    User.updateOne({ _id: verified._id }, { $set: { name: req.body.name, email: req.body.email, phone: req.body.phone, role: req.body.role } }).then((result) => {
-        res.status(201).json(result);
-    }).catch((err) => {
-        console.warn(err);
-    })
+    const verifie = jwt.verify(authorizationHeader, "hisdi");
+
+    if (req.body.params && req.body.params._id) {
+        User.updateOne({ _id: req.body.params._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verified: req.body.body.verified, aadhaar: req.body.body.aadhaar, pan: req.body.body.pan, dob: req.body.body.dob } }).then((result) => {
+            res.status(201).json(result);
+        }).catch((err) => {
+            console.warn(err);
+        })
+    }
+    else
+        User.updateOne({ _id: verifie._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verified: req.body.body.verified, aadhaar: req.body.body.aadhaar, pan: req.body.body.pan, dob: req.body.body.dob } }).then((result) => {
+            res.status(201).json(result);
+        }).catch((err) => {
+            console.warn(err);
+        })
 });
+
 
 /*app.put('/api/user/wishlist/:id/:listId/:code', function (req, res) {
     User.updateOne({ _id: req.params.id }, { $set: { lists:{ req.params.listId : [ req.params.code ]} } }).then((result) => {

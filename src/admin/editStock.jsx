@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { FormGroup, FormControl, InputLabel, Input, Button, makeStyles, Typography } from '@material-ui/core';
+import { FormGroup, FormControl, InputLabel, Input, makeStyles, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 
@@ -17,16 +18,16 @@ const useStyles = makeStyles({
 const EditUser = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
-    const { id } = useParams();
+    const { code } = useParams();
     const classes = useStyles();
     let history = useNavigate();
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API_URL + `/stockone/${id}`)
+        axios.get(process.env.REACT_APP_API_URL + `/user/stock/${code}`)
             .then(response => {
                 // console.log(response.data);
                 setLoading(true);
-                setUser(response.data);
+
                 setName(response.data.name);
                 setPrice(response.data.price);
 
@@ -41,7 +42,7 @@ const EditUser = () => {
 
 
     const editStockDetails = async () => {
-        const response = await fetch(process.env.REACT_APP_API_URL + `/stock/${id}`, {
+        const response = await fetch(process.env.REACT_APP_API_URL + `/stock/${code}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -61,8 +62,7 @@ const EditUser = () => {
         }
     }
 
-    if (!loading)
-        return <h1>loading....</h1>;
+
 
     return (
         <FormGroup className={classes.container}>

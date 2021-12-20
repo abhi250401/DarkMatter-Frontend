@@ -6,6 +6,7 @@ import Analysis from './components/Analysis/Analysis';
 import Shortlist from './components/Shortlist/Shortlist';
 import Compare from './components/Compare/Compare';
 import StockInfo from './components/StockInfo/StockInfo';
+import Holdings from './components/Holdings/Holdings';
 //	Public pages
 const FirstPage = React.lazy(() => import( /*webpackChunkName: 'index'*/ './pages/index'));
 const Error = React.lazy(() => import( /*webpackChunkName: 'error'*/ './pages/error'));
@@ -83,13 +84,14 @@ const Routes = [
 		children: [
 
 			{
-				path: 'stocks/:id',
-				element: <Error user={user} />
+				path: 'stocks/:code/edit',
+				element: <EditStock user={user} />
 			},
 			{
 				path: 'stocks',
 				element: <Stocks user={user} />
 			},
+
 			{
 				path: 'users/:id/edit',
 				element: <EditUser user={user} />
@@ -135,6 +137,10 @@ const Routes = [
 			{
 				path: 'profile/edit',
 				element: <EditUser user={user} />
+			},
+			{
+				path: 'holdings',
+				element: <Holdings user={user} />
 			},
 			{
 				path: 'profile/update/kyc',

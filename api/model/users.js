@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema({
         required: false,
     },
     aadhaar: {
-        type: Number,
+        type: String,
         required: false,
     },
     pan: {

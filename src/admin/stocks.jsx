@@ -357,7 +357,7 @@ export default function EnhancedTable(props) {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    <Link to={`/admin/stock/${stock._id}`} >   {stock._id}  </Link>
+                                                    <Link to={`/admin/stocks/${stock.code}/edit`} >   {stock._id}  </Link>
                                                 </TableCell>
 
 

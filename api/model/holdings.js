@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 const HoldingsSchema = new mongoose.Schema({
-    holdingId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
-    },
+
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
