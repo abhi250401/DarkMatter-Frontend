@@ -18,6 +18,12 @@ const useStyles = makeStyles({
 const EditUser = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [marketCap, setMarketCap] = useState('');
+    const [closePrice, setclosePrice] = useState();
+    const [codes, setcodes] = useState('')
+    const [sector, setsector] = useState('')
+    const [peRatio, setpeRatio] = useState('')
+    const [percentage, setPercentage] = useState('')
     const { code } = useParams();
     const classes = useStyles();
     let history = useNavigate();
@@ -27,9 +33,15 @@ const EditUser = () => {
             .then(response => {
                 // console.log(response.data);
                 setLoading(true);
-
+                console.log(response.data);
                 setName(response.data.name);
                 setPrice(response.data.price);
+                setsector(response.data.sector);
+                setpeRatio(response.data.peRatio);
+                setPercentage(response.data.percentage);
+                setclosePrice(response.data.closePrice);
+                setMarketCap(response.data.marketCapital);
+                setcodes(response.data.code);
 
             }).catch(err => {
                 console.log(err);
@@ -76,9 +88,29 @@ const EditUser = () => {
                 <InputLabel htmlFor="my-input">Price</InputLabel>
                 <Input onChange={(e) => setPrice(e.target.value)} name="price" id="price" type="price" value={price} id="my-input" aria-describedby="my-helper-text" />
             </FormControl>
-
             <FormControl>
-                <Button variant="contained" color="primary" onClick={() => editStockDetails()}>Edit Stock</Button>
+                <InputLabel htmlFor="my-input">Code</InputLabel>
+                <Input onChange={(e) => setPrice(e.target.value)} name="price" id="price" type="price" value={code} id="my-input" aria-describedby="my-helper-text" />
+            </FormControl>
+            <FormControl>
+                <InputLabel htmlFor="my-input">Percentage</InputLabel>
+                <Input onChange={(e) => setPrice(e.target.value)} name="price" id="price" type="price" value={percentage} id="my-input" aria-describedby="my-helper-text" />
+            </FormControl><FormControl>
+                <InputLabel htmlFor="my-input">Market capital</InputLabel>
+                <Input onChange={(e) => setPrice(e.target.value)} name="price" id="price" type="price" value={marketCap} id="my-input" aria-describedby="my-helper-text" />
+            </FormControl><FormControl>
+                <InputLabel htmlFor="my-input">Pe Ratio</InputLabel>
+                <Input onChange={(e) => setPrice(e.target.value)} name="price" id="price" type="price" value={peRatio} id="my-input" aria-describedby="my-helper-text" />
+            </FormControl><FormControl>
+                <InputLabel htmlFor="my-input">Close Price</InputLabel>
+                <Input onChange={(e) => setPrice(e.target.value)} name="price" id="price" type="price" value={closePrice} id="my-input" aria-describedby="my-helper-text" />
+            </FormControl>
+            <FormControl>
+                <InputLabel htmlFor="my-input">Sector</InputLabel>
+                <Input onChange={(e) => setPrice(e.target.value)} name="price" id="price" type="price" value={sector} id="my-input" aria-describedby="my-helper-text" />
+            </FormControl>
+            <FormControl>
+                <Button variant="contained" sx={{ mb: 2 }} color="primary" onClick={() => editStockDetails()}>Edit Stock</Button>
             </FormControl>
         </FormGroup>
     )

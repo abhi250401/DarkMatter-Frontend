@@ -7,7 +7,7 @@ import DatePicker from '@mui/lab/DatePicker';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
-
+import Button from '@mui/material/Button'
 import { ButtonUnstyled } from '@mui/base';
 import { SendToMobile } from '@mui/icons-material';
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
@@ -71,15 +71,20 @@ const EditUser = (props) => {
     return (
         <div style={{ margin: "20px " }}>
             <Typography variant="h4" > User Profile</Typography>
-            <EditIcon sx={{ mr: 2, mt: 2, mb: 2 }} onClick={() => navigate('edit')} />
-            <DocumentScannerIcon sx={{ mr: 2, mt: 2, mb: 2 }} onClick={() => navigate('update/kyc')} />
+            <Button variant="contained" sx={{ mr: 2, mt: 2, mb: 2 }} onClick={() => navigate('edit')} >Edit Profile</Button>
+            <Button variant="contained" sx={{ mt: 2, mb: 2 }} onClick={() => navigate('update/kyc')} >Update Kyc</Button>
+
+
             <div>
                 <Typography variant="body1">Name : {name}</Typography>
-                <Typography variant="body1">role: {role}</Typography>
+                <Typography variant="body1">Role: {role}</Typography>
                 <Typography variant="body1"> Phone : {phone}</Typography>
                 <Typography variant="body1"> Email : {email}</Typography>
                 <Typography variant="body1">Status : {status}</Typography>
-                <Typography variant="body1">Verified : {verify}</Typography>
+                <Typography variant="body1">Aadhaar number : {aadhaar}</Typography>
+                <Typography variant="body1">Pan card : {pan}</Typography>
+                <Typography variant="body1">Verify : {verify}</Typography>
+                <Typography variant="body1">Date of Birth : {dob}</Typography>
             </div>
         </div>
     )

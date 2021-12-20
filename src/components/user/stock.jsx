@@ -23,6 +23,10 @@ export default function UserStockInfo(props) {
     useEffect(() => {
         if (window.location.pathname === `/user/stock/${code}`)
             setValue('1');
+        if (window.location.pathname === `/user/stock/${code}/compare`)
+            setValue('4');
+        if (window.location.pathname === `/user/stock/${code}/analysis`)
+            setValue('2');
     }, [window.location.pathname])
 
     const handleChange = (event, newValue) => {
@@ -39,6 +43,8 @@ export default function UserStockInfo(props) {
                         <Tab label="Performance" value="3" onClick={() => navigate(`/user/stock/${code}/performance`)} />
                         <Tab label="Compare" value="4" onClick={() => navigate(`/user/stock/${code}/compare`)} />
                         <Tab label="Shortlist" value="5" onClick={() => navigate(`/user/stock/${code}/shortlist`)} />
+                        <Tab label="Holdings" value="6" onClick={() => navigate(`/user/stock/${code}/holdings`)} />
+
                     </TabList>
                 </Box>
                 <TabPanel value="1"><StockInfo /></TabPanel>
@@ -46,6 +52,8 @@ export default function UserStockInfo(props) {
                 <TabPanel value="3"><Outlet /></TabPanel>
                 <TabPanel value="4"><Outlet /></TabPanel>
                 <TabPanel value="5"><Outlet /></TabPanel>
+                <TabPanel value="6"><Outlet /></TabPanel>
+
             </TabContext>
         </Box>
     )

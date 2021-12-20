@@ -17,10 +17,7 @@ const StockSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    catergory: {
-        type: String,
-        required: false
-    },
+
     catergory: {
         type: String,
         required: false

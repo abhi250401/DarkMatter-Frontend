@@ -8,9 +8,10 @@ import { FormGroup } from "@material-ui/core";
 import { useNavigate } from "react-router";
 import { Typography } from "@material-ui/core";
 import Button from '@mui/material/Button';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
+
 export default function Kyc(props) {
     const [pan, setPan] = useState('');
     const [dob, setdob] = useState('');
@@ -89,7 +90,7 @@ export default function Kyc(props) {
                 autoComplete="off"
                 fullWidth
             />
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            {/*   <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                     label="Dob"
                     value={dob}
@@ -99,6 +100,23 @@ export default function Kyc(props) {
                     renderInput={(params) => <TextField {...params} />}
                 />
             </LocalizationProvider>
+                */}
+            <FormControl fullWidth>
+                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                    Select Government Id
+                </InputLabel>
+                <NativeSelect
+                    defaultValue="none"
+                    inputProps={{
+                        name: 'Select Govenment Id',
+                        id: 'uncontrolled-native',
+                    }}
+                >
+                    <option value="none">none</option>
+                    <option value="aadhaar card">Aadhaar card</option>
+                    <option value="voterId">Voter ID</option>
+                </NativeSelect>
+            </FormControl>
             <FormGroup style={{ display: "flex", justifyContent: "center", alignContent: "center", margin: "auto" }}>
                 <input
                     style={{ display: "flex", justifyContent: "center", alignContent: "center", marginTop: "10px" }}

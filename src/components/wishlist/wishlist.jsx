@@ -270,23 +270,23 @@ export default function Wishlist(props) {
                                     <IconButton onClick={() => addtoWishlist(suggestion)} >
                                         <PlaylistAdd color="primary" />
                                     </IconButton>
-                                    <IconButton >
+                                    <IconButton onClick={() => { navigate(`/user/stock/${suggestion.code}/analysis`) }}>
                                         <AnalyticsIcon />
                                     </IconButton>
-                                    <IconButton>
+                                    <IconButton onClick={() => { navigate(`/user/stock/${suggestion.code}/compare`) }} >
                                         <CompareArrowsIcon />
                                     </IconButton>
                                 </div>
                             }
                         >
-                            <ListItemText primary={`${suggestion.code}`} />
+                            <ListItemText primary={`${suggestion.code}`} onClick={() => { navigate(`/user/stock/${suggestion.code}`) }} />
                         </ListItem>
                     ))}
                 </List>) : null}
             </div>
             {loading ? (Loading()
             ) : (<div style={{ overflowY: "auto", height: "70vh" }}>
-                {wishlistData && wishlistData.map((suggestion,i) =>
+                {wishlistData && wishlistData.map((suggestion, i) =>
                     <ListItem className={(suggestion.stockId.closePrice > 10 ? 'text-success' : 'text-error')} key={i} component="div" disableGutters disablePadding divider aria-label="User stock lists">
                         <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }}>
                             <Grid container direction="row" alignItems="center" >

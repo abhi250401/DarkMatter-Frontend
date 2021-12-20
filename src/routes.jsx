@@ -131,17 +131,18 @@ const Routes = [
 					{
 						path: 'compare',
 						element: <Compare />
-					}
+					},
+					{
+						path: 'holdings',
+						element: <Holdings user={user} />
+					},
 				]
 			},
 			{
 				path: 'profile/edit',
 				element: <EditUser user={user} />
 			},
-			{
-				path: 'holdings',
-				element: <Holdings user={user} />
-			},
+
 			{
 				path: 'profile/update/kyc',
 				element: <Kyc user={user} />
