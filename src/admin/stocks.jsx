@@ -209,7 +209,13 @@ export default function EnhancedTable(props) {
 
     const [stocks, setData] = useState(null);
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API_URL + '/admin/stocks').then(response => {
+        axios.get(process.env.REACT_APP_API_URL + '/admin/stocks', {
+            params: {
+                page: page,
+                rowsPerPage: rowsPerPage,
+
+            }
+        }).then(response => {
             console.log(response.data);
             setData(response.data);
             setLoading(true);
@@ -281,7 +287,7 @@ export default function EnhancedTable(props) {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - stocks.length) : 0;
     if (!loading)
         return (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "white" }}>Loading ...</h1></div>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "black" }}>Loading ...</h1></div>
         );
     if (!props.user || !props.user.userID)
         return (

@@ -29,6 +29,10 @@ const StockSchema = new mongoose.Schema({
     percentage: {
         type: Number,
         required: true
+    },
+    stockCode: {
+        required: true,
+        type: String
     }
 
     /*  
@@ -38,4 +42,5 @@ const StockSchema = new mongoose.Schema({
     updated
     */
 }, { timestamps: true });
+
 module.exports = mongoose.model('Stock', StockSchema);

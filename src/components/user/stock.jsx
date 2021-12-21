@@ -48,13 +48,10 @@ export default function UserStockInfo(props) {
                     </TabList>
                 </Box>
                 <TabPanel value="1"><StockInfo /></TabPanel>
-                <TabPanel value="2"><Outlet /></TabPanel>
-                <TabPanel value="3"><Outlet /></TabPanel>
-                <TabPanel value="4"><Outlet /></TabPanel>
-                <TabPanel value="5"><Outlet /></TabPanel>
-                <TabPanel value="6"><Outlet /></TabPanel>
+                <TabPanel value={value}><Outlet /></TabPanel>
+
 
             </TabContext>
-        </Box>
+        </Box >
     )
 }

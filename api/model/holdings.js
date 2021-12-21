@@ -8,7 +8,7 @@ const HoldingsSchema = new mongoose.Schema({
     },
     stockId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        //     required: true,
         ref: 'Stock',
     },
     quantity: {
@@ -23,6 +23,10 @@ const HoldingsSchema = new mongoose.Schema({
     datetime: {
         type: String,
         required: true
+    },
+    stockCode: {
+        type: String,
+        required: false
     }
 }, { timestamps: true });
 module.exports = mongoose.model('Holdings', HoldingsSchema);
