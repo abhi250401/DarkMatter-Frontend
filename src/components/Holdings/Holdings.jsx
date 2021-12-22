@@ -1,7 +1,9 @@
 import React from 'react'
 import axios from 'axios'
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { FormGroup, } from '@material-ui/core';
 
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import Modal from '@mui/material/Modal';
 import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import DateTimePicker from '@mui/lab/DateTimePicker';
@@ -89,35 +91,24 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'name',
+        id: 'Price',
         numeric: false,
         disablePadding: true,
-        label: 'Dessert (100g serving)',
+        label: 'Price',
     },
     {
-        id: 'calories',
+        id: 'Date and Time',
         numeric: true,
         disablePadding: false,
-        label: 'Calories',
+        label: 'Date and time',
     },
     {
-        id: 'fat',
+        id: 'Quantity',
         numeric: true,
         disablePadding: false,
-        label: 'Fat (g)',
+        label: 'Quantity',
     },
-    {
-        id: 'carbs',
-        numeric: true,
-        disablePadding: false,
-        label: 'Carbs (g)',
-    },
-    {
-        id: 'protein',
-        numeric: true,
-        disablePadding: false,
-        label: 'Protein (g)',
-    },
+
 ];
 
 function EnhancedTableHead(props) {
@@ -205,7 +196,7 @@ const EnhancedTableToolbar = (props) => {
                     id="tableTitle"
                     component="div"
                 >
-                    Nutrition
+                    Holdings
                 </Typography>
             )}
 
@@ -238,7 +229,8 @@ export default function Holdings(props) {
     const [price, setPrice] = useState("");
     const [quantity, setQuantity] = useState(0);
     const [name, setName] = useState("");
-
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
 
 
@@ -304,14 +296,14 @@ export default function Holdings(props) {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
     function putHoldings() {
-        if (price <= 0 || price === "" || quantity == 0 || name == '') {
+        if (price <= 0 || price === "" || quantity == 0) {
             alert("error")
             return
         }
 
         axios.post(process.env.REACT_APP_API_URL + '/user/holdings', {
 
-            name: name,
+
             price: price,
             quantity: quantity,
             datetime: value,
@@ -327,34 +319,68 @@ export default function Holdings(props) {
         setValue(newValue);
     };
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API_URL + '/user/holdings').then((response) => {
+        axios.get(process.env.REACT_APP_API_URL + '/user/holdings', {
+            params: {
+                page: page,
+                rowsperpage: rowsPerPage,
+
+            }
+        }).then((response) => {
             console.log(response.data)
             setHoldingsData(response.data);
         }).catch((err) => {
             console.log(err)
         })
 
-    }, [])
+    }, [page, rowsPerPage])
+    const [open, setOpen] = React.useState(false);
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
     return (
         <div>
 
-            <TextField sx={{ mt: 2, mb: 2 }} label="Quantity" fullWidth variant="standard" value={quantity} onChange={(e) => { setQuantity(e.target.value) }} />
-            <TextField sx={{}} id="standard-basic" label="Price(in Rs.)" fullWidth variant="standard" value={price} onChange={(e) => { setPrice(e.target.value) }} />
-            <TextField sx={{ mt: 2, mb: 4 }} label="Stock Name" fullWidth variant="standard" value={name} onChange={(e) => { setName(e.target.value) }} />
 
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateTimePicker
-                    label="Date&Time picker"
-                    value={value}
-                    inputFormat="yyyy/MM/dd hh:mm a"
-                    maxDate={new Date()}
+            <FormGroup>
+                <Button onClick={handleOpen}>Add holdings</Button>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <TextField sx={{ mt: 2, mb: 2 }} label="Quantity" fullWidth variant="standard" value={quantity} onChange={(e) => { setQuantity(e.target.value) }} />
+                        <TextField sx={{ mb: 2 }} id="standard-basic" label="Price(in Rs.)" fullWidth variant="standard" value={price} onChange={(e) => { setPrice(e.target.value) }} />
 
-                    onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                />    </LocalizationProvider>
+                        <LocalizationProvider dateAdapter={AdapterDateFns} sx={{ mt: 3 }}>
+                            <DateTimePicker
+                                sx={{ mt: 3, mb: 2 }}
+                                label="Date&Time picker"
+                                value={value}
+                                inputFormat="yyyy/MM/dd hh:mm a"
+                                maxDate={new Date()}
 
-            <Button variant="contained" color="primary" onClick={() => putHoldings()}>Add Holdings</Button>
+                                onChange={handleChange}
+                                renderInput={(params) => <TextField {...params} />}
+                            />    </LocalizationProvider>
 
+                        <Button variant="contained" color="primary" onClick={() => putHoldings()}>Add Holdings</Button>
+
+
+                    </Box>
+                </Modal>
+
+            </FormGroup>
 
             <Box sx={{ width: '100%' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
@@ -411,20 +437,11 @@ export default function Holdings(props) {
                                                 </TableCell>
                                                 <TableCell align="right">{row.datetime}</TableCell>
                                                 <TableCell align="right">{row.quantity}</TableCell>
-                                                <TableCell align="right"></TableCell>
-                                                <TableCell align="right"></TableCell>
+
                                             </TableRow>
                                         );
                                     })}
-                                {emptyRows > 0 && (
-                                    <TableRow
-                                        style={{
-                                            height: (dense ? 33 : 53) * emptyRows,
-                                        }}
-                                    >
-                                        <TableCell colSpan={6} />
-                                    </TableRow>
-                                )}
+
                             </TableBody>
                         </Table>
                     </TableContainer>

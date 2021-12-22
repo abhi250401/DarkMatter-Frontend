@@ -104,7 +104,8 @@ const EditUser = (props) => {
     const handledob = (newValue) => {
         setDob(newValue);
     };
-
+    const [rolename, setrolename] = useState('');
+    const [statusname, setstatus] = useState('')
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
 
@@ -117,6 +118,25 @@ const EditUser = (props) => {
             alert('Invalid email');
 
         else {
+            if (role == "0") {
+                setrolename('Admin')
+            }
+            else if (role == "1") {
+                setrolename('Manager')
+            }
+            else if (role == "2") {
+                setrolename('Customer')
+            }
+
+            if (status == "0") {
+                setstatus('Pending')
+            }
+            else if (status == "1") {
+                setstatus('Approved')
+            }
+            else if (status == "2") {
+                setstatus('Blocked')
+            }
             axios.put(process.env.REACT_APP_API_URL + `/user`, {
                 params: {
                     _id: id
@@ -127,7 +147,8 @@ const EditUser = (props) => {
                     role: role,
                     status: status,
                     verify: verify,
-
+                    rolename: rolename,
+                    statusname: statusname,
                     dob: dob
                 }
             }
@@ -169,10 +190,7 @@ const EditUser = (props) => {
                     {!email ? (<p style={{ color: "red" }}>Required</p>) : null}
                 </FormControl>
 
-                <FormControl margin="normal">
-                    <InputLabel htmlFor="my-input">Phone</InputLabel>
-                    <Input onChange={(e) => setPhone(e.target.value)} name="phone" type="phone" value={phone} disabled aria-describedby="my-helper-text" />
-                </FormControl>
+
 
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <Stack spacing={3}>
@@ -195,8 +213,8 @@ const EditUser = (props) => {
                             <FormLabel component="legend">Verified</FormLabel>
 
                             <RadioGroup name="use-radio-group" value={verify} onChange={(e) => setVerify(e.target.value)}>
-                                <MyFormControlLabel value="0" label="Verified" control={<Radio />} />
-                                <MyFormControlLabel value="1" label="Pending Approval" control={<Radio />} />
+                                <MyFormControlLabel value="0" label="Unverified" control={<Radio />} />
+                                <MyFormControlLabel value="1" label="Verified" control={<Radio />} />
 
                             </RadioGroup>
                         </FormControl>
@@ -206,7 +224,7 @@ const EditUser = (props) => {
                             <RadioGroup name="use-radio-group" value={status} onChange={(e) => setStatus(e.target.value)}>
                                 <MyFormControlLabel value="0" label="Pending" control={<Radio />} />
                                 <MyFormControlLabel value="1" label="Approved" control={<Radio />} />
-                                <MyFormControlLabel value="2" label="Kyc not done" control={<Radio />} />
+                                <MyFormControlLabel value="2" label="Blocked" control={<Radio />} />
 
                             </RadioGroup>
                         </FormControl>
@@ -214,10 +232,9 @@ const EditUser = (props) => {
                             <FormLabel component="legend"> Role</FormLabel>
 
                             <RadioGroup name="use-radio-group" value={role} onChange={(e) => setRole(e.target.value)}>
-                                <MyFormControlLabel value="0" label=" Super Admin" control={<Radio />} />
                                 <MyFormControlLabel value="1" label="Admin" control={<Radio />} />
-                                <MyFormControlLabel value="2" label="User" control={<Radio />} />
-
+                                <MyFormControlLabel value="2" label="Manager" control={<Radio />} />
+                                <MyFormControlLabel value="3" label="Customer" control={<Radio />} />
                             </RadioGroup>
                         </FormControl>
                     </>) : null}

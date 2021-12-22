@@ -207,14 +207,22 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable(props) {
     const history = useNavigate();
-
+    const [page, setPage] = React.useState(0);
+    const [dense, setDense] = React.useState(true);
+    const [rowsPerPage, setRowsPerPage] = React.useState(15);
     const [tok, setTok] = useState(null);
 
     const [loading, setLoading] = useState(false);
 
     const [users, setData] = useState(null);
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API_URL + '/user/users').then(response => {
+        axios.get(process.env.REACT_APP_API_URL + '/user/users', {
+            params: {
+                page: page,
+                rowsperpage: rowsPerPage,
+
+            }
+        }).then(response => {
             console.log(response.data);
             setData(response.data);
             setLoading(true);
@@ -232,15 +240,13 @@ export default function EnhancedTable(props) {
                 history('/');
             }
         }*/
-    }, [])
+    }, [page, rowsPerPage])
 
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("calories");
     const [selected, setSelected] = React.useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(true);
-    const [rowsPerPage, setRowsPerPage] = React.useState(15);
+
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === "asc";

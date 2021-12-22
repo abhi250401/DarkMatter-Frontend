@@ -18,7 +18,7 @@ export default function Kyc(props) {
     const [aadhaar, setAadhaar] = useState('')
     const [img2, setimg2] = useState('')
     const [img, setimg] = useState('');
-    const [idSelect, setidSelect] = useState("aadhaar");
+    const [idSelect, setidSelect] = useState("Aadhaar Card");
     useEffect(async () => {
         await axios.get(process.env.REACT_APP_API_URL + `/userone`,)
             .then(response => {
@@ -131,9 +131,9 @@ export default function Kyc(props) {
                         id: 'uncontrolled-native',
                     }}
                 >
-                    <option value="none">none</option>
-                    <option value="aadhaar">Aadhaar card</option>
-                    <option value="voterId">Voter ID</option>
+
+                    <option value="Aadhaar Card">Aadhaar Card</option>
+                    <option value="Voter Id">Voter ID</option>
                 </NativeSelect>
             </FormControl>
             <TextField
@@ -145,7 +145,18 @@ export default function Kyc(props) {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
-            />
+            />   <FormGroup style={{ display: "flex", justifyContent: "center", alignContent: "center", margin: "auto" }}>
+                <input
+                    style={{ display: "flex", justifyContent: "center", alignContent: "center", marginTop: "10px" }}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => imageHandler(e)}
+                />
+                {img ? (<img src={img} alt="" id="img" className="img" />) : null}
+
+                <Button variant="outlined" onClick={() => submitFile()}>Upload File</Button>
+
+            </FormGroup>
             <TextField
                 label="PAN Card"
                 name="pan"
@@ -168,18 +179,7 @@ export default function Kyc(props) {
                 />
             </LocalizationProvider>
                 */}
-            <FormGroup style={{ display: "flex", justifyContent: "center", alignContent: "center", margin: "auto" }}>
-                <input
-                    style={{ display: "flex", justifyContent: "center", alignContent: "center", marginTop: "10px" }}
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => imageHandler(e)}
-                />
-                {img ? (<img src={img} alt="" id="img" className="img" />) : null}
 
-                <Button variant="outlined" onClick={() => submitFile()}>Upload File</Button>
-
-            </FormGroup>
 
             <FormGroup style={{ display: "flex", justifyContent: "center", alignContent: "center", margin: "auto" }}>
                 <input

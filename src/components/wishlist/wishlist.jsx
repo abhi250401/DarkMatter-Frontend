@@ -181,10 +181,15 @@ export default function Wishlist(props) {
         if (text.length >= 3) {
             const loadApiData = async () => {
                 const response = await axios.get(process.env.REACT_APP_API_URL + '/admin/stocks', {
-                    params: text
+                    params: {
+                        text: text,
+                        limit: 5000,
+                        skip: 0,
+                        rowsperpage: 5000
+                    }
                 });
 
-                setApiData(response.data)
+                setApiData(response.data.data)
 
                 setStockLoad(false);
 

@@ -77,14 +77,14 @@ const EditUser = (props) => {
 
             <div>
                 <Typography variant="body1">Name : {name}</Typography>
-                <Typography variant="body1">Role: {role}</Typography>
+                <Typography variant="body1">Role: {user && user.rolename}</Typography>
                 <Typography variant="body1"> Phone : {phone}</Typography>
                 <Typography variant="body1"> Email : {email}</Typography>
-                <Typography variant="body1">Status : {status}</Typography>
+                <Typography variant="body1">Status :  {user && user.statusname}</Typography>
                 <Typography variant="body1">Aadhaar number : {aadhaar}</Typography>
                 <Typography variant="body1">Pan card : {pan}</Typography>
-                <Typography variant="body1">Verify : {verify}</Typography>
-                <Typography variant="body1">Date of Birth : {dob}</Typography>
+                <Typography variant="body1">Verify : {verify == "1" ? <>Verified</> : <>Unverified</>}</Typography>
+                <Typography variant="body1">Date of Birth : {dob.slice(0, 10)}</Typography>
             </div>
         </div>
     )

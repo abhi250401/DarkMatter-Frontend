@@ -67,6 +67,12 @@ const UserSchema = new mongoose.Schema({
     },
     idname: {
         type: String
+    },
+    rolename: {
+        type: String
+    },
+    statusname: {
+        type: String
     }
     /*lists: [
         [{

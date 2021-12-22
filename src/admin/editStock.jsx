@@ -5,11 +5,12 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 
+import FormLabel from '@mui/material/FormLabel';
+
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormHelperText from '@mui/material/FormHelperText';
 const useStyles = makeStyles({
     container: {
         width: '50%',
@@ -82,10 +83,13 @@ const EditStock = () => {
 
         }).then((response) => {
             setCategoryList(response.data);
+            console.log(categoryList)
+            console.log(checkedState)
+            setCheckedState(new Array(categoryList.length).fill(false))
         }).catch(() => {
 
         })
-
+        console.log(checkedState)
 
     }, [code]);
 
@@ -113,19 +117,31 @@ const EditStock = () => {
             alert('error');
         }
     }
-    const addCategory = () => {
-        if (category === '')
-            return;
-        axios.post(process.env.REACT_APP_API_URL + '/stock/category', {
-            code: id,
-            title: category,
-        }).then((response) => {
-            console.log(response.data);
+    const [state, setState] = React.useState({
+        gilad: false,
+        jason: false,
+        antoine: false,
+    });
+    const { gilad, jason, antoine } = state;
 
-        }).catch((err) => {
-            console.log(err);
-        })
-    }
+    const [checked, setChecked] = React.useState(false);
+    const [checkedState, setCheckedState] = useState(new Array(categoryList.length).fill(false))
+
+    const [data12, setData] = useState([
+
+    ]);
+    const handleChange = (position, item) => {
+        console.log(item.title)
+        console.log(position)
+        const updatedCheckedState = checkedState.map((item, index) =>
+            index === position ? !item : item
+        );
+
+        setCheckedState(updatedCheckedState);
+        console.log(checkedState)
+        console.log(data12)
+    };
+
 
 
 
@@ -164,54 +180,42 @@ const EditStock = () => {
                     <InputLabel htmlFor="my-input">Sector</InputLabel>
                     <Input onChange={(e) => setsector(e.target.value)} name="price" id="price" type="price" value={sector} id="my-input" aria-describedby="my-helper-text" />
                 </FormControl>
-                <Button onClick={handleOpen}>Add Category </Button>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={style}>
+                <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
 
 
-                        <FormControl>
-                            <InputLabel htmlFor="my-input">Title</InputLabel>
-                            <Input onChange={(e) => setCategory(e.target.value)} name="category" type=" category" value={category} id="my-input" aria-describedby="my-helper-text" />
 
-                            <Button variant="contained" sx={{ mt: 2 }} color="primary" onClick={() => addCategory()}>Add Category</Button>
-                        </FormControl>
-                    </Box>
-                </Modal>
+                    <FormLabel component="legend">Assign responsibility</FormLabel>
+                    <FormGroup>
+                        {categoryList && checkedState && categoryList.map((item, index) => (
+                            <FormControlLabel
+                                control={
+                                    <Checkbox checked={checkedState[index]}
+                                        onChange={() => handleChange(index, item)} value={item.title} key={item._id} />
+                                }
+                                label={item.title}
+                            />
+                        ))}
+
+                    </FormGroup>
+
+                </FormControl>
+
+
+
+
+
+
+
+
+
+
                 <FormControl>
                     <Button variant="contained" sx={{ mb: 2 }} color="primary" onClick={() => editStockDetails()}>Edit Stock</Button>
                 </FormControl>
             </FormGroup>
-            <FormGroup>
-                <InputLabel htmlFor="my-input">Category</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-
-                    label="Age"
-
-                >{categoryData ? (categoryData.map((data) => (<MenuItem >{data.title}</MenuItem>))) : null}
 
 
-                </Select>
-            </FormGroup>
-            <FormGroup>
-                <InputLabel htmlFor="my-input">All Categories</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
 
-                    label="Age"
-
-                >{categoryList && categoryList.map((data) => (<MenuItem >{data.title}</MenuItem>))}
-
-
-                </Select>
-            </FormGroup>
         </div >
 
     )

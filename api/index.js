@@ -108,7 +108,7 @@ app.use('/api/posts', postRoute);
 app.post('/api/stock/category', function (req, res) {
     const category = new Category({
         title: req.body.title,
-        code: req.body.code
+
     })
     const result = category.save();
     if (result)
@@ -143,7 +143,7 @@ app.put('/api/user', function (req, res) {
     const verifie = jwt.verify(authorizationHeader, "hisdi");
 
     if (req.body.params && req.body.params._id) {
-        User.updateOne({ _id: req.body.params._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verify: req.body.body.verify, aadhaar: req.body.body.aadhaar, pan: req.body.body.pan, dob: req.body.body.dob, status: req.body.body.status } }).then((result) => {
+        User.updateOne({ _id: req.body.params._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verify: req.body.body.verify, aadhaar: req.body.body.aadhaar, pan: req.body.body.pan, dob: req.body.body.dob, status: req.body.body.status, rolename: req.body.body.rolename, statusname: req.body.body.statusname } }).then((result) => {
             res.status(201).json(result);
         }).catch((err) => {
             console.warn(err);
@@ -153,7 +153,7 @@ app.put('/api/user', function (req, res) {
         console.log(req.body.body.dob)
         const id = req.body.body.idname
 
-        User.updateOne({ _id: verifie._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verify: req.body.body.verify, idname: req.body.body.idname, id: req.body.body.idSelect, pan: req.body.body.pan, dob: req.body.body.dob, status: req.body.body.status } }).then((result) => {
+        User.updateOne({ _id: verifie._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verify: req.body.body.verify, idname: req.body.body.idname, id: req.body.body.idSelect, pan: req.body.body.pan, dob: req.body.body.dob, status: req.body.body.status, rolename: req.body.body.rolename, statusname: req.body.body.statusname } }).then((result) => {
             res.status(201).json(result);
         }).catch((err) => {
             console.warn(err);

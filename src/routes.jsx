@@ -7,6 +7,7 @@ import Shortlist from './components/Shortlist/Shortlist';
 import Compare from './components/Compare/Compare';
 import StockInfo from './components/StockInfo/StockInfo';
 import Holdings from './components/Holdings/Holdings';
+import Category from './components/category/Category';
 //	Public pages
 const FirstPage = React.lazy(() => import( /*webpackChunkName: 'index'*/ './pages/index'));
 const Error = React.lazy(() => import( /*webpackChunkName: 'error'*/ './pages/error'));
@@ -86,6 +87,10 @@ const Routes = [
 			{
 				path: 'stocks/:code/edit',
 				element: <EditStock user={user} />
+			},
+			{
+				path: 'stocks/category',
+				element: <Category user={user} />
 			},
 			{
 				path: 'stocks',

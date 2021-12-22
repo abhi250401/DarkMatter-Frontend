@@ -1,32 +1,62 @@
-import * as React from "react";
-import Navbar from "../pages/navbar";
+import { useState, useEffect } from 'react';
+import { FormGroup, FormControl, InputLabel, Input, makeStyles } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router';
+import axios from 'axios';
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import axios from 'axios';
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import { useEffect } from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import { visuallyHidden } from "@mui/utils";
+
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { visuallyHidden } from '@mui/utils';
+
+function createData(name, calories, fat, carbs, protein) {
+    return {
+        name,
+        calories,
+        fat,
+        carbs,
+        protein,
+    };
+}
+
+const rows = [
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Donut', 452, 25.0, 51, 4.9),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+    createData('Honeycomb', 408, 3.2, 87, 6.5),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Jelly Bean', 375, 0.0, 94, 0.0),
+    createData('KitKat', 518, 26.0, 65, 7.0),
+    createData('Lollipop', 392, 0.2, 98, 0.0),
+    createData('Marshmallow', 318, 0, 81, 2.0),
+    createData('Nougat', 360, 19.0, 9, 37.0),
+    createData('Oreo', 437, 18.0, 63, 4.0),
+];
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -39,7 +69,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-    return order === "desc"
+    return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -63,33 +93,20 @@ const headCells = [
         id: '_id',
         numeric: false,
         disablePadding: true,
-        label: 'User id',
+        label: 'Id',
     },
     {
-        id: 'Price',
-        numeric: false,
+        id: 'title',
+        numeric: true,
         disablePadding: false,
-        label: 'Price',
-    },
-
-    {
-        id: 'name',
-        numeric: false,
-        disablePadding: false,
-        label: 'Name',
+        label: 'Title',
     },
 
 ];
 
 function EnhancedTableHead(props) {
-    const {
-        onSelectAllClick,
-        order,
-        orderBy,
-        numSelected,
-        rowCount,
-        onRequestSort
-    } = props;
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+        props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
@@ -104,26 +121,26 @@ function EnhancedTableHead(props) {
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
                         inputProps={{
-                            "aria-label": "select all desserts"
+                            'aria-label': 'select all desserts',
                         }}
                     />
                 </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? "right" : "left"}
-                        padding={headCell.disablePadding ? "none" : "normal"}
+                        align={headCell.numeric ? 'right' : 'left'}
+                        padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
                             active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : "asc"}
+                            direction={orderBy === headCell.id ? order : 'asc'}
                             onClick={createSortHandler(headCell.id)}
                         >
                             {headCell.label}
                             {orderBy === headCell.id ? (
                                 <Box component="span" sx={visuallyHidden}>
-                                    {order === "desc" ? "sorted descending" : "sorted ascending"}
+                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                                 </Box>
                             ) : null}
                         </TableSortLabel>
@@ -138,16 +155,13 @@ EnhancedTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
     onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+    order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired
+    rowCount: PropTypes.number.isRequired,
 };
-
 const EnhancedTableToolbar = (props) => {
     const { numSelected } = props;
-    const handleDelete = () => {
 
-    }
     return (
         <Toolbar
             sx={{
@@ -155,16 +169,13 @@ const EnhancedTableToolbar = (props) => {
                 pr: { xs: 1, sm: 1 },
                 ...(numSelected > 0 && {
                     bgcolor: (theme) =>
-                        alpha(
-                            theme.palette.primary.main,
-                            theme.palette.action.activatedOpacity
-                        )
-                })
+                        alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+                }),
             }}
         >
             {numSelected > 0 ? (
                 <Typography
-                    sx={{ flex: "1 1 100%" }}
+                    sx={{ flex: '1 1 100%' }}
                     color="inherit"
                     variant="subtitle1"
                     component="div"
@@ -173,19 +184,19 @@ const EnhancedTableToolbar = (props) => {
                 </Typography>
             ) : (
                 <Typography
-                    sx={{ flex: "1 1 100%" }}
+                    sx={{ flex: '1 1 100%' }}
                     variant="h6"
                     id="tableTitle"
                     component="div"
                 >
-                    Stocks
+                    Categories
                 </Typography>
             )}
 
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
                     <IconButton>
-                        <DeleteIcon onClick={() => handleDelete()} />
+                        <DeleteIcon />
                     </IconButton>
                 </Tooltip>
             ) : (
@@ -200,48 +211,32 @@ const EnhancedTableToolbar = (props) => {
 };
 
 EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired
+    numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable(props) {
-    const [loading, setLoading] = useState(false);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(25);
-    const [total, setTotal] = React.useState();
 
-    const [stocks, setData] = useState(null);
-    useEffect(() => {
-        axios.get(process.env.REACT_APP_API_URL + '/admin/stocks', {
-            params: {
-                page: page,
-                rowsperpage: rowsPerPage,
 
-            }
-        }).then(response => {
-            console.log(response.data.data);
-            setData(response.data.data);
-            setLoading(true);
-            setTotal(response.data.total)
-        }).catch(err => {
-            console.log(err);
-        })
-    }, [page, rowsPerPage])
 
-    const [order, setOrder] = React.useState("asc");
-    const [orderBy, setOrderBy] = React.useState("calories");
+
+export default function Category() {
+
+
+    const [order, setOrder] = React.useState('asc');
+    const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [dense, setDense] = React.useState(true);
+    const [page, setPage] = React.useState(0);
+    const [dense, setDense] = React.useState(false);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleRequestSort = (event, property) => {
-        const isAsc = orderBy === property && order === "asc";
-        setOrder(isAsc ? "desc" : "asc");
+        const isAsc = orderBy === property && order === 'asc';
+        setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = stocks.map((n) => n._id);
+            const newSelecteds = rows.map((n) => n.name);
             setSelected(newSelecteds);
             return;
         }
@@ -261,7 +256,7 @@ export default function EnhancedTable(props) {
         } else if (selectedIndex > 0) {
             newSelected = newSelected.concat(
                 selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1)
+                selected.slice(selectedIndex + 1),
             );
         }
 
@@ -285,35 +280,82 @@ export default function EnhancedTable(props) {
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - stocks.length) : 0;
-    if (!loading)
-        return (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "black" }}>Loading ...</h1></div>
-        );
-    if (!props.user || !props.user.userID)
-        return (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", color: "white", height: "100vh" }}><h1 style={{ color: "black" }}>No access ...
-                <Link to="/login" > Login</Link>  </h1></div >
-        );
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+
+
+    const [category, setCategory] = useState('')
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [categoryList, setCategoryList] = useState([])
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API_URL + '/stock/category', {
+            params: {
+                page: page,
+                rowsperpage: rowsPerPage,
+
+            }
+        }).then((response) => {
+            setCategoryList(response.data);
+        }).catch(() => {
+
+        })
+    }, [page, rowsPerPage])
+    const addCategory = () => {
+        if (category === '')
+            return;
+        axios.post(process.env.REACT_APP_API_URL + '/stock/category', {
+            title: category,
+        }).then((response) => {
+            console.log(response.data);
+
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
     return (
         <div>
-            <Box sx={{ width: "100%" }}>
+            <FormGroup>
+                <Button onClick={handleOpen}>Add Category </Button>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
 
 
-                <Paper sx={{ width: "100%", mb: 2 }}>
-                    <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to="/admin/stock/add">Add Stock</Button>
-                    <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to="/admin/stocks/category">Category</Button>
+                        <FormControl>
+                            <InputLabel htmlFor="my-input">Title</InputLabel>
+                            <Input onChange={(e) => setCategory(e.target.value)} name="category" type=" category" value={category} id="my-input" aria-describedby="my-helper-text" />
 
+                            <Button variant="contained" sx={{ mt: 2 }} color="primary" onClick={() => addCategory()}>Add Category</Button>
+                        </FormControl>
+                    </Box>
+                </Modal>
 
+            </FormGroup>
+            <Box sx={{ width: '100%' }}>
+                <Paper sx={{ width: '100%', mb: 2 }}>
                     <EnhancedTableToolbar numSelected={selected.length} />
                     <TableContainer>
-                        <input style={{ display: "flex", justifyContent: "center", width: "30%", alignContent: "center", margin: "auto", marginBottom: "20px" }} onChange={(e) => setSearchTerm(e.target.value)}
-                            value={searchTerm}
-                            placeholder="SEARCH" />
                         <Table
                             sx={{ minWidth: 750 }}
                             aria-labelledby="tableTitle"
-                            size={dense ? "small" : "medium"}
+                            size={dense ? 'small' : 'medium'}
                         >
                             <EnhancedTableHead
                                 numSelected={selected.length}
@@ -321,33 +363,25 @@ export default function EnhancedTable(props) {
                                 orderBy={orderBy}
                                 onSelectAllClick={handleSelectAllClick}
                                 onRequestSort={handleRequestSort}
-                                rowCount={rowsPerPage}
+                                rowCount={rows.length}
                             />
                             <TableBody>
                                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                                {stableSort(stocks, getComparator(order, orderBy))
-                                    .filter((val) => {
-                                        if (val.name) {
-                                            if (searchTerm === " ")
-                                                return val
-                                            else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                                return val
-                                            }
-                                        }
-                                    })
-                                    .map((stock, index) => {
-                                        const isItemSelected = isSelected(stock._id);
+                                {categoryList && stableSort(categoryList, getComparator(order, orderBy))
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((row, index) => {
+                                        const isItemSelected = isSelected(row.name);
                                         const labelId = `enhanced-table-checkbox-${index}`;
 
                                         return (
                                             <TableRow
                                                 hover
-                                                onClick={(event) => handleClick(event, stock._id)}
+                                                onClick={(event) => handleClick(event, row.name)}
                                                 role="checkbox"
                                                 aria-checked={isItemSelected}
                                                 tabIndex={-1}
-                                                key={stock._id}
+                                                key={row.name}
                                                 selected={isItemSelected}
                                             >
                                                 <TableCell padding="checkbox">
@@ -355,7 +389,7 @@ export default function EnhancedTable(props) {
                                                         color="primary"
                                                         checked={isItemSelected}
                                                         inputProps={{
-                                                            "aria-labelledby": labelId
+                                                            'aria-labelledby': labelId,
                                                         }}
                                                     />
                                                 </TableCell>
@@ -365,18 +399,10 @@ export default function EnhancedTable(props) {
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    <Link to={`/admin/stocks/${stock.code}/edit`} >   {stock._id}  </Link>
+                                                    {row._id}
                                                 </TableCell>
+                                                <TableCell align="right">{row.title}</TableCell>
 
-
-
-
-                                                <TableCell>{stock.closePrice}</TableCell>
-                                                {stock.name ? (<TableCell>{stock.name}</TableCell>) : null}
-                                                <TableCell>
-                                                    <Button color="primary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/edit/stock/${stock._id}`}>Edit</Button>
-                                                    <Button color="secondary" variant="contained" style={{ margin: "2px" }} component={Link} to={`/delete/stock/${stock._id}`}>Delete</Button>
-                                                </TableCell>
                                             </TableRow>
                                         );
                                     })}
@@ -385,9 +411,9 @@ export default function EnhancedTable(props) {
                         </Table>
                     </TableContainer>
                     <TablePagination
-                        rowsPerPageOptions={[25, 50, 75, 100]}
+                        rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={total}
+                        count={rows.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
@@ -399,6 +425,7 @@ export default function EnhancedTable(props) {
                     label="Dense padding"
                 />
             </Box>
-        </div>
-    );
+
+        </div >
+    )
 }
