@@ -15,28 +15,53 @@ import NativeSelect from '@mui/material/NativeSelect';
 export default function Kyc(props) {
     const [pan, setPan] = useState('');
     const [dob, setdob] = useState('');
-    const [aadhaar, setAadhaar] = useState('');
-    useEffect(() => {
-        axios.get(process.env.REACT_APP_API_URL + `/userone`,)
+    const [aadhaar, setAadhaar] = useState('')
+    const [img2, setimg2] = useState('')
+    const [img, setimg] = useState('');
+    const [idSelect, setidSelect] = useState("aadhaar");
+    useEffect(async () => {
+        await axios.get(process.env.REACT_APP_API_URL + `/userone`,)
             .then(response => {
                 setAadhaar(response.data.aadhaar);
                 setdob(response.data.dob);
 
 
+                setidSelect("aadhaar");
 
                 setPan(response.data.pan)
             }).catch(err => {
                 console.log(err);
+            }).finally(() => {
+                if (aadhaar !== "")
+                    setidSelect("aadhaar");
             })
+
     }, []);
 
-    const [file, setFile] = React.useState('');
+    const [file, setFile1] = React.useState('');
+    const [file2, setFile2] = React.useState('');
+
     const goto = useNavigate();
     const submitFile = async () => {
 
         const formData = new FormData()
         formData.append('profileImg', file)
         axios.put(process.env.REACT_APP_API_URL + `/user/image/${props.user._id}`, formData, {
+        }).then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log(err)
+        })
+
+
+
+    }
+
+    const submitPan = async (e) => {
+        e.preventDefault();
+        const formData = new FormData()
+        formData.append('panFile', file2)
+        axios.put(process.env.REACT_APP_API_URL + `/user/pan/${props.user._id}`, formData, {
         }).then(res => {
             console.log(res)
         }).catch(err => {
@@ -65,12 +90,54 @@ export default function Kyc(props) {
 
 
     }
+    const imageHandler = (e) => {
+        setFile1(e.target.files[0])
+        const reader = new FileReader();
+        console.log(reader)
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setimg(reader.result)
+            }
+        }
+
+        reader.readAsDataURL(e.target.files[0])
+    }
+    const imageHandler2 = (e) => {
+        setFile2(e.target.files[0])
+        const reader = new FileReader();
+        console.log(reader)
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setimg2(reader.result)
+            }
+        }
+
+        reader.readAsDataURL(e.target.files[0])
+    }
 
     return (
         <Container maxWidth="xm">
             <Typography variant="h4">Update Kyc</Typography>
+            <FormControl fullWidth>
+                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                    Select Government Id
+                </InputLabel>
+                <NativeSelect
+
+                    value={idSelect}
+                    onChange={(e) => setidSelect(e.target.value)}
+                    inputProps={{
+                        name: 'Select Govenment Id',
+                        id: 'uncontrolled-native',
+                    }}
+                >
+                    <option value="none">none</option>
+                    <option value="aadhaar">Aadhaar card</option>
+                    <option value="voterId">Voter ID</option>
+                </NativeSelect>
+            </FormControl>
             <TextField
-                label="Aadhaar Card"
+                label={idSelect}
                 name="aadhar"
                 value={aadhaar}
                 onChange={(e) => setAadhaar(e.target.value)}
@@ -101,28 +168,27 @@ export default function Kyc(props) {
                 />
             </LocalizationProvider>
                 */}
-            <FormControl fullWidth>
-                <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                    Select Government Id
-                </InputLabel>
-                <NativeSelect
-                    defaultValue="none"
-                    inputProps={{
-                        name: 'Select Govenment Id',
-                        id: 'uncontrolled-native',
-                    }}
-                >
-                    <option value="none">none</option>
-                    <option value="aadhaar card">Aadhaar card</option>
-                    <option value="voterId">Voter ID</option>
-                </NativeSelect>
-            </FormControl>
             <FormGroup style={{ display: "flex", justifyContent: "center", alignContent: "center", margin: "auto" }}>
                 <input
                     style={{ display: "flex", justifyContent: "center", alignContent: "center", marginTop: "10px" }}
                     type="file"
-                    onChange={(e) => setFile(e.target.files[0])}
-                />      <Button variant="outlined" onClick={() => submitFile()}>Upload File</Button>
+                    accept="image/*"
+                    onChange={(e) => imageHandler(e)}
+                />
+                {img ? (<img src={img} alt="" id="img" className="img" />) : null}
+
+                <Button variant="outlined" onClick={() => submitFile()}>Upload File</Button>
+
+            </FormGroup>
+
+            <FormGroup style={{ display: "flex", justifyContent: "center", alignContent: "center", margin: "auto" }}>
+                <input
+                    style={{ display: "flex", justifyContent: "center", alignContent: "center", marginTop: "10px" }}
+                    type="file"
+                    onChange={(e) => imageHandler2(e)}
+                />
+                {img2 ? (<img src={img2} alt="" id="img" className="img" />) : null}
+                <Button variant="outlined" onClick={(e) => submitPan(e)}>Upload Pan Card</Button>
 
             </FormGroup>
             <Stack spacing={2} direction="row">

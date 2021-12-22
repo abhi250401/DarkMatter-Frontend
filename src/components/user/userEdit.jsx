@@ -10,7 +10,21 @@ import { Alert, Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { RotateLeftOutlined } from '@mui/icons-material';
+import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
+import RadioGroup, { useRadioGroup } from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import FormLabel from '@mui/material/FormLabel';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
+const StyledFormControlLabel = styled((props) => <FormControlLabel {...props} />)(
+    ({ theme, checked }) => ({
+        '.MuiFormControlLabel-label': checked && {
+            color: theme.palette.primary.main,
+        },
+    }),
+);
 const currencies = [
     {
         value: '0',
@@ -33,7 +47,9 @@ const EditUser = (props) => {
     const [verify, setVerify] = useState('');
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
+    const [status, setStatus] = useState("")
     console.log(id)
+    const [dob, setDob] = useState(new Date());
     const [phone, setPhone] = useState('');
     const goto = useNavigate();
     console.log(props);
@@ -52,11 +68,13 @@ const EditUser = (props) => {
                 setPhone(response.data.phone);
                 setRole(response.data.role);
                 setUser(response.data);
+                setDob(response.data.dob)
+
                 setName(response.data.name);
                 setEmail(response.data.email);
                 setVerify(response.data.verify);
                 console.log(role);
-
+                setStatus(response.data.status)
             }).catch(err => {
                 console.log(err);
             })
@@ -64,7 +82,28 @@ const EditUser = (props) => {
     const Token = {
         _id: `${id}`
     };
+    function MyFormControlLabel(props) {
+        const radioGroup = useRadioGroup();
 
+        let checked = false;
+
+        if (radioGroup) {
+            checked = radioGroup.value === props.value;
+        }
+
+        return <StyledFormControlLabel checked={checked} {...props} />;
+    }
+
+    MyFormControlLabel.propTypes = {
+        /**
+         * The value of the component.
+         */
+        value: PropTypes.any,
+    };
+
+    const handledob = (newValue) => {
+        setDob(newValue);
+    };
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -86,9 +125,10 @@ const EditUser = (props) => {
                     name: name,
                     email: email,
                     role: role,
+                    status: status,
+                    verify: verify,
 
-
-
+                    dob: dob
                 }
             }
             ).then(() => {
@@ -133,28 +173,42 @@ const EditUser = (props) => {
                     <InputLabel htmlFor="my-input">Phone</InputLabel>
                     <Input onChange={(e) => setPhone(e.target.value)} name="phone" type="phone" value={phone} disabled aria-describedby="my-helper-text" />
                 </FormControl>
+
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <Stack spacing={3}>
+                        <DesktopDatePicker
+                            label="Date desktop"
+                            inputFormat="MM/dd/yyyy"
+                            value={dob}
+                            onChange={handledob}
+                            renderInput={(params) => <TextField {...params} />}
+                        />      </Stack>
+                </LocalizationProvider>
+
+
                 {props.user.role === 1 ? (
                     <>
-                        <TextField
-                            id="standard-select-currency"
-                            select
-                            label="Edit Role"
-                            value={role}
-                            margin="normal"
-                            onChange={handleChange}
-                            helperText="ROLES"
-                            variant="standard"
-                        >
-                            {currencies.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </TextField>
 
-                        <FormControl margin="normal">
-                            <InputLabel htmlFor="my-input">Verified</InputLabel>
-                            <Input onChange={(e) => setVerify(e.target.value)} name="verify" id="verify" type="verify" value={verify} aria-describedby="my-helper-text" />
+
+
+                        <FormControl>
+                            <FormLabel component="legend">Verified</FormLabel>
+
+                            <RadioGroup name="use-radio-group" value={verify} onChange={(e) => setVerify(e.target.value)}>
+                                <MyFormControlLabel value="0" label="Verified" control={<Radio />} />
+                                <MyFormControlLabel value="1" label="Pending Approval" control={<Radio />} />
+
+                            </RadioGroup>
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel component="legend">Status</FormLabel>
+
+                            <RadioGroup name="use-radio-group" value={status} onChange={(e) => setStatus(e.target.value)}>
+                                <MyFormControlLabel value="0" label="Pending" control={<Radio />} />
+                                <MyFormControlLabel value="1" label="Approved" control={<Radio />} />
+                                <MyFormControlLabel value="2" label="Kyc not done" control={<Radio />} />
+
+                            </RadioGroup>
                         </FormControl>
                     </>) : null}
             </FormGroup>
@@ -164,7 +218,7 @@ const EditUser = (props) => {
                 <Button variant="contained" onClick={() => editUserDetails()}>Save</Button>
             </Stack>
 
-        </div>
+        </div >
     )
 }
 

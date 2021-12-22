@@ -74,6 +74,29 @@ app.put('/api/user/image/:id', upload.single('profileImg'), (req, res, next) => 
                 });
         })
 })
+app.put('/api/user/pan/:id', upload.single('panFile'), (req, res, next) => {
+    const url = req.protocol + '://' + req.get('host')
+    User.updateOne({ _id: req.params.id },
+        {
+            $set:
+                { panFile: url + '/public/' + req.file.filename }
+        })
+        .then((result) => {
+            res.status(201).json({
+                message: "User registered successfully!",
+                userCreated: {
+                    _id: result._id,
+                    panFile: result.panFile
+                }
+            })
+        }).catch(err => {
+            console.log(err),
+                res.status(500).json({
+                    error: err
+                });
+        })
+})
+
 
 //routemiddlewares 
 app.use('/api/user', authRoute);
@@ -120,18 +143,20 @@ app.put('/api/user', function (req, res) {
     const verifie = jwt.verify(authorizationHeader, "hisdi");
 
     if (req.body.params && req.body.params._id) {
-        User.updateOne({ _id: req.body.params._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verified: req.body.body.verified, aadhaar: req.body.body.aadhaar, pan: req.body.body.pan, dob: req.body.body.dob } }).then((result) => {
+        User.updateOne({ _id: req.body.params._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verify: req.body.body.verify, aadhaar: req.body.body.aadhaar, pan: req.body.body.pan, dob: req.body.body.dob, status: req.body.body.status } }).then((result) => {
             res.status(201).json(result);
         }).catch((err) => {
             console.warn(err);
         })
     }
-    else
-        User.updateOne({ _id: verifie._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verified: req.body.body.verified, aadhaar: req.body.body.aadhaar, pan: req.body.body.pan, dob: req.body.body.dob } }).then((result) => {
+    else {
+        console.log(req.body.body.dob)
+        User.updateOne({ _id: verifie._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verify: req.body.body.verify, aadhaar: req.body.body.aadhaar, pan: req.body.body.pan, dob: req.body.body.dob, status: req.body.body.status } }).then((result) => {
             res.status(201).json(result);
         }).catch((err) => {
             console.warn(err);
         })
+    }
 });
 
 

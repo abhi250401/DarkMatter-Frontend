@@ -41,17 +41,26 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         required: false,
     },
-    verified: {
-        type: Number,
+    verify: {
+        type: String,
         required: false,
     },
     status: {
-        type: Number,
+        type: String,
         required: true,
     },
     profileImg: {
         type: String
     },
+    aadhaar: {
+        type: String
+    },
+    voterId: {
+        type: String
+    },
+    panFile: {
+        type: String
+    }
     /*lists: [
         [{
             type: mongoose.Schema.Types.ObjectId,
