@@ -177,7 +177,7 @@ const EditUser = (props) => {
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <Stack spacing={3}>
                         <DesktopDatePicker
-                            label="Date desktop"
+                            label="Date of Birth"
                             inputFormat="MM/dd/yyyy"
                             value={dob}
                             onChange={handledob}
