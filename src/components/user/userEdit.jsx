@@ -210,6 +210,16 @@ const EditUser = (props) => {
 
                             </RadioGroup>
                         </FormControl>
+                        <FormControl>
+                            <FormLabel component="legend"> Role</FormLabel>
+
+                            <RadioGroup name="use-radio-group" value={role} onChange={(e) => setRole(e.target.value)}>
+                                <MyFormControlLabel value="0" label=" Super Admin" control={<Radio />} />
+                                <MyFormControlLabel value="1" label="Admin" control={<Radio />} />
+                                <MyFormControlLabel value="2" label="User" control={<Radio />} />
+
+                            </RadioGroup>
+                        </FormControl>
                     </>) : null}
             </FormGroup>
 
