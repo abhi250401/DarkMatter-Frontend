@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
+
 const StockSchema = new mongoose.Schema({
     stockId: {
         required: true,
         type: mongoose.Schema.Types.ObjectId
     },
     code: {
+        required: true,
+        type: String
+    },
+    stockCode: {
         required: true,
         type: String
     },
@@ -17,11 +22,19 @@ const StockSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-
-    catergory: {
+    category: {
         type: String,
         required: false
     },
+    sector: {
+        type: String,
+        required: false
+    },
+    categories: [{
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Category',
+    }],
     price: {
         type: Number,
         required: true,
@@ -29,10 +42,6 @@ const StockSchema = new mongoose.Schema({
     percentage: {
         type: Number,
         required: true
-    },
-    stockCode: {
-        required: true,
-        type: String
     }
 
     /*  
