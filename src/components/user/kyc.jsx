@@ -22,11 +22,11 @@ export default function Kyc(props) {
     useEffect(async () => {
         await axios.get(process.env.REACT_APP_API_URL + `/userone`,)
             .then(response => {
-                setAadhaar(response.data.aadhaar);
+                setAadhaar(response.data.id);
                 setdob(response.data.dob);
 
 
-                setidSelect("aadhaar");
+                setidSelect(response.data.idname);
 
                 setPan(response.data.pan)
             }).catch(err => {
@@ -75,10 +75,10 @@ export default function Kyc(props) {
 
             body: {
 
-
-                dob: dob,
-                aadhaar: aadhaar,
                 pan: pan,
+                dob: dob,
+                idSelect: aadhaar,
+                idname: `${idSelect}`
 
             }
         }
@@ -138,7 +138,7 @@ export default function Kyc(props) {
             </FormControl>
             <TextField
                 label={idSelect}
-                name="aadhar"
+                name={idSelect}
                 value={aadhaar}
                 onChange={(e) => setAadhaar(e.target.value)}
                 margin="normal"

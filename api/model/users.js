@@ -61,6 +61,13 @@ const UserSchema = new mongoose.Schema({
     panFile: {
         type: String
     }
+    ,
+    id: {
+        type: String
+    },
+    idname: {
+        type: String
+    }
     /*lists: [
         [{
             type: mongoose.Schema.Types.ObjectId,

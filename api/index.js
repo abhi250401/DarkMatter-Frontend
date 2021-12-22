@@ -151,7 +151,9 @@ app.put('/api/user', function (req, res) {
     }
     else {
         console.log(req.body.body.dob)
-        User.updateOne({ _id: verifie._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verify: req.body.body.verify, aadhaar: req.body.body.aadhaar, pan: req.body.body.pan, dob: req.body.body.dob, status: req.body.body.status } }).then((result) => {
+        const id = req.body.body.idname
+
+        User.updateOne({ _id: verifie._id }, { $set: { name: req.body.body.name, email: req.body.body.email, phone: req.body.body.phone, role: req.body.body.role, verify: req.body.body.verify, idname: req.body.body.idname, id: req.body.body.idSelect, pan: req.body.body.pan, dob: req.body.body.dob, status: req.body.body.status } }).then((result) => {
             res.status(201).json(result);
         }).catch((err) => {
             console.warn(err);
