@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const holdings = require('./routes/holdings')
 let multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
-
+const Category = require('./model/Category');
 //  Import models
 const User = require('./model/users');
 const Stocks = require('./model/stocks');
@@ -51,6 +51,7 @@ var upload = multer({
     }
 });
 
+
 app.put('/api/user/image/:id', upload.single('profileImg'), (req, res, next) => {
     const url = req.protocol + '://' + req.get('host')
     User.updateOne({ _id: req.params.id },
@@ -81,7 +82,31 @@ app.use('/api/user', holdings);
 app.use('/api/user', wishlist);
 app.use('/api', stock);
 app.use('/api/posts', postRoute);
-
+app.post('/api/stock/category', function (req, res) {
+    const category = new Category({
+        title: req.body.title,
+        code: req.body.code
+    })
+    const result = category.save();
+    if (result)
+        res.json('success');
+});
+app.get('/api/stock/category', function (req, res) {
+    if (req.query.code) {
+        Category.find({ code: req.query.code }).then((response) => {
+            res.json(response);
+        }).catch((err) => {
+            res.json(err);
+        })
+    }
+    else {
+        Category.find().then((response) => {
+            res.json(response);
+        }).catch((err) => {
+            res.json(err);
+        })
+    }
+});
 app.delete('/api/user/:id', function (req, res) {
     User.deleteOne({ _id: req.params.id }).then((result) => {
         res.status(200).json(result);

@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useParams } from 'react-router';
 import { useEffect } from 'react';
 
-export default function Shortlist() {
+export default function Shortlist(props) {
     const { id } = useParams();
     const code = id;
-    
+
+
     useEffect(() => {
     }, [id]);
 

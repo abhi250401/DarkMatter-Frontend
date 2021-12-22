@@ -4,13 +4,12 @@ import routes from './routes';
 import './App.css';
 
 const AppRoutes = () => {
-  return useRoutes( routes );
+    return useRoutes(routes);
 };
-
 function App() {
     return (
         <Router>
-            <Suspense fallback={<div style={{ backgroundColor: '#191919', color : '#999', height : '100vh', display : 'flex', alignItems : 'center', justifyContent : 'center' }}>Loading...</div>}>
+            <Suspense fallback={<div style={{ backgroundColor: '#191919', color: '#999', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
                 <AppRoutes />
             </Suspense>
         </Router>

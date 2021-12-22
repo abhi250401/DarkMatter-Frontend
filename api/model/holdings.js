@@ -15,6 +15,9 @@ const HoldingsSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    name: {
+        type: String
+    },
     price: {
         type: Number,
         required: true

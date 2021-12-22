@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext, createContext } from 'react'
 import { useNavigate } from 'react-router';
 import { Grid, Button, IconButton, List, ListItem, ListItemButton, ListItemText, Pagination, Stack, Snackbar, Container, Typography, Divider, createTheme } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
@@ -24,6 +24,8 @@ export default function Wishlist(props) {
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
+    const nam = "abhishek";
+    const context = createContext(nam);
     const navigate = useNavigate();
     const [text, setText] = useState('')
     const [wishlistData, setwishlistData] = useState([])

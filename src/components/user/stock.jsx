@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import ReactDOM from "react-dom";
+
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -14,10 +16,12 @@ import StockInfo from '../StockInfo/StockInfo';
 export default function UserStockInfo(props) {
     const { id } = useParams();
     const code = id;
+
     const val = localStorage.getItem('value') || 1;
     const [value, setValue] = React.useState(val);
     const navigate = useNavigate();
-
+    const [data, setData] = useState();
+    const Context = React.createContext();
     localStorage.setItem('value', value);
 
     useEffect(() => {
@@ -27,7 +31,10 @@ export default function UserStockInfo(props) {
             setValue('4');
         if (window.location.pathname === `/user/stock/${code}/analysis`)
             setValue('2');
+
     }, [window.location.pathname])
+
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -48,7 +55,8 @@ export default function UserStockInfo(props) {
                     </TabList>
                 </Box>
                 <TabPanel value="1"><StockInfo /></TabPanel>
-                <TabPanel value={value}><Outlet /></TabPanel>
+
+                <TabPanel value={value}><Outlet data={data} /></TabPanel>
 
 
             </TabContext>
