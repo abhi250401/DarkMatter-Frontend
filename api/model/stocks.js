@@ -22,10 +22,9 @@ const StockSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    category: {
-        type: String,
-        required: false
-    },
+    category: [
+
+    ],
     sector: {
         type: String,
         required: false

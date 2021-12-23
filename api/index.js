@@ -180,9 +180,9 @@ app.delete('/api/stock/:id', function (req, res) {
 
 app.put('/api/stock/:id', function (req, res) {
     const authorizationHeader = authHeader = req.get("Authorization");
+    console.log(req.body.value[0])
 
-
-    Stocks.updateOne({ _id: req.params.id }, { $set: { name: req.body.name, price: req.body.price } }).then((result) => {
+    Stocks.updateOne({ code: req.params.id }, { $set: { name: req.body.name, price: req.body.price, } }, { $push: { categories: req.body.value[0] } }).then((result) => {
         res.status(201).json(result);
     }).catch((err) => {
         console.warn(err);

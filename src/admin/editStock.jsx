@@ -106,6 +106,7 @@ const EditStock = () => {
             body: JSON.stringify({
                 name,
                 price,
+                value
             }),
         })
 
@@ -127,19 +128,18 @@ const EditStock = () => {
     const [checked, setChecked] = React.useState(false);
     const [checkedState, setCheckedState] = useState(new Array(categoryList.length).fill(false))
 
-    const [data12, setData] = useState([
-
-    ]);
+    const [value, setValue] = useState([]);
     const handleChange = (position, item) => {
-        console.log(item.title)
+        console.log(item)
         console.log(position)
         const updatedCheckedState = checkedState.map((item, index) =>
             index === position ? !item : item
         );
+        setValue([...value, item._id])
 
         setCheckedState(updatedCheckedState);
         console.log(checkedState)
-        console.log(data12)
+        console.log(value)
     };
 
 
@@ -190,7 +190,7 @@ const EditStock = () => {
                             <FormControlLabel
                                 control={
                                     <Checkbox checked={checkedState[index]}
-                                        onChange={() => handleChange(index, item)} value={item.title} key={item._id} />
+                                        onChange={() => handleChange(index, item)} name={item.title} key={item._id} />
                                 }
                                 label={item.title}
                             />

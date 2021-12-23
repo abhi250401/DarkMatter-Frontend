@@ -215,7 +215,6 @@ export default function EnhancedTable(props) {
             params: {
                 page: page,
                 rowsperpage: rowsPerPage,
-
             }
         }).then(response => {
             console.log(response.data.data);
