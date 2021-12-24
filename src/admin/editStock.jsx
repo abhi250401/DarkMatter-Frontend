@@ -66,14 +66,20 @@ const EditStock = () => {
                 //  Get global categories
                 axios.get(process.env.REACT_APP_API_URL + '/stock/category')
                     .then((response) => {
-                        response.data.map((item, k) => {
+                        setCategoryList(response.data);
+                        console.log(stock)
+
+                        console.log(response.data)
+
+
+                        {/* response.data.map((item, k) => {
+
                             item.selected = false;
                             let cidx = stockData.categories.findIndex(x => x._id === item._id);
                             if (cidx !== -1) {
                                 item.selected = true;
                             }
-                        });
-                        setCategoryList(response.data);
+                        });*/}
                     }).catch(err => {
                         console.log(err);
                     });
@@ -82,8 +88,29 @@ const EditStock = () => {
             }).finally(() => {
                 setLoading(false);
             });
+
+
     }, [code]);
 
+    const truFalse = () => {
+        console.log(categoryList, stock)
+        categoryList.map((item) => {
+            console.log(item.selected)
+            {
+                stock && stock.categories &&
+                    stock.categories.forEach((element) => {
+                        console.log(element, item._id)
+                        console.log(element === item._id)
+                        if (item.selected != true)
+                            item.selected = (element === item._id)
+
+
+                    })
+
+            }
+        })
+    }
+    truFalse();
     const editStockDetails = async (e) => {
         const response = await fetch(process.env.REACT_APP_API_URL + `/stock/${code}`, {
             method: 'PUT',
@@ -157,9 +184,10 @@ const EditStock = () => {
                     <FormLabel component="legend">Categories</FormLabel>
                     <FormGroup>
                         {categoryList && categoryList.map((item, index) => (
+
                             <FormControlLabel
                                 control={
-                                    <Checkbox data-checked={item.selected} onclick="return false" onChange={() => handleChange(index, item)} name={stock.categories} value={item._id} key={item._id} />
+                                    <Checkbox checked={item.selected} onclick="return false" onChange={() => handleChange(index, item)} name={stock.categories} value={item._id} key={item._id} />
                                 }
                                 label={item.title}
                             />
