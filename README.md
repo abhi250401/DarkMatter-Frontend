@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+# This is a full stack project with 2 factor authentication and personalised wishlist for users.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Login and sign up pages 
+![Screenshot 2022-01-21 012022](https://user-images.githubusercontent.com/56989605/150974865-a97c497f-437b-4970-9a29-9c99390b73f7.png)
+![Screenshot 2022-01-21 012041](https://user-images.githubusercontent.com/56989605/150974897-51f173b3-b57d-4a07-9f82-a0c7ceec08f4.png)
+![Screenshot 2022-01-21 012101](https://user-images.githubusercontent.com/56989605/150974940-4d75d86a-3822-44d8-8e91-e0ca8d80548a.png)
+![Screenshot 2022-01-21 012158](https://user-images.githubusercontent.com/56989605/150974978-b75e52a7-5dd7-4de0-adac-82ba096e8e7b.png)
+![Screenshot 2022-01-21 012222](https://user-images.githubusercontent.com/56989605/150975003-7298dfba-86b7-4a04-92e9-92aa179d22f6.png)
 
-In the project directory, you can run:
+# this is user dashboard
+![Screenshot 2022-01-21 011611](https://user-images.githubusercontent.com/56989605/150975058-77b13c9d-e8ab-46bc-9d81-654ee231b961.png)
+![Screenshot 2022-01-21 011643](https://user-images.githubusercontent.com/56989605/150975080-4f501353-7323-4ba9-a2b7-cf5312f6c2ec.png)
+![Screenshot 2022-01-21 011734](https://user-images.githubusercontent.com/56989605/150975097-76937764-1c70-487e-995e-9dd1611c1709.png)
 
-### `npm start`
+# this is holdings section 
+![Screenshot 2022-01-21 011805](https://user-images.githubusercontent.com/56989605/150975145-6d627b44-0793-4bc1-9236-5015c267c01c.png)
+![Screenshot 2022-01-21 011848](https://user-images.githubusercontent.com/56989605/150975159-59ab0e30-7b6b-41d1-ab60-681b680679bb.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# profile section
+![Screenshot 2022-01-21 011905](https://user-images.githubusercontent.com/56989605/150975224-2ee2bed0-75c3-405e-af36-c680c6cc9b45.png)
+![Screenshot 2022-01-21 011921](https://user-images.githubusercontent.com/56989605/150975236-415c15b1-6577-4bde-89a3-036fc108cb0c.png)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# admin backend
+![Screenshot 2022-01-21 011959](https://user-images.githubusercontent.com/56989605/150975290-474249b6-b3b0-43d4-8ebf-b19877e2c538.png)
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![Screenshot 2022-01-21 011941](https://user-images.githubusercontent.com/56989605/150975278-fc670da8-cc35-4bae-a0dc-ca150fbc7966.png)
