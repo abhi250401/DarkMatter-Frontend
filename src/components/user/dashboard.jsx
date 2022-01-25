@@ -5,6 +5,8 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import logo from './download.png';
+import logo2 from './download (1).png';
 
 export default function UserDashboard(props) {
     // const history = useNavigate();
@@ -32,6 +34,15 @@ export default function UserDashboard(props) {
     return (
         <div style={{ margin: "20px " }}>
             <h1>Hi {user && user.name}!!</h1>
+            <div className='info-div'>
+
+            </div>
+            <div style={{ display: "flex", justifyContent: 'center' }}>
+                <img src={logo} height={300} />
+
+
+                <img src={logo2} height={300} width={300} />
+            </div>
         </div>
     )
 }

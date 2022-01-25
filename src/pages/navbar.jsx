@@ -155,11 +155,11 @@ export default function PrimarySearchAppBar(props) {
     );
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <div style={{ backgroundColor: '#191919', color: '#999', height: '1.5rem', fontSize: '.75rem', padding: '.25rem .5rem', justifyContent: "center", alignItems: "center", display: "flex" }}>
+        <Box sx={{ flexGrow: 1, }} >
+            <div style={{ backgroundColor: '#191919', zIndex: '5', top: '0', width: "100%", color: '#999', position: 'fixed', height: '1.5rem', fontSize: '.75rem', padding: '.25rem .5rem', justifyContent: "center", alignItems: "center", display: "flex" }}>
                 TICKER COMES HERE...
             </div>
-            <AppBar position="static" style={{ backgroundColor: "#f5f5f5", justifyContent: "space-between", display: "flex", color: "black" }}>
+            <AppBar position="fixed" sx={{ mt: 4 }} style={{ backgroundColor: "#f5f5f5", justifyContent: "space-between", display: "flex", color: "black" }}>
                 <Toolbar style={{ display: "flex", justifyContent: "flex-end", marginLeft: "1%" }}>
 
                     <Typography style={{ marginLeft: "%" }}

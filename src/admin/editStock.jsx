@@ -147,7 +147,7 @@ const EditStock = () => {
     };
 
     return (
-        <div>
+        <div style={{ marginTop: "15px" }}>
             <FormGroup className={classes.container}>
                 <Typography variant="h4">Edit Information</Typography>
                 <FormControl>

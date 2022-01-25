@@ -13,13 +13,16 @@ export default function Home(props) {
     return (
         <div>
             <Navbar {...props} />
-            <Grid container component="main" sx={{ height: 'calc( 100vh - 102px )' }}>
-                <Wishlist {...props} />
-                <Grid item xs={12} sm={8} md={9} component={Paper} elevation={2} square style={{ color: "#000", zIndex: 1 }}>
+            <Wishlist {...props} />
+            <Grid container component="main" sx={{ height: 'calc( 100vh - )' }} style={{ marginBottom: '10px' }} >
+
+
+                <Grid item xs={10} sm={8} md={8} component={Paper} elevation={2} square sx={{ mt: 15.4 }} style={{ borderRadius: '8px', border: '3px solid #C3BABA', padding: '10px', color: "#000", position: "relative", zIndex: 1, left: "29%" }}>
                     <Outlet />
+
                 </Grid>
             </Grid>
 
-        </div>
+        </div >
     )
 }

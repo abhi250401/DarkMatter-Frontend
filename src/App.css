@@ -1,12 +1,39 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    background-color:var(--text-color);
+ 
+  font-family:'Comfortaa', monospace !important;
+      background-color:var(--text-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
     color: #000;
+    background-color: #F3C5C5;
+}
+html::-webkit-scrollbar {
+  width: 9px;
+
+}
+*{
+  font-family: 'Comfortaa', monospace !important;  font-family: 'Montserrat', sans-serif;
+}
+
+html::-webkit-scrollbar-track {
+  background: rgb(179, 177, 177);
+  border-radius: 10px;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: rgb(136, 136, 136);
+  border-radius: 6px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: rgb(100, 100, 100);
+  border-radius: 6px;
+}
+
+html::-webkit-scrollbar-thumb:active {
+  background: rgb(68, 68, 68);
+  border-radius: 6px;
 }
 
 code {
@@ -41,3 +68,5 @@ code {
 #user-wishlist span {
     font-size: .75rem !important;
 }
+
+

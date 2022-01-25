@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, createContext } from 'react'
 import { useNavigate } from 'react-router';
-import { Grid, Button, IconButton, List, ListItem, ListItemButton, ListItemText, Pagination, Stack, Snackbar, Container, Typography, Divider, createTheme } from '@mui/material';
+import { Grid, Button, IconButton, List, ListItem, ListItemButton, ListItemText, Pagination, Stack, Snackbar, Container, Typography, Divider, createTheme, Paper } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import Skeleton from '@mui/material/Skeleton';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -155,8 +155,24 @@ export default function Wishlist(props) {
         getUserWishlist(page);
         setOpen(true)
     }
+    const loadApiData = async () => {
+        const response = await axios.get(process.env.REACT_APP_API_URL + '/admin/stocks', {
+            params: {
+                text: text,
+                limit: 5000,
+                skip: 0,
+                rowsperpage: 5000
+            }
+        });
 
+        setApiData(response.data.data)
+
+        setStockLoad(false);
+
+
+    }
     useEffect(() => {
+        loadApiData();
         getUserWishlist(1);
     }, [])
 
@@ -178,33 +194,15 @@ export default function Wishlist(props) {
             setStockLoad(true);
         }
         let matches = [];
-        if (text.length >= 3) {
-            const loadApiData = async () => {
-                const response = await axios.get(process.env.REACT_APP_API_URL + '/admin/stocks', {
-                    params: {
-                        text: text,
-                        limit: 5000,
-                        skip: 0,
-                        rowsperpage: 5000
-                    }
-                });
-
-                setApiData(response.data.data)
-
-                setStockLoad(false);
 
 
+        matches = apiData.filter(stock => {
+            if (stock.name) {
+                const regex = new RegExp(`${text}`, 'gi');
+                return stock.name.match(regex);
             }
-            if (!apiData.length) {
-                loadApiData();
-            }
-            matches = apiData.filter(stock => {
-                if (stock.name) {
-                    const regex = new RegExp(`${text}`, 'gi');
-                    return stock.name.match(regex);
-                }
-            })
-        }
+        })
+
         if (matches.length > 20)
             matches.length = 20
         setSuggestion(matches);
@@ -239,14 +237,15 @@ export default function Wishlist(props) {
 
     }
     return (
-        <Grid id="user-wishlist" item xs={3} style={{
-            position: 'relative', zIndex: 0
+        <Grid id="user-wishlist" item xs={3} component={Paper} style={{
+            position: 'fixed', zIndex: 3, padding: '8px', width: "430px", alignItems: 'center', background: 'white', borderRadius: '8px', border: '2px solid #C3BABA', marginLeft: '3.5%', marginTop: "8%"
         }}>
-            <Snackbar anchorOrigin={{ vertical, horizontal }} open={open} autoHideDuration={4000} onClose={handleClose}>
+            <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={status} sx={{ width: '100%' }}>
                     {message}
                 </Alert>
             </Snackbar>
+
 
             <div className="search-wrapper" style={{ display: 'flex', alignItems: 'end', flexDirection: 'column' }}>
                 {stockLoad ? (<CircularProgress size="1.1em" sx={{ mt: 1.7, mr: 1.2 }} style={{ zIndex: '3', position: 'absolute' }} />) : null}
@@ -260,8 +259,10 @@ export default function Wishlist(props) {
                     position: 'absolute',
                     overflowY: 'auto',
                     // maxHeight: 300,
-                    '& ul': { padding: 0 },
-                    top: '2.4rem',
+
+                    fontWeight: '500',
+                    '& ul': { padding: 5 },
+                    top: '3.2rem',
                     backgroundColor: '#fff',
                     height: '75%',
                     left: 0,
@@ -291,43 +292,47 @@ export default function Wishlist(props) {
                     ))}
                 </List>) : null}
             </div>
-            {loading ? (Loading()
-            ) : (<div style={{ overflowY: "auto", height: "70vh" }}>
-                {wishlistData && wishlistData.map((suggestion, i) =>
-                    <ListItem className={(suggestion.stockId.closePrice > 10 ? 'text-success' : 'text-error')} key={i} component="div" disableGutters disablePadding divider aria-label="User stock lists">
-                        <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }}>
-                            <Grid container direction="row" alignItems="center" >
-                                <ListItemText
-                                    sx={{ minWidth: "50%" }}
-                                    primary={suggestion.stockId.code}
-                                />
-                                <BusinessCenterIcon sx={{ color: "#ccc", mr: 1 }} />
-                                <ListItemText sx={{ color: "#979797", width: "5%", }}
-                                    primary="0"
-                                />
-                                {value === 'ClosePrice' ? (
-                                    <ListItemText
-                                        primary={suggestion.stockId.closePrice}
-                                    />) : (
-                                    <ListItemText
-                                        primary={suggestion.stockId.price}
-                                    />)}
 
-                                <KeyboardArrowUpIcon sx={{ mr: 2 }} />
-                                <ListItemText
-                                    primary="0"
-                                />{format === 'percentage' ? ('%') : null}
-                            </Grid>
-                        </ListItemButton>
-                        <IconButton onClick={() => removeFromWatchlist(suggestion)}>
-                            <DeleteIcon />
-                        </IconButton>
-                        <Divider />
-                    </ListItem>
-                )}</div>)}
+            {
+                loading ? (Loading()
+                ) : (<div style={{ overflowY: "auto", height: "fit-content", marginBottom: "10%", padding: '2px', fontWeight: 'bolder', }}>
+                    {wishlistData && wishlistData.map((suggestion, i) =>
+                        <ListItem className={(suggestion.stockId.closePrice > 100 ? 'text-success' : 'text-error')} key={i} component="div" disableGutters disablePadding divider aria-label="User stock lists" >
+                            <ListItemButton onClick={() => { navigate(`/user/stock/${suggestion.stockId.code}`) }} >
+                                <Grid container direction="row" alignItems="center" >
+                                    <ListItemText
+                                        sx={{ minWidth: "50%", }}
+                                        primary={suggestion.stockId.code}
+                                    />
+                                    <BusinessCenterIcon sx={{ color: "#ccc", mr: 1 }} />
+                                    <ListItemText sx={{ color: "#979797", width: "5%", }}
+                                        primary="0"
+                                    />
+                                    {value === 'ClosePrice' ? (
+                                        <ListItemText
+                                            primary={suggestion.stockId.closePrice}
+                                        />) : (
+                                        <ListItemText
+                                            primary={suggestion.stockId.price}
+                                        />)}
+
+                                    <KeyboardArrowUpIcon sx={{ mr: 2 }} />
+                                    <ListItemText
+                                        primary="0"
+                                    />{format === 'percentage' ? ('%') : null}
+                                </Grid>
+                            </ListItemButton>
+                            <IconButton onClick={() => removeFromWatchlist(suggestion)}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <Divider />
+                        </ListItem>
+                    )}</div>
+                )
+            }
 
             <Stack style={{
-                position: 'absolute', width: "100%", backgroundColor: "#FAF9F6", padding: "5px", bottom: 0
+                position: 'sticky', backgroundColor: "#FAF9F6", padding: "10px", bottom: 0, borderRadius: '6px'
             }}  >
                 < Grid container
                     direction="row"
@@ -387,7 +392,7 @@ export default function Wishlist(props) {
                     </Grid>
                 </Popover>
             </Stack>
-        </Grid>
+        </Grid >
 
     )
 }

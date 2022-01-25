@@ -5,7 +5,6 @@ import Performance from './components/Performance/Performance';
 import Analysis from './components/Analysis/Analysis';
 import Shortlist from './components/Shortlist/Shortlist';
 import Compare from './components/Compare/Compare';
-import StockInfo from './components/StockInfo/StockInfo';
 import Holdings from './components/Holdings/Holdings';
 import Category from './components/category/Category';
 //	Public pages

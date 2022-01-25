@@ -41,10 +41,10 @@ export default function UserStockInfo(props) {
     }
 
     return (
-        <Box sx={{ width: '100%', typography: 'body1' }}>
+        <Box sx={{ width: '100%', typography: 'body1', }} style={{ padding: '0px' }}>
             <TabContext value={value}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <TabList onChange={handleChange} aria-label="lab API tabs example">
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }} style={{ padding: '0px' }}>
+                    <TabList onChange={handleChange} >
                         <Tab label="Info" value="1" onClick={() => navigate(`/user/stock/${code}`)} />
                         <Tab label="Analysis" value="2" onClick={() => navigate(`/user/stock/${code}/analysis`)} />
                         <Tab label="Performance" value="3" onClick={() => navigate(`/user/stock/${code}/performance`)} />
@@ -54,9 +54,11 @@ export default function UserStockInfo(props) {
 
                     </TabList>
                 </Box>
-                <TabPanel value="1"><StockInfo /></TabPanel>
+                <TabPanel value="1" style={{ padding: '24px' }}><StockInfo /></TabPanel>
 
-                <TabPanel value={value}><Outlet data={data} /></TabPanel>
+                <TabPanel value={value}>
+                    <Outlet data={data} />
+                </TabPanel>
 
 
             </TabContext>
